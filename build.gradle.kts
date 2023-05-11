@@ -1,4 +1,5 @@
 plugins {
+    id("com.github.johnrengelman.shadow").version("7.1.2")
     id("java")
 }
 
@@ -18,8 +19,15 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     compileOnly("com.velocitypowered:velocity-api:3.1.1")
     annotationProcessor("com.velocitypowered:velocity-api:3.1.1")
+    implementation("org.apache.commons:commons-lang3:3.12.0")
 }
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
+}
+
+tasks {
+    compileJava {
+        options.encoding = "UTF-8"
+    }
 }

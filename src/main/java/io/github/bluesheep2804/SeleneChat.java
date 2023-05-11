@@ -5,6 +5,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
+import io.github.bluesheep2804.japanize.Japanizer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -37,6 +38,7 @@ public class SeleneChat {
                 .append(Component.text(userName).hoverEvent(Component.text(userName)).clickEvent(ClickEvent.suggestCommand("/tell " + userName + " ")))
                 .append(Component.text(">"))
                 .append(Component.text(": ", NamedTextColor.GREEN))
-                .append(Component.text(event.getMessage())));
+                .append(Component.text(event.getMessage()))
+                .append(Component.text(" (" + Japanizer.Japanizer(event.getMessage()) + ")", NamedTextColor.GOLD)));
     }
 }
