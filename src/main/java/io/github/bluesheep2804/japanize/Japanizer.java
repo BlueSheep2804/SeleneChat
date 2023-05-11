@@ -10,4 +10,9 @@ public class Japanizer {
         String kana = RomaToKana.convert(original);
         return IMEConverter.googleIME(kana);
     }
+
+    public static boolean shouldConvert(String original) {
+        return (original.getBytes().length == original.length()  // 2バイト文字が無い
+            && !original.matches("[ \\uFF61-\\uFF9F]+"));  // 半角カタカナが無い
+    }
 }

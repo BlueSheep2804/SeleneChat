@@ -4,9 +4,11 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import io.github.bluesheep2804.japanize.Japanizer;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.slf4j.Logger;
@@ -28,17 +30,25 @@ public class SeleneChat {
 
     @Subscribe
     public void onPlayerChatEvent(PlayerChatEvent event) {
-        String userName = event.getPlayer().getUsername();
+        Player player = event.getPlayer();
+        String userName = player.getUsername();
+        String message = event.getMessage();
 
         // デフォルトのイベントを無効化する
         // クライアントのバージョンが1.19.1以降だとキックされるがUnSignedVelocityで回避できる
         event.setResult(PlayerChatEvent.ChatResult.denied());
 
-        server.sendMessage(Component.text("<")
-                .append(Component.text(userName).hoverEvent(Component.text(userName + "にメッセージを送る")).clickEvent(ClickEvent.suggestCommand("/tell " + userName + " ")))
+        TextComponent.Builder returnMessage = Component.text()
+                .content("<")
+                .append(Component.text(userName)
+                        .hoverEvent(Component.text(userName + "にメッセージを送る"))
+                        .clickEvent(ClickEvent.suggestCommand("/tell " + userName + " ")))
                 .append(Component.text(">"))
                 .append(Component.text(": ", NamedTextColor.GREEN))
-                .append(Component.text(event.getMessage()))
-                .append(Component.text(" (" + Japanizer.Japanizer(event.getMessage()) + ")", NamedTextColor.GOLD)));
+                .append(Component.text(message));
+        if (Japanizer.shouldConvert(message)) {
+            returnMessage.append(Component.text(" (" + Japanizer.Japanizer(message) + ")", NamedTextColor.GOLD));
+        }
+        server.sendMessage(returnMessage.build());
     }
 }
