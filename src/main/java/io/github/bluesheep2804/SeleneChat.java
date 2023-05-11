@@ -42,12 +42,15 @@ public class SeleneChat {
                 .content("<")
                 .append(Component.text(userName)
                         .hoverEvent(player.asHoverEvent())
-                        .clickEvent(ClickEvent.suggestCommand("/tell " + userName + " ")))
+                        .clickEvent(ClickEvent.suggestCommand(String.format("/tell %s ", userName))))
                 .append(Component.text(">"))
                 .append(Component.text(": ", NamedTextColor.GREEN))
                 .append(Component.text(message));
         if (Japanizer.shouldConvert(message)) {
-            returnMessage.append(Component.text(" (" + Japanizer.Japanizer(message) + ")", NamedTextColor.GOLD));
+            returnMessage.append(Component.text(
+                    String.format(" (%s)", Japanizer.Japanizer(message)),
+                    NamedTextColor.GOLD
+            ));
         }
         server.sendMessage(returnMessage.build());
     }
