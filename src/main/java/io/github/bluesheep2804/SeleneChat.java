@@ -41,7 +41,7 @@ public class SeleneChat {
         TextComponent.Builder returnMessage = Component.text()
                 .content("<")
                 .append(Component.text(userName)
-                        .hoverEvent(Component.text(userName + "にメッセージを送る"))
+                        .hoverEvent(player.asHoverEvent())
                         .clickEvent(ClickEvent.suggestCommand("/tell " + userName + " ")))
                 .append(Component.text(">"))
                 .append(Component.text(": ", NamedTextColor.GREEN))
