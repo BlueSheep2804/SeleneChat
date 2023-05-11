@@ -35,7 +35,7 @@ public class SeleneChat {
         event.setResult(PlayerChatEvent.ChatResult.denied());
 
         server.sendMessage(Component.text("<")
-                .append(Component.text(userName).hoverEvent(Component.text(userName)).clickEvent(ClickEvent.suggestCommand("/tell " + userName + " ")))
+                .append(Component.text(userName).hoverEvent(Component.text(userName + "にメッセージを送る")).clickEvent(ClickEvent.suggestCommand("/tell " + userName + " ")))
                 .append(Component.text(">"))
                 .append(Component.text(": ", NamedTextColor.GREEN))
                 .append(Component.text(event.getMessage()))
