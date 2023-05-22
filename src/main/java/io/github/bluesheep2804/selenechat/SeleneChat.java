@@ -1,11 +1,11 @@
-package io.github.bluesheep2804;
+package io.github.bluesheep2804.selenechat;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
-import io.github.bluesheep2804.listener.ChatListener;
+import io.github.bluesheep2804.selenechat.listener.ChatListener;
 import org.slf4j.Logger;
 
 @Plugin(

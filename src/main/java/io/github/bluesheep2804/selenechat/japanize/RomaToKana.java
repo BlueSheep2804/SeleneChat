@@ -1,4 +1,4 @@
-package io.github.bluesheep2804.japanize;
+package io.github.bluesheep2804.selenechat.japanize;
 
 import java.util.Map;
 

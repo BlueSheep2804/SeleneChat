@@ -1,10 +1,10 @@
-package io.github.bluesheep2804.listener;
+package io.github.bluesheep2804.selenechat.listener;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
-import io.github.bluesheep2804.SeleneChat;
-import io.github.bluesheep2804.japanize.Japanizer;
+import io.github.bluesheep2804.selenechat.SeleneChat;
+import io.github.bluesheep2804.selenechat.japanize.Japanizer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
