@@ -3,9 +3,9 @@ package io.github.bluesheep2804.selenechat.listener;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
-import io.github.bluesheep2804.selenechat.SeleneChat;
+import io.github.bluesheep2804.selenechat.SeleneChatVelocity;
 
-public class ChatListener {
+public class ChatListenerVelocity {
     @Subscribe
     public void onPlayerChatEvent(PlayerChatEvent event) {
         Player player = event.getPlayer();
@@ -16,6 +16,6 @@ public class ChatListener {
         // クライアントのバージョンが1.19.1以降だとキックされるがUnSignedVelocityで回避できる
         event.setResult(PlayerChatEvent.ChatResult.denied());
 
-        SeleneChat.server.sendMessage(ChatProcess.message(message, username, player.asHoverEvent()));
+        SeleneChatVelocity.server.sendMessage(ChatProcess.message(message, username, player.asHoverEvent()));
     }
 }
