@@ -41,3 +41,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+/run_paper
+/run_velocity
+/run_waterfall

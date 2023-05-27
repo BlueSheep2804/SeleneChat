@@ -1,6 +1,9 @@
 plugins {
     id("com.github.johnrengelman.shadow").version("7.1.2")
     id("java")
+    id("xyz.jpenilla.run-paper").version("2.1.0")
+    id("xyz.jpenilla.run-waterfall").version("2.1.0")
+    id("xyz.jpenilla.run-velocity").version("2.1.0")
 }
 
 group = "io.github.bluesheep2804"
@@ -34,5 +37,17 @@ tasks.getByName<Test>("test") {
 tasks {
     compileJava {
         options.encoding = "UTF-8"
+    }
+    runServer {
+        minecraftVersion("1.19.4")
+        runDirectory(File("run_paper"))
+    }
+    runVelocity {
+        velocityVersion("3.2.0-SNAPSHOT")
+        runDirectory(File("run_velocity"))
+    }
+    runWaterfall {
+        waterfallVersion("1.19")
+        runDirectory(File("run_waterfall"))
     }
 }
