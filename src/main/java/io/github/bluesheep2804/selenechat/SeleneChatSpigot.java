@@ -2,12 +2,14 @@ package io.github.bluesheep2804.selenechat;
 
 import io.github.bluesheep2804.selenechat.listener.ChatListenerSpigot;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class SeleneChatSpigot extends JavaPlugin {
     public static Server server;
+    private static SeleneChatSpigot instance;
     private BukkitAudiences adventure;
 
     public @NonNull BukkitAudiences adventure() {
@@ -22,6 +24,8 @@ public class SeleneChatSpigot extends JavaPlugin {
         server = getServer();
         server.getPluginManager().registerEvents(new ChatListenerSpigot(), this);
         this.adventure = BukkitAudiences.create(this);
+
+        server.getMessenger().registerOutgoingPluginChannel(this, "selenechat:message");
     }
 
     @Override
@@ -30,5 +34,16 @@ public class SeleneChatSpigot extends JavaPlugin {
             this.adventure.close();
             this.adventure = null;
         }
+    }
+
+    public static SeleneChatSpigot getInstance() {
+        if (instance == null) {
+            instance = (SeleneChatSpigot) Bukkit.getPluginManager().getPlugin("selenechat");
+        }
+        return instance;
+    }
+
+    public void sendPluginMessage(byte[] msg) {
+        server.sendPluginMessage(this, "selenechat:message", msg);
     }
 }

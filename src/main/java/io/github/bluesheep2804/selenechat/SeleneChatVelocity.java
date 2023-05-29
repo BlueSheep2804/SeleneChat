@@ -5,6 +5,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import io.github.bluesheep2804.selenechat.listener.ChatListenerVelocity;
 import org.slf4j.Logger;
 
@@ -31,5 +32,6 @@ public class SeleneChatVelocity {
     @Subscribe
     public void onProxyInitialize(ProxyInitializeEvent event) {
         server.getEventManager().register(this, new ChatListenerVelocity());
+        server.getChannelRegistrar().register(MinecraftChannelIdentifier.create("selenechat", "message"));
     }
 }

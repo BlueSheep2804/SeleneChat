@@ -21,6 +21,9 @@ public class SeleneChatBungee extends Plugin {
         proxy = getProxy();
         proxy.getPluginManager().registerListener(this, new ChatListenerBungee(this));
         this.adventure = BungeeAudiences.create(this);
+
+        getProxy().registerChannel("selenechat:message");
+
         getLogger().info("Loaded");
     }
 
