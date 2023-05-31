@@ -2,8 +2,6 @@ package io.github.bluesheep2804.selenechat
 
 import io.github.bluesheep2804.selenechat.listener.ChatListenerSpigot
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
-import org.bukkit.Bukkit
-import org.bukkit.Server
 import org.bukkit.plugin.java.JavaPlugin
 
 class SeleneChatSpigot : JavaPlugin() {

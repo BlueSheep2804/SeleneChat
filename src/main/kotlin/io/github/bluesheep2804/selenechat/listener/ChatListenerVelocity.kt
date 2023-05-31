@@ -3,7 +3,6 @@ package io.github.bluesheep2804.selenechat.listener
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.connection.PluginMessageEvent
 import com.velocitypowered.api.event.player.PlayerChatEvent
-import com.velocitypowered.api.proxy.ProxyServer
 import com.velocitypowered.api.proxy.ServerConnection
 import io.github.bluesheep2804.selenechat.SeleneChatVelocity
 
