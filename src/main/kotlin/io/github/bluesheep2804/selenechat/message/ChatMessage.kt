@@ -1,4 +1,4 @@
-package io.github.bluesheep2804.selenechat.listener
+package io.github.bluesheep2804.selenechat.message
 
 import io.github.bluesheep2804.selenechat.japanize.Japanizer
 import net.kyori.adventure.text.Component
@@ -6,7 +6,7 @@ import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
 
-object ChatProcess {
+object ChatMessage {
     fun message(msg: String): Component {
         val japaneseConversion = Japanizer(msg)
         val returnMessage = Component.text().content(msg)

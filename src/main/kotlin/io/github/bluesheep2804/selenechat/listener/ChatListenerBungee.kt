@@ -1,6 +1,8 @@
 package io.github.bluesheep2804.selenechat.listener
 
 import com.google.common.io.ByteStreams
+import io.github.bluesheep2804.selenechat.message.ChatMessage
+import io.github.bluesheep2804.selenechat.message.PluginMessage
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
@@ -28,7 +30,7 @@ class ChatListenerBungee(private val plugin: Plugin) : Listener {
         proxy.scheduler.runAsync(plugin) {
             val message = event.message
             val sender = event.sender as ProxiedPlayer
-            val returnMessage = ChatProcess.message(message, sender.displayName, HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(sender.displayName)))
+            val returnMessage = ChatMessage.message(message, sender.displayName, HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(sender.displayName)))
             proxy.broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
         }
         event.isCancelled = true
@@ -39,12 +41,12 @@ class ChatListenerBungee(private val plugin: Plugin) : Listener {
         if (event.tag != "selenechat:message") {
             return
         }
-        val `in` = ByteStreams.newDataInput(event.data)
-        val playerName = `in`.readUTF()
-        val message = `in`.readUTF()
+        val input = ByteStreams.newDataInput(event.data)
+        val pm = PluginMessage.fromByteArrayDataInput(input)
         val serverName = (event.sender as Server).info.name
-        logger.info("Received message: $playerName> $message")
-        val returnMessage = ChatProcess.message(message, playerName, HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(playerName)))
+        val playerHoverEvent = HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(pm.playerDisplayName))
+        val returnMessage = ChatMessage.message(pm.message, pm.playerDisplayName, playerHoverEvent)
+
         for (player in proxy.players) {
             if (player.server.info.name != serverName) {
                 player.sendMessage(*BungeeComponentSerializer.get().serialize(returnMessage))
