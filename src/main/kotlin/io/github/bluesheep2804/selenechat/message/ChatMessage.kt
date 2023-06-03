@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.selenechat.message
 
+import io.github.bluesheep2804.selenechat.ConvertMode
 import io.github.bluesheep2804.selenechat.japanize.Japanizer
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
@@ -7,19 +8,19 @@ import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
 
 object ChatMessage {
-    fun message(msg: String): Component {
+    fun message(msg: String, convertMode: ConvertMode): Component {
         val japaneseConversion = Japanizer(msg)
         val returnMessage = Component.text().content(msg)
-        if (japaneseConversion.shouldConvert()) {
+        if (convertMode != ConvertMode.NONE && japaneseConversion.shouldConvert()) {
             returnMessage.append(Component.text(
-                    java.lang.String.format(" (%s)", japaneseConversion.japanize()),
+                    java.lang.String.format(" (%s)", japaneseConversion.japanize(convertMode)),
                     NamedTextColor.GOLD
             ))
         }
         return returnMessage.build()
     }
 
-    fun message(msg: String, username: String, playerHover: HoverEvent<*>): Component {
+    fun message(msg: String, username: String, playerHover: HoverEvent<*>, convertMode: ConvertMode): Component {
         val returnMessage = Component.text()
                 .content("<")
                 .append(Component.text(username)
@@ -27,6 +28,6 @@ object ChatMessage {
                         .clickEvent(ClickEvent.suggestCommand(String.format("/tell %s ", username))))
                 .append(Component.text(">"))
                 .append(Component.text(": ", NamedTextColor.GREEN))
-        return returnMessage.append(message(msg)).build()
+        return returnMessage.append(message(msg, convertMode)).build()
     }
 }

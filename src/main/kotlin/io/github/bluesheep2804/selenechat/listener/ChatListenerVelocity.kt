@@ -4,6 +4,7 @@ import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.connection.PluginMessageEvent
 import com.velocitypowered.api.event.player.PlayerChatEvent
 import com.velocitypowered.api.proxy.ServerConnection
+import io.github.bluesheep2804.selenechat.ConvertMode
 import io.github.bluesheep2804.selenechat.SeleneChatVelocity
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
@@ -14,6 +15,9 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
     private val config = plugin.config!!
     @Subscribe
     fun onPlayerChatEvent(event: PlayerChatEvent) {
+        if (config.convertMode == ConvertMode.NONE) {
+            return
+        }
         val player = event.player
         val username = player.username
         val message = event.message
@@ -21,7 +25,7 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
         // デフォルトのイベントを無効化する
         // クライアントのバージョンが1.19.1以降だとキックされるがUnSignedVelocityで回避できる
         event.result = PlayerChatEvent.ChatResult.denied()
-        server.sendMessage(ChatMessage.message(message, username, player.asHoverEvent()))
+        server.sendMessage(ChatMessage.message(message, username, player.asHoverEvent(), config.convertMode))
     }
 
     @Subscribe
@@ -29,11 +33,14 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
         if (event.identifier.id != "selenechat:message") {
             return
         }
+        if (!config.shouldReceivePluginMessage) {
+            return
+        }
         val input = event.dataAsDataStream()
         val pm = PluginMessage.fromByteArrayDataInput(input)
         val serverName = (event.source as ServerConnection).serverInfo.name
         val playerHoverEvent = server.getPlayer(pm.playerUUID).get().asHoverEvent()
-        val returnMessage = ChatMessage.message(pm.message, pm.playerDisplayName, playerHoverEvent)
+        val returnMessage = ChatMessage.message(pm.message, pm.playerDisplayName, playerHoverEvent, config.convertMode)
 
         for (server in server.allServers) {
             if (server.serverInfo.name != serverName) {

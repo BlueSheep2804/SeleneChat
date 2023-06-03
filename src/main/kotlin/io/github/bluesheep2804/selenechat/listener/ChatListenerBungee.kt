@@ -1,6 +1,7 @@
 package io.github.bluesheep2804.selenechat.listener
 
 import com.google.common.io.ByteStreams
+import io.github.bluesheep2804.selenechat.ConvertMode
 import io.github.bluesheep2804.selenechat.SeleneChatBungee
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
@@ -26,10 +27,13 @@ class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
         if (event.sender !is ProxiedPlayer) {
             return
         }
+        if (config.convertMode == ConvertMode.NONE) {
+            return
+        }
         proxy.scheduler.runAsync(plugin) {
             val message = event.message
             val sender = event.sender as ProxiedPlayer
-            val returnMessage = ChatMessage.message(message, sender.displayName, HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(sender.displayName)))
+            val returnMessage = ChatMessage.message(message, sender.displayName, HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(sender.displayName)), config.convertMode)
             proxy.broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
         }
         event.isCancelled = true
@@ -40,11 +44,14 @@ class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
         if (event.tag != "selenechat:message") {
             return
         }
+        if (!config.shouldReceivePluginMessage) {
+            return
+        }
         val input = ByteStreams.newDataInput(event.data)
         val pm = PluginMessage.fromByteArrayDataInput(input)
         val serverName = (event.sender as Server).info.name
         val playerHoverEvent = HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(pm.playerDisplayName))
-        val returnMessage = ChatMessage.message(pm.message, pm.playerDisplayName, playerHoverEvent)
+        val returnMessage = ChatMessage.message(pm.message, pm.playerDisplayName, playerHoverEvent, config.convertMode)
 
         for (player in proxy.players) {
             if (player.server.info.name != serverName) {

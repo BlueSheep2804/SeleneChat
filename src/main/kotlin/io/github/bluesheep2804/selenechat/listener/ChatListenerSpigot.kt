@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.selenechat.listener
 
+import io.github.bluesheep2804.selenechat.ConvertMode
 import io.github.bluesheep2804.selenechat.SeleneChatSpigot
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
@@ -13,9 +14,13 @@ class ChatListenerSpigot(private val plugin: SeleneChatSpigot) : Listener {
     @EventHandler
     fun onPlayerChat(event: AsyncPlayerChatEvent) {
         val message = event.message
-        val returnMessage = ChatMessage.message(message)
 
-        event.message = LegacyComponentSerializer.legacySection().serialize(returnMessage)
-        plugin.sendPluginMessage(PluginMessage(event.message, event.player.uniqueId, event.player.displayName).build())
+        if (config.convertMode != ConvertMode.NONE) {
+            val returnMessage = ChatMessage.message(message, config.convertMode)
+            event.message = LegacyComponentSerializer.legacySection().serialize(returnMessage)
+        }
+        if (config.shouldSendPluginMessage) {
+            plugin.sendPluginMessage(PluginMessage(event.message, event.player.uniqueId, event.player.displayName).build())
+        }
     }
 }
