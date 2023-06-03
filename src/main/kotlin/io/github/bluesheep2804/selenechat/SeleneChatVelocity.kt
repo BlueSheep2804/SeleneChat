@@ -15,13 +15,14 @@ import java.nio.file.Path
 class SeleneChatVelocity @Inject constructor(val server: ProxyServer, val logger: Logger, @DataDirectory val dataDirectory: Path) {
     var config: SeleneChatConfigData? = null
     init {
-        logger.info("Loaded!")
         config = SeleneChatConfig.load(dataDirectory.toFile())
         if (config!!.configVersion < SeleneChatConfigData().configVersion) {
             logger.warn(SeleneChatConfig.TEXT_VERSION_OUTDATED)
         } else if (config!!.configVersion > SeleneChatConfigData().configVersion) {
             logger.warn(SeleneChatConfig.TEXT_VERSION_NEWER)
         }
+
+        logger.info("Loaded!")
     }
 
     @Subscribe

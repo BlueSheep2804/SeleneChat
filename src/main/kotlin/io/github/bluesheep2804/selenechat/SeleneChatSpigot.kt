@@ -14,16 +14,18 @@ class SeleneChatSpigot : JavaPlugin() {
     }
 
     override fun onEnable() {
-        server.pluginManager.registerEvents(ChatListenerSpigot(this), this)
-        adventure = BukkitAudiences.create(this)
-        server.messenger.registerOutgoingPluginChannel(this, "selenechat:message")
-
         config = SeleneChatConfig.load(dataFolder)
         if (config!!.configVersion < SeleneChatConfigData().configVersion) {
             logger.warning(SeleneChatConfig.TEXT_VERSION_OUTDATED)
         } else if (config!!.configVersion > SeleneChatConfigData().configVersion) {
             logger.warning(SeleneChatConfig.TEXT_VERSION_NEWER)
         }
+
+        server.pluginManager.registerEvents(ChatListenerSpigot(this), this)
+        adventure = BukkitAudiences.create(this)
+        server.messenger.registerOutgoingPluginChannel(this, "selenechat:message")
+
+        logger.info("Loaded!")
     }
 
     override fun onDisable() {

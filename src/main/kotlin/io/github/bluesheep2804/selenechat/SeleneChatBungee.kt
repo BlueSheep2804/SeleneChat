@@ -15,8 +15,6 @@ class SeleneChatBungee : Plugin() {
     }
 
     override fun onEnable() {
-        proxy.pluginManager.registerListener(this, ChatListenerBungee(this))
-        adventure = BungeeAudiences.create(this)
         config = SeleneChatConfig.load(dataFolder)
         if (config!!.configVersion < SeleneChatConfigData().configVersion) {
             logger.warning(SeleneChatConfig.TEXT_VERSION_OUTDATED)
@@ -24,8 +22,11 @@ class SeleneChatBungee : Plugin() {
             logger.warning(SeleneChatConfig.TEXT_VERSION_NEWER)
         }
 
+        proxy.pluginManager.registerListener(this, ChatListenerBungee(this))
+        adventure = BungeeAudiences.create(this)
         proxy.registerChannel("selenechat:message")
-        logger.info("Loaded")
+
+        logger.info("Loaded!")
     }
 
     override fun onDisable() {
