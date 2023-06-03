@@ -8,6 +8,7 @@ plugins {
     id("xyz.jpenilla.run-velocity").version("2.1.0")
     kotlin("jvm") version "1.8.21"
     kotlin("kapt") version "1.8.21"
+    kotlin("plugin.serialization") version "1.4.20"
 }
 
 group = "io.github.bluesheep2804"
@@ -33,6 +34,7 @@ dependencies {
     compileOnly("net.md-5:bungeecord-api:1.19-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-platform-bukkit:4.3.0")
     implementation("net.kyori:adventure-platform-bungeecord:4.3.0")
+    implementation("com.charleskorn.kaml:kaml:0.54.0")
 }
 
 tasks.getByName<Test>("test") {

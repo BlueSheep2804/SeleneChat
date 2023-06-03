@@ -1,24 +1,23 @@
 package io.github.bluesheep2804.selenechat.listener
 
 import com.google.common.io.ByteStreams
+import io.github.bluesheep2804.selenechat.SeleneChatBungee
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
-import net.md_5.bungee.api.ProxyServer
 import net.md_5.bungee.api.connection.ProxiedPlayer
 import net.md_5.bungee.api.connection.Server
 import net.md_5.bungee.api.event.ChatEvent
 import net.md_5.bungee.api.event.PluginMessageEvent
 import net.md_5.bungee.api.plugin.Listener
-import net.md_5.bungee.api.plugin.Plugin
 import net.md_5.bungee.event.EventHandler
-import java.util.logging.Logger
 
-class ChatListenerBungee(private val plugin: Plugin) : Listener {
-    private val proxy: ProxyServer = plugin.proxy
-    private val logger: Logger = proxy.logger
+class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
+    private val proxy = plugin.proxy
+    private val logger = proxy.logger
+    private val config = plugin.config!!
     @EventHandler
     fun onChat(event: ChatEvent) {
         if (event.isCommand || event.isProxyCommand) {

@@ -8,6 +8,7 @@ import net.md_5.bungee.api.plugin.Plugin
 class SeleneChatBungee : Plugin() {
     private val proxy: ProxyServer = getProxy()
     private var adventure: BungeeAudiences? = null
+    var config: SeleneChatConfigData? = null
     fun adventure(): BungeeAudiences {
         checkNotNull(adventure) { "Cannot retrieve audience provider while plugin is not enabled" }
         return adventure!!
@@ -16,6 +17,13 @@ class SeleneChatBungee : Plugin() {
     override fun onEnable() {
         proxy.pluginManager.registerListener(this, ChatListenerBungee(this))
         adventure = BungeeAudiences.create(this)
+        config = SeleneChatConfig.load(dataFolder)
+        if (config!!.configVersion < SeleneChatConfigData().configVersion) {
+            logger.warning(SeleneChatConfig.TEXT_VERSION_OUTDATED)
+        } else if (config!!.configVersion > SeleneChatConfigData().configVersion) {
+            logger.warning(SeleneChatConfig.TEXT_VERSION_NEWER)
+        }
+
         proxy.registerChannel("selenechat:message")
         logger.info("Loaded")
     }

@@ -11,6 +11,7 @@ import io.github.bluesheep2804.selenechat.message.PluginMessage
 class ChatListenerVelocity(plugin: SeleneChatVelocity) {
     private val server = plugin.server
     private val logger = plugin.logger
+    private val config = plugin.config!!
     @Subscribe
     fun onPlayerChatEvent(event: PlayerChatEvent) {
         val player = event.player

@@ -9,6 +9,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerChatEvent
 
 class ChatListenerSpigot(private val plugin: SeleneChatSpigot) : Listener {
+    private val config = plugin.config!!
     @EventHandler
     fun onPlayerChat(event: AsyncPlayerChatEvent) {
         val message = event.message
