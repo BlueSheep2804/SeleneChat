@@ -14,7 +14,9 @@ data class SeleneChatConfigData(
         @YamlComment("Whether to send message content to proxy servers using plugin messages.", "Applies to Spigot only.")
         var shouldSendPluginMessage: Boolean = false,
         @YamlComment("Whether to receive plugin messages from the server to the proxy server.", "Applies to Bungeecord and Velocity only.")
-        var shouldReceivePluginMessage: Boolean = false
+        var shouldReceivePluginMessage: Boolean = false,
+        @YamlComment("Whether to include the name of the server where the sender is located in the chat.", "Applies to Bungeecord and Velocity only.")
+        var shouldShowServerName: Boolean = true
 )
 
 @Serializable

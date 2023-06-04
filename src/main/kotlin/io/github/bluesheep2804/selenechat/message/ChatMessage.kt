@@ -20,13 +20,20 @@ object ChatMessage {
         return returnMessage.build()
     }
 
-    fun message(msg: String, username: String, playerHover: HoverEvent<*>, convertMode: ConvertMode): Component {
+    fun message(msg: String, username: String, serverName: String, playerHover: HoverEvent<*>, convertMode: ConvertMode): Component {
         val returnMessage = Component.text()
                 .content("<")
                 .append(Component.text(username)
                         .hoverEvent(playerHover)
                         .clickEvent(ClickEvent.suggestCommand(String.format("/tell %s ", username))))
-                .append(Component.text(">"))
+        if (serverName != "") {
+            returnMessage.append(Component.text(" ("))
+                    .append(Component.text(serverName, NamedTextColor.GREEN)
+                            .hoverEvent(HoverEvent.showText(Component.text("このサーバーに接続")))
+                            .clickEvent(ClickEvent.runCommand("/server $serverName")))
+                    .append(Component.text(")"))
+        }
+        returnMessage.append(Component.text(">"))
                 .append(Component.text(": ", NamedTextColor.GREEN))
         return returnMessage.append(message(msg, convertMode)).build()
     }

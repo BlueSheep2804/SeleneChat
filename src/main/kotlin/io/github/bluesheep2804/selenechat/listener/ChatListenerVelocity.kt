@@ -21,11 +21,12 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
         val player = event.player
         val username = player.username
         val message = event.message
+        val serverName = if (config.shouldShowServerName) event.player.currentServer.get().serverInfo.name else ""
 
         // デフォルトのイベントを無効化する
         // クライアントのバージョンが1.19.1以降だとキックされるがUnSignedVelocityで回避できる
         event.result = PlayerChatEvent.ChatResult.denied()
-        server.sendMessage(ChatMessage.message(message, username, player.asHoverEvent(), config.convertMode))
+        server.sendMessage(ChatMessage.message(message, username, serverName, player.asHoverEvent(), config.convertMode))
     }
 
     @Subscribe
@@ -40,7 +41,7 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
         val pm = PluginMessage.fromByteArrayDataInput(input)
         val serverName = (event.source as ServerConnection).serverInfo.name
         val playerHoverEvent = server.getPlayer(pm.playerUUID).get().asHoverEvent()
-        val returnMessage = ChatMessage.message(pm.message, pm.playerDisplayName, playerHoverEvent, config.convertMode)
+        val returnMessage = ChatMessage.message(pm.message, pm.playerDisplayName, serverName, playerHoverEvent, config.convertMode)
 
         for (server in server.allServers) {
             if (server.serverInfo.name != serverName) {
