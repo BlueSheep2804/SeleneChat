@@ -13,7 +13,7 @@ object ChatMessage {
         val returnMessage = Component.text().content(msg)
         if (convertMode != ConvertMode.NONE && japaneseConversion.shouldConvert()) {
             returnMessage.append(Component.text(
-                    java.lang.String.format(" (%s)", japaneseConversion.japanize(convertMode)),
+                    " (${japaneseConversion.japanize(convertMode)})",
                     NamedTextColor.GOLD
             ))
         }
@@ -25,7 +25,7 @@ object ChatMessage {
                 .content("<")
                 .append(Component.text(username)
                         .hoverEvent(playerHover)
-                        .clickEvent(ClickEvent.suggestCommand(String.format("/tell %s ", username))))
+                        .clickEvent(ClickEvent.suggestCommand("/tell $username ")))
         if (serverName != "") {
             returnMessage.append(Component.text(" ("))
                     .append(Component.text(serverName, NamedTextColor.GREEN)
