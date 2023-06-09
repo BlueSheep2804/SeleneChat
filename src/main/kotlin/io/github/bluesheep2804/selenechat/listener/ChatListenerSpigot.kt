@@ -16,7 +16,7 @@ class ChatListenerSpigot(private val plugin: SeleneChatSpigot) : Listener {
         val message = event.message
 
         if (config.convertMode != ConvertMode.NONE) {
-            val returnMessage = ChatMessage.message(message, config.convertMode)
+            val returnMessage = ChatMessage.message(config.chatFormatMessage, message, config.convertMode)
             event.message = LegacyComponentSerializer.legacySection().serialize(returnMessage)
         }
         if (config.shouldSendPluginMessage) {

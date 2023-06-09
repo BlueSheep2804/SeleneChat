@@ -35,6 +35,7 @@ dependencies {
     implementation("net.kyori:adventure-platform-bukkit:4.3.0")
     implementation("net.kyori:adventure-platform-bungeecord:4.3.0")
     implementation("com.charleskorn.kaml:kaml:0.54.0")
+    implementation("net.kyori:adventure-text-minimessage:4.13.1")
 }
 
 tasks.getByName<Test>("test") {

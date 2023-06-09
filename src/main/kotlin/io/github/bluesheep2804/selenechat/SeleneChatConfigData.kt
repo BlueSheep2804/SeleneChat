@@ -16,7 +16,23 @@ data class SeleneChatConfigData(
         @YamlComment("Whether to receive plugin messages from the server to the proxy server.", "Applies to Bungeecord and Velocity only.")
         var shouldReceivePluginMessage: Boolean = false,
         @YamlComment("Whether to include the name of the server where the sender is located in the chat.", "Applies to Bungeecord and Velocity only.")
-        var shouldShowServerName: Boolean = true
+        var shouldShowServerName: Boolean = true,
+
+        @YamlComment(
+                "Specifies the format of the chat.",
+                "MiniMessage tags can be used.",
+                "<username> -> Display name of speaker",
+                "<servername:[prefix]:[suffix]> -> Name of the server where the speaker is located",
+                "<message> -> Message body"
+        )
+        var chatFormat: String = "<username><servername:@:><green>:</green> <message>",
+        @YamlComment(
+                "Specifies the format of the message portion of the chat.",
+                "MiniMessage tags can be used.",
+                "<message> -> Message body",
+                "<jp:[prefix]:[suffix]> -> Message after Japanese conversion"
+        )
+        var chatFormatMessage: String = "<message><gold><jp: (:)></gold>"
 )
 
 @Serializable
