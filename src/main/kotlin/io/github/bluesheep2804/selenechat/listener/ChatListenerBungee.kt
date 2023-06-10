@@ -31,7 +31,7 @@ class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
         proxy.scheduler.runAsync(plugin) {
             val message = event.message
             val sender = event.sender as ProxiedPlayer
-            val serverName = if (config.shouldShowServerName) sender.server.info.name else ""
+            val serverName = sender.server.info.name
             val returnMessage = ChatMessage.message(config.chatFormat, config.chatFormatMessage, message, sender.displayName, sender.uniqueId, serverName, config.convertMode)
             proxy.broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
         }

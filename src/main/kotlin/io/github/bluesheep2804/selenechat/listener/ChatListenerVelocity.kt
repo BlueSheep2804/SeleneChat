@@ -21,7 +21,7 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
         val player = event.player
         val username = player.username
         val message = event.message
-        val serverName = if (config.shouldShowServerName) event.player.currentServer.get().serverInfo.name else ""
+        val serverName = player.currentServer.get().serverInfo.name
 
         // デフォルトのイベントを無効化する
         // クライアントのバージョンが1.19.1以降だとキックされるがUnSignedVelocityで回避できる

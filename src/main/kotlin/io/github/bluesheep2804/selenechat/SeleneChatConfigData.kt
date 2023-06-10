@@ -17,8 +17,6 @@ data class SeleneChatConfigData(
         var useSeleneChatFormat: Boolean = false,
         @YamlComment("Whether to receive plugin messages from the server to the proxy server.", "Applies to Bungeecord and Velocity only.")
         var shouldReceivePluginMessage: Boolean = false,
-        @YamlComment("Whether to include the name of the server where the sender is located in the chat.", "Applies to Bungeecord and Velocity only.")
-        var shouldShowServerName: Boolean = true,
 
         @YamlComment(
                 "Specifies the format of the chat.",
@@ -40,6 +38,6 @@ data class SeleneChatConfigData(
 @Serializable
 enum class ConvertMode {
         @SerialName("none") NONE,
-        @SerialName("hiragana") KANA,
+        @SerialName("kana") KANA,
         @SerialName("ime") IME
 }
