@@ -2,7 +2,7 @@ package io.github.bluesheep2804.selenechat.message
 
 import io.github.bluesheep2804.selenechat.ConvertMode
 import io.github.bluesheep2804.selenechat.japanize.Japanizer
-import net.kyori.adventure.key.Key
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.event.HoverEvent
@@ -12,7 +12,6 @@ import net.kyori.adventure.text.minimessage.tag.Tag
 import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
-import java.util.UUID
 
 object ChatMessage {
     fun message(chatFormat: String, msg: String, convertMode: ConvertMode): Component {
@@ -38,17 +37,17 @@ object ChatMessage {
         return mm.deserialize(chatFormat, messageTagResolver, jpTagResolver)
     }
 
-    fun message(chatFormat: String, chatFormatMessage: String, msg: String, username: String, userUUID: UUID, serverName: String, convertMode: ConvertMode): Component {
+    fun message(chatFormat: String, chatFormatMessage: String, msg: String, sender: SeleneChatPlayer, convertMode: ConvertMode): Component {
         val mm = MiniMessage.miniMessage()
         val usernameTagResolver = Placeholder.component(
                 "username",
-                Component.text(username)
-                        .hoverEvent(HoverEvent.showEntity(HoverEvent.ShowEntity.of(Key.key("player"), userUUID, Component.text(username))))
-                        .clickEvent(ClickEvent.suggestCommand("/tell $username "))
+                Component.text(sender.displayName)
+                        .hoverEvent(sender.asHoverEvent())
+                        .clickEvent(ClickEvent.suggestCommand("/tell ${sender.displayName} "))
         )
         val serverNameTagResolver = TagResolver.resolver("servername")
         { args: ArgumentQueue, _: Context ->
-            if (serverName == "") {
+            if (sender.currentServerName == "") {
                 return@resolver Tag.selfClosingInserting(Component.text(""))
             }
             val prefix = args.popOr("prefix").value()
@@ -57,9 +56,9 @@ object ChatMessage {
             return@resolver Tag.selfClosingInserting(
                     Component.text(prefix)
                             .append(
-                                    Component.text(serverName)
+                                    Component.text(sender.currentServerName)
                                         .hoverEvent(HoverEvent.showText(Component.text("このサーバーに接続")))
-                                        .clickEvent(ClickEvent.runCommand("/server $serverName")))
+                                        .clickEvent(ClickEvent.runCommand("/server ${sender.currentServerName}")))
                             .append(Component.text(suffix))
             )
         }

@@ -4,6 +4,7 @@ import io.github.bluesheep2804.selenechat.ConvertMode
 import io.github.bluesheep2804.selenechat.SeleneChatSpigot
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerSpigot
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.event.EventHandler
@@ -15,11 +16,11 @@ class ChatListenerSpigot(private val plugin: SeleneChatSpigot) : Listener {
     @EventHandler
     fun onPlayerChat(event: AsyncPlayerChatEvent) {
         val message = event.message
-        val player = event.player
+        val sender = SeleneChatPlayerSpigot(event.player)
 
         if (config.convertMode != ConvertMode.NONE) {
             if (config.useSeleneChatFormat) {
-                val returnMessage = ChatMessage.message(config.chatFormat, config.chatFormatMessage, message, player.displayName, player.uniqueId, "", config.convertMode)
+                val returnMessage = ChatMessage.message(config.chatFormat, config.chatFormatMessage, message, sender, config.convertMode)
                 plugin.server.spigot().broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
                 event.isCancelled = true
             } else {
@@ -28,7 +29,7 @@ class ChatListenerSpigot(private val plugin: SeleneChatSpigot) : Listener {
             }
         }
         if (config.shouldSendPluginMessage) {
-            plugin.sendPluginMessage(PluginMessage(event.message, player.uniqueId, player.displayName).build())
+            plugin.sendPluginMessage(PluginMessage(event.message, sender.uniqueId, sender.displayName).build())
         }
     }
 }

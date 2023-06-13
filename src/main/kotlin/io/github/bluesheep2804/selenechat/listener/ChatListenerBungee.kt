@@ -5,6 +5,7 @@ import io.github.bluesheep2804.selenechat.ConvertMode
 import io.github.bluesheep2804.selenechat.SeleneChatBungee
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerBungee
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
 import net.md_5.bungee.api.connection.ProxiedPlayer
 import net.md_5.bungee.api.connection.Server
@@ -30,9 +31,8 @@ class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
         }
         proxy.scheduler.runAsync(plugin) {
             val message = event.message
-            val sender = event.sender as ProxiedPlayer
-            val serverName = sender.server.info.name
-            val returnMessage = ChatMessage.message(config.chatFormat, config.chatFormatMessage, message, sender.displayName, sender.uniqueId, serverName, config.convertMode)
+            val sender = SeleneChatPlayerBungee.getPlayer(event.sender)
+            val returnMessage = ChatMessage.message(config.chatFormat, config.chatFormatMessage, message, sender, config.convertMode)
             proxy.broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
         }
         event.isCancelled = true
@@ -48,8 +48,9 @@ class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
         }
         val input = ByteStreams.newDataInput(event.data)
         val pm = PluginMessage.fromByteArrayDataInput(input)
+        val sender = SeleneChatPlayerBungee(proxy.getPlayer(pm.playerUUID))
         val serverName = (event.sender as Server).info.name
-        val returnMessage = ChatMessage.message(config.chatFormat, config.chatFormatMessage, pm.message, pm.playerDisplayName, pm.playerUUID, serverName, config.convertMode)
+        val returnMessage = ChatMessage.message(config.chatFormat, config.chatFormatMessage, pm.message, sender, config.convertMode)
 
         for (player in proxy.players) {
             if (player.server.info.name != serverName) {
