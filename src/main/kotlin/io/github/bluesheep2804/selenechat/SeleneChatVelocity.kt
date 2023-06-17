@@ -13,7 +13,7 @@ import io.github.bluesheep2804.selenechat.listener.ChatListenerVelocity
 import org.slf4j.Logger
 import java.nio.file.Path
 
-@Plugin(id = "selenechat", name = "SeleneChat", version = "0.1.0-SNAPSHOT", description = "Chat plugin for Velocity inspired by Lunachat", authors = ["BlueSheep2804"])
+@Plugin(id = "selenechat", name = "SeleneChat", version = "0.1.0-SNAPSHOT", description = "Chat plugin inspired by LunaChat", authors = ["BlueSheep2804"])
 class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger: Logger, @DataDirectory val dataDirectory: Path) : SeleneChat {
     override val config: SeleneChatConfigData = SeleneChatConfig.load(dataDirectory.toFile())
     init {
