@@ -1,7 +1,6 @@
 package io.github.bluesheep2804.selenechat.listener
 
 import com.google.common.io.ByteStreams
-import io.github.bluesheep2804.selenechat.ConvertMode
 import io.github.bluesheep2804.selenechat.SeleneChatBungee
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
@@ -24,9 +23,6 @@ class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
             return
         }
         if (event.sender !is ProxiedPlayer) {
-            return
-        }
-        if (config.convertMode == ConvertMode.NONE) {
             return
         }
         proxy.scheduler.runAsync(plugin) {

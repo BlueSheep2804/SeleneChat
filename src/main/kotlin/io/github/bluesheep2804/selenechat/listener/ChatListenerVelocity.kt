@@ -4,7 +4,6 @@ import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.connection.PluginMessageEvent
 import com.velocitypowered.api.event.player.PlayerChatEvent
 import com.velocitypowered.api.proxy.ServerConnection
-import io.github.bluesheep2804.selenechat.ConvertMode
 import io.github.bluesheep2804.selenechat.SeleneChatVelocity
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
@@ -16,9 +15,6 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
     private val config = plugin.config
     @Subscribe
     fun onPlayerChatEvent(event: PlayerChatEvent) {
-        if (config.convertMode == ConvertMode.NONE) {
-            return
-        }
         val sender = SeleneChatPlayerVelocity(event.player)
         val message = event.message
 
