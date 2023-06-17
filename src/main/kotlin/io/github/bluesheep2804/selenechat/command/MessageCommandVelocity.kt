@@ -11,7 +11,7 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 
 class MessageCommandVelocity(val plugin: SeleneChatVelocity) : SimpleCommand {
-    val command = MessageCommand(plugin.config!!)
+    val command = MessageCommand(plugin.config)
     override fun execute(invocation: Invocation) {
         val source = invocation.source()
         val args = invocation.arguments()

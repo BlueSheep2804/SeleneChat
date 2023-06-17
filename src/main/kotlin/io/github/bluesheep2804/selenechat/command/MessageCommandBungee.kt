@@ -11,7 +11,7 @@ import net.md_5.bungee.api.plugin.Command
 import net.md_5.bungee.api.plugin.TabExecutor
 
 class MessageCommandBungee(val plugin: SeleneChatBungee) : Command(MessageCommand.COMMAND_NAME, MessageCommand.PERMISSION, *MessageCommand.COMMAND_ALIASES), TabExecutor {
-    val command = MessageCommand(plugin.config!!)
+    val command = MessageCommand(plugin.config)
     override fun execute(commandSender: CommandSender, args: Array<String>) {
         val sender = when (commandSender) {
             is ProxiedPlayer -> SeleneChatPlayerBungee(commandSender)

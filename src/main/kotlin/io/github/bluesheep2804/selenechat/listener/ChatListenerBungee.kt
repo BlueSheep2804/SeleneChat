@@ -17,7 +17,7 @@ import net.md_5.bungee.event.EventHandler
 class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
     private val proxy = plugin.proxy
     private val logger = proxy.logger
-    private val config = plugin.config!!
+    private val config = plugin.config
     @EventHandler
     fun onChat(event: ChatEvent) {
         if (event.isCommand || event.isProxyCommand) {

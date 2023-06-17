@@ -13,7 +13,7 @@ import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerVelocity
 class ChatListenerVelocity(plugin: SeleneChatVelocity) {
     private val proxy = plugin.proxy
     private val logger = plugin.logger
-    private val config = plugin.config!!
+    private val config = plugin.config
     @Subscribe
     fun onPlayerChatEvent(event: PlayerChatEvent) {
         if (config.convertMode == ConvertMode.NONE) {
