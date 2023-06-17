@@ -4,3 +4,17 @@ description: Chat plugin inspired by Lunachat
 main: io.github.bluesheep2804.selenechat.SeleneChatSpigot
 authors: [ BlueSheep2804 ]
 api-version: 1.16
+
+commands:
+  message:
+    description: Selenechat message command
+    aliases:
+      - msg
+      - tell
+      - w
+    permission: selenechat.command.message
+
+permissions:
+  selenechat.command.message:
+    description: Allow using SeleneChat message command
+    default: true

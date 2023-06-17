@@ -32,7 +32,15 @@ data class SeleneChatConfigData(
                 "<message> -> Message body",
                 "<jp:[prefix]:[suffix]> -> Message after Japanese conversion"
         )
-        var chatFormatMessage: String = "<message><gold><jp: (:)></gold>"
+        var chatFormatMessage: String = "<message><gold><jp: (:)></gold>",
+        @YamlComment(
+                "Specifies the format of the private chat.",
+                "MiniMessage tags can be used.",
+                "<sender> -> Display name of sender",
+                "<receiver> -> Display name of receiver",
+                "<message> -> Message body"
+        )
+        var chatFormatPrivateMessage: String = "<gray>[<sender> -> <receiver>]</gray> <message>"
 )
 
 @Serializable

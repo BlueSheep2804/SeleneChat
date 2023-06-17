@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.selenechat
 
+import io.github.bluesheep2804.selenechat.command.MessageCommandBungee
 import io.github.bluesheep2804.selenechat.listener.ChatListenerBungee
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences
 import net.md_5.bungee.api.ProxyServer
@@ -25,6 +26,7 @@ class SeleneChatBungee : Plugin() {
         proxy.pluginManager.registerListener(this, ChatListenerBungee(this))
         adventure = BungeeAudiences.create(this)
         proxy.registerChannel("selenechat:message")
+        proxy.pluginManager.registerCommand(this, MessageCommandBungee(this))
 
         logger.info("Loaded!")
     }

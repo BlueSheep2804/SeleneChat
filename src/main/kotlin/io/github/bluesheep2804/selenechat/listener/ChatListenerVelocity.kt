@@ -11,7 +11,7 @@ import io.github.bluesheep2804.selenechat.message.PluginMessage
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerVelocity
 
 class ChatListenerVelocity(plugin: SeleneChatVelocity) {
-    private val server = plugin.server
+    private val proxy = plugin.proxy
     private val logger = plugin.logger
     private val config = plugin.config!!
     @Subscribe
@@ -25,7 +25,7 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
         // デフォルトのイベントを無効化する
         // クライアントのバージョンが1.19.1以降だとキックされるがUnSignedVelocityで回避できる
         event.result = PlayerChatEvent.ChatResult.denied()
-        server.sendMessage(ChatMessage.message(config.chatFormat, config.chatFormatMessage, message, sender, config.convertMode))
+        proxy.sendMessage(ChatMessage.message(config.chatFormat, config.chatFormatMessage, message, sender, config.convertMode))
     }
 
     @Subscribe
@@ -38,11 +38,11 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
         }
         val input = event.dataAsDataStream()
         val pm = PluginMessage.fromByteArrayDataInput(input)
-        val sender = SeleneChatPlayerVelocity(server.getPlayer(pm.playerUUID).get())
+        val sender = SeleneChatPlayerVelocity(proxy.getPlayer(pm.playerUUID).get())
         val serverName = (event.source as ServerConnection).serverInfo.name
         val returnMessage = ChatMessage.message(config.chatFormat, config.chatFormatMessage, pm.message, sender, config.convertMode)
 
-        for (server in server.allServers) {
+        for (server in proxy.allServers) {
             if (server.serverInfo.name != serverName) {
                 server.sendMessage(returnMessage)
             }

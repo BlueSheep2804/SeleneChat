@@ -1,5 +1,7 @@
 package io.github.bluesheep2804.selenechat
 
+import io.github.bluesheep2804.selenechat.command.MessageCommand
+import io.github.bluesheep2804.selenechat.command.MessageCommandSpigot
 import io.github.bluesheep2804.selenechat.listener.ChatListenerSpigot
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import org.bukkit.plugin.java.JavaPlugin
@@ -24,6 +26,8 @@ class SeleneChatSpigot : JavaPlugin() {
         server.pluginManager.registerEvents(ChatListenerSpigot(this), this)
         adventure = BukkitAudiences.create(this)
         server.messenger.registerOutgoingPluginChannel(this, "selenechat:message")
+
+        this.getCommand(MessageCommand.COMMAND_NAME)?.setExecutor(MessageCommandSpigot(this))
 
         logger.info("Loaded!")
     }
