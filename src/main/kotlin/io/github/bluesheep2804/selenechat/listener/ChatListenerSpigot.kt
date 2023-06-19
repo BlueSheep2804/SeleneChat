@@ -18,15 +18,13 @@ class ChatListenerSpigot(private val plugin: SeleneChatSpigot) : Listener {
         val message = event.message
         val sender = SeleneChatPlayerSpigot(event.player)
 
-        if (config.convertMode != ConvertMode.NONE) {
-            if (config.useSeleneChatFormat) {
-                val returnMessage = ChatMessage.message(message, sender)
-                plugin.server.spigot().broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
-                event.isCancelled = true
-            } else {
-                val returnMessage = ChatMessage.message(message)
-                event.message = LegacyComponentSerializer.legacySection().serialize(returnMessage)
-            }
+        if (config.useSeleneChatFormat) {
+            val returnMessage = ChatMessage.message(message, sender)
+            plugin.server.spigot().broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
+            event.isCancelled = true
+        } else {
+            val returnMessage = ChatMessage.message(message)
+            event.message = LegacyComponentSerializer.legacySection().serialize(returnMessage)
         }
         if (config.shouldSendPluginMessage) {
             plugin.sendPluginMessage(PluginMessage(event.message, sender.uniqueId, sender.displayName).build())
