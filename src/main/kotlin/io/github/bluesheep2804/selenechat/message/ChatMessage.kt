@@ -1,6 +1,6 @@
 package io.github.bluesheep2804.selenechat.message
 
-import io.github.bluesheep2804.selenechat.ConvertMode
+import io.github.bluesheep2804.selenechat.config.ConvertMode
 import io.github.bluesheep2804.selenechat.japanize.Japanizer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import net.kyori.adventure.text.Component

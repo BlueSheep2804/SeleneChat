@@ -1,6 +1,6 @@
 package io.github.bluesheep2804.selenechat.command
 
-import io.github.bluesheep2804.selenechat.SeleneChatConfigData
+import io.github.bluesheep2804.selenechat.config.SeleneChatConfigData
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import net.kyori.adventure.text.Component

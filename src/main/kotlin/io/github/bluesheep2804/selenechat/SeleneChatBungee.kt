@@ -1,19 +1,16 @@
 package io.github.bluesheep2804.selenechat
 
 import io.github.bluesheep2804.selenechat.command.MessageCommandBungee
+import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerBungee
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences
 import net.md_5.bungee.api.plugin.Plugin
 
-class SeleneChatBungee : Plugin(), SeleneChat {
+class SeleneChatBungee : Plugin(), PluginInterface {
     private lateinit var adventure: BungeeAudiences
-    override val config: SeleneChatConfigData = SeleneChatConfig.load(dataFolder)
+    override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataFolder)
     init {
-        if (config.configVersion < SeleneChatConfigData().configVersion) {
-            logger.warning(SeleneChatConfig.TEXT_VERSION_OUTDATED)
-        } else if (config.configVersion > SeleneChatConfigData().configVersion) {
-            logger.warning(SeleneChatConfig.TEXT_VERSION_NEWER)
-        }
+        logger.info(configManager.checkVersion())
     }
 
     override fun onEnable() {

@@ -9,19 +9,16 @@ import com.velocitypowered.api.proxy.ProxyServer
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier
 import io.github.bluesheep2804.selenechat.command.MessageCommand
 import io.github.bluesheep2804.selenechat.command.MessageCommandVelocity
+import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerVelocity
 import org.slf4j.Logger
 import java.nio.file.Path
 
 @Plugin(id = "selenechat", name = "SeleneChat", version = "0.1.0-SNAPSHOT", description = "Chat plugin inspired by LunaChat", authors = ["BlueSheep2804"])
-class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger: Logger, @DataDirectory val dataDirectory: Path) : SeleneChat {
-    override val config: SeleneChatConfigData = SeleneChatConfig.load(dataDirectory.toFile())
+class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger: Logger, @DataDirectory val dataDirectory: Path) : PluginInterface {
+    override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataDirectory.toFile())
     init {
-        if (config.configVersion < SeleneChatConfigData().configVersion) {
-            logger.warn(SeleneChatConfig.TEXT_VERSION_OUTDATED)
-        } else if (config.configVersion > SeleneChatConfigData().configVersion) {
-            logger.warn(SeleneChatConfig.TEXT_VERSION_NEWER)
-        }
+        logger.info(configManager.checkVersion())
     }
 
     @Subscribe

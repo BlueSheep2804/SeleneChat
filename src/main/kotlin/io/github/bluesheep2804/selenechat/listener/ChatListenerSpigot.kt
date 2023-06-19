@@ -1,6 +1,6 @@
 package io.github.bluesheep2804.selenechat.listener
 
-import io.github.bluesheep2804.selenechat.ConvertMode
+import io.github.bluesheep2804.selenechat.config.ConvertMode
 import io.github.bluesheep2804.selenechat.SeleneChatSpigot
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage

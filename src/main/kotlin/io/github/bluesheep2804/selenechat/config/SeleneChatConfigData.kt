@@ -1,7 +1,6 @@
-package io.github.bluesheep2804.selenechat
+package io.github.bluesheep2804.selenechat.config
 
 import com.charleskorn.kaml.YamlComment
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -42,10 +41,3 @@ data class SeleneChatConfigData(
         )
         var chatFormatPrivateMessage: String = "<gray>[<sender> -> <receiver>]</gray> <message>"
 )
-
-@Serializable
-enum class ConvertMode {
-        @SerialName("none") NONE,
-        @SerialName("kana") KANA,
-        @SerialName("ime") IME
-}

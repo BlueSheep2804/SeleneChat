@@ -1,6 +1,6 @@
 package io.github.bluesheep2804.selenechat.japanize
 
-import io.github.bluesheep2804.selenechat.ConvertMode
+import io.github.bluesheep2804.selenechat.config.ConvertMode
 
 /**
  * ローマ字表記を漢字に変換するクラス
