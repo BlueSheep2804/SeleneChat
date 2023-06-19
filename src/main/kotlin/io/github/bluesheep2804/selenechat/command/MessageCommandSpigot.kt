@@ -13,7 +13,7 @@ import org.bukkit.command.TabExecutor
 import org.bukkit.entity.Player
 
 class MessageCommandSpigot(val plugin: SeleneChatSpigot) : CommandExecutor, TabExecutor {
-    val command = MessageCommand(plugin.config)
+    val command = MessageCommand()
     override fun onCommand(commandSender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         val sender = when (commandSender) {
             is Player -> SeleneChatPlayerSpigot(commandSender)

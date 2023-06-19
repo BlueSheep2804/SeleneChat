@@ -11,6 +11,8 @@ class SeleneChatBungee : Plugin(), PluginInterface {
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataFolder)
     init {
         logger.info(configManager.checkVersion())
+
+        SeleneChat.setPluginInstance(this)
     }
 
     override fun onEnable() {

@@ -19,6 +19,8 @@ class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger:
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataDirectory.toFile())
     init {
         logger.info(configManager.checkVersion())
+
+        SeleneChat.setPluginInstance(this)
     }
 
     @Subscribe

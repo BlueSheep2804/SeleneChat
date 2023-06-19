@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.selenechat.japanize
 
+import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.config.ConvertMode
 
 /**
@@ -8,13 +9,13 @@ import io.github.bluesheep2804.selenechat.config.ConvertMode
  * @see [LunaChat Github](https://github.com/ucchyocean/LunaChat/tree/master/src/main/java/com/github/ucchyocean/lc3/japanize/Japanizer.java)
  */
 class Japanizer(private val original: String) {
-    fun japanize(convertMode: ConvertMode): String {
-        if (convertMode == ConvertMode.NONE) {
+    fun japanize(): String {
+        if (config.convertMode == ConvertMode.NONE) {
             return original
         }
 
         val kana = RomaToKana.convert(original)
-        if (convertMode == ConvertMode.KANA) {
+        if (config.convertMode == ConvertMode.KANA) {
             return kana
         }
 

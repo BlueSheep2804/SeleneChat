@@ -1,6 +1,7 @@
 package io.github.bluesheep2804.selenechat.listener
 
 import com.google.common.io.ByteStreams
+import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.SeleneChatBungee
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
@@ -16,7 +17,6 @@ import net.md_5.bungee.event.EventHandler
 class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
     private val proxy = plugin.proxy
     private val logger = proxy.logger
-    private val config = plugin.config
     @EventHandler
     fun onChat(event: ChatEvent) {
         if (event.isCommand || event.isProxyCommand) {
@@ -28,7 +28,7 @@ class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
         proxy.scheduler.runAsync(plugin) {
             val message = event.message
             val sender = SeleneChatPlayerBungee.getPlayer(event.sender)
-            val returnMessage = ChatMessage.message(config.chatFormat, config.chatFormatMessage, message, sender, config.convertMode)
+            val returnMessage = ChatMessage.message(message, sender)
             proxy.broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
         }
         event.isCancelled = true
@@ -46,7 +46,7 @@ class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
         val pm = PluginMessage.fromByteArrayDataInput(input)
         val sender = SeleneChatPlayerBungee(proxy.getPlayer(pm.playerUUID))
         val serverName = (event.sender as Server).info.name
-        val returnMessage = ChatMessage.message(config.chatFormat, config.chatFormatMessage, pm.message, sender, config.convertMode)
+        val returnMessage = ChatMessage.message(pm.message, sender)
 
         for (player in proxy.players) {
             if (player.server.info.name != serverName) {

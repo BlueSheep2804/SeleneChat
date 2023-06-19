@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.selenechat.message
 
+import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.config.ConvertMode
 import io.github.bluesheep2804.selenechat.japanize.Japanizer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
@@ -14,7 +15,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 
 object ChatMessage {
-    fun message(chatFormat: String, msg: String, convertMode: ConvertMode): Component {
+    fun message(msg: String): Component {
         val mm = MiniMessage.miniMessage()
         val japaneseConversion = Japanizer(msg)
         val messageTagResolver = Placeholder.component(
@@ -23,21 +24,21 @@ object ChatMessage {
         )
         val jpTagResolver = TagResolver.resolver("jp")
         { args: ArgumentQueue, _: Context ->
-            if (convertMode == ConvertMode.NONE || !japaneseConversion.shouldConvert()) {
+            if (config.convertMode == ConvertMode.NONE || !japaneseConversion.shouldConvert()) {
                 return@resolver Tag.selfClosingInserting(Component.text(""))
             }
             val prefix = args.popOr("prefix").value()
             val suffix = args.popOr("suffix").value()
             return@resolver Tag.selfClosingInserting(
                     Component.text(prefix)
-                            .append(Component.text(japaneseConversion.japanize(convertMode)))
+                            .append(Component.text(japaneseConversion.japanize()))
                             .append(Component.text(suffix))
             )
         }
-        return mm.deserialize(chatFormat, messageTagResolver, jpTagResolver)
+        return mm.deserialize(config.chatFormatMessage, messageTagResolver, jpTagResolver)
     }
 
-    fun message(chatFormat: String, chatFormatMessage: String, msg: String, sender: SeleneChatPlayer, convertMode: ConvertMode): Component {
+    fun message(msg: String, sender: SeleneChatPlayer): Component {
         val mm = MiniMessage.miniMessage()
         val usernameTagResolver = Placeholder.component(
                 "username",
@@ -63,7 +64,7 @@ object ChatMessage {
             )
         }
 
-        val messageTagResolver = Placeholder.component("message", message(chatFormatMessage, msg, convertMode))
-        return mm.deserialize(chatFormat, usernameTagResolver, serverNameTagResolver, messageTagResolver)
+        val messageTagResolver = Placeholder.component("message", message(msg))
+        return mm.deserialize(config.chatFormat, usernameTagResolver, serverNameTagResolver, messageTagResolver)
     }
 }
