@@ -11,7 +11,7 @@ import io.github.bluesheep2804.selenechat.config.ConvertMode
 class Japanizer(private val original: String) {
     fun japanize(): String {
         if (config.convertMode == ConvertMode.NONE) {
-            return original
+            return ""
         }
 
         val kana = RomaToKana.convert(original)
