@@ -26,6 +26,13 @@ class MessageCommand : ICommand {
             return false
         }
 
+        var message = args[1]
+        if (args.size > 2) {
+            for (i in 2 until args.size) {
+                message += " ${args[i]}"
+            }
+        }
+
         val mm = MiniMessage.miniMessage()
         val senderTagResolver = Placeholder.component(
                 "sender",
@@ -41,7 +48,7 @@ class MessageCommand : ICommand {
         )
         val messageTagResolver = Placeholder.component(
                 "message",
-                ChatMessage.message(args[1])
+                ChatMessage.message(message)
         )
         val returnMessage = mm.deserialize(config.chatFormatPrivateMessage, senderTagResolver, receiverTagResolver, messageTagResolver)
         sender.sendMessage(returnMessage)
