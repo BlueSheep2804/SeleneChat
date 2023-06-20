@@ -28,6 +28,6 @@ class SeleneChatCommandVelocity(val plugin: SeleneChatVelocity) : SimpleCommand 
             else -> return emptyList()
         }
         val args = if (invocation.arguments().isNotEmpty()) invocation.arguments() else invocation.arguments() + ""
-        return command.onTabComplete(sender, args)
+        return command.suggest(sender, args)
     }
 }

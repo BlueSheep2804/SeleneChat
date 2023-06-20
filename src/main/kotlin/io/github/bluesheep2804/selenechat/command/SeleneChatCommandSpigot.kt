@@ -27,6 +27,6 @@ class SeleneChatCommandSpigot(val plugin: SeleneChatSpigot) : CommandExecutor, T
             is ConsoleCommandSender -> SeleneChatPlayerSpigotConsole(commandSender)
             else -> return emptyList()
         }
-        return this.command.onTabComplete(sender, args)
+        return this.command.suggest(sender, args)
     }
 }

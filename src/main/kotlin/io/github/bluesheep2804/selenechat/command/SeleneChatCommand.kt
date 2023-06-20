@@ -5,8 +5,8 @@ import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 
-class SeleneChatCommand {
-    fun execute(sender: SeleneChatPlayer, args: Array<String>): Boolean {
+class SeleneChatCommand : ICommand {
+    override fun execute(sender: SeleneChatPlayer, args: Array<String>): Boolean {
         if (args.isEmpty()) {
             sender.sendMessage(Component.text("empty", NamedTextColor.RED))
             return false
@@ -18,7 +18,7 @@ class SeleneChatCommand {
         return true
     }
 
-    fun onTabComplete(sender: SeleneChatPlayer, args: Array<String>): List<String> {
+    override fun suggest(sender: SeleneChatPlayer, args: Array<String>): List<String> {
         if (args.size == 1) {
             return listOf("reload")
         } else {

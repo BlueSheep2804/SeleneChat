@@ -6,8 +6,10 @@ import io.github.bluesheep2804.selenechat.command.SeleneChatCommand
 import io.github.bluesheep2804.selenechat.command.SeleneChatCommandSpigot
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerSpigot
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerSpigot
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import org.bukkit.plugin.java.JavaPlugin
+import java.util.*
 
 class SeleneChatSpigot : JavaPlugin(), PluginInterface {
     private lateinit var adventure: BukkitAudiences
@@ -35,5 +37,19 @@ class SeleneChatSpigot : JavaPlugin(), PluginInterface {
 
     fun sendPluginMessage(msg: ByteArray) {
         server.sendPluginMessage(this, "selenechat:message", msg)
+    }
+
+    override fun getAllPlayers(): List<SeleneChatPlayerSpigot> {
+        return server.onlinePlayers.map { getPlayer(it.uniqueId)!! }
+    }
+
+    override fun getPlayer(name: String): SeleneChatPlayerSpigot? {
+        val player = server.getPlayerExact(name)
+        return if (player == null) null else SeleneChatPlayerSpigot(player)
+    }
+
+    override fun getPlayer(uuid: UUID): SeleneChatPlayerSpigot? {
+        val player = server.getPlayer(uuid)
+        return if (player == null) null else SeleneChatPlayerSpigot(player)
     }
 }

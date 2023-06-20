@@ -23,6 +23,6 @@ class SeleneChatCommandBungee(val plugin: SeleneChatBungee) : Command(SeleneChat
             is ProxiedPlayer -> SeleneChatPlayerBungee(commandSender)
             else -> SeleneChatPlayerBungeeConsole(commandSender)
         }
-        return command.onTabComplete(sender, args)
+        return command.suggest(sender, args)
     }
 }

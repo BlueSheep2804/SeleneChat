@@ -7,8 +7,6 @@ import com.velocitypowered.api.proxy.Player
 import io.github.bluesheep2804.selenechat.SeleneChatVelocity
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerVelocity
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerVelocityConsole
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 
 class MessageCommandVelocity(val plugin: SeleneChatVelocity) : SimpleCommand {
     val command = MessageCommand()
@@ -20,21 +18,7 @@ class MessageCommandVelocity(val plugin: SeleneChatVelocity) : SimpleCommand {
             is ConsoleCommandSource -> SeleneChatPlayerVelocityConsole(source)
             else -> return
         }
-        if (args.isEmpty()) {
-            sender.sendMessage(Component.text("A player is required", NamedTextColor.RED))
-            return
-        }
-        if (args.size == 1) {
-            sender.sendMessage(Component.text("A message is required.", NamedTextColor.RED))
-            return
-        }
-        val receiverRaw = plugin.proxy.getPlayer(args[0])
-        if (receiverRaw.isEmpty) {
-            sender.sendMessage(Component.text("The specified player ${args[0]} does not exist.", NamedTextColor.RED))
-            return
-        }
-        val receiver = SeleneChatPlayerVelocity(receiverRaw.get())
-        command.execute(sender, receiver, args[1])
+        command.execute(sender, args)
     }
 
     override fun hasPermission(invocation: Invocation): Boolean {
@@ -42,11 +26,12 @@ class MessageCommandVelocity(val plugin: SeleneChatVelocity) : SimpleCommand {
     }
 
     override fun suggest(invocation: Invocation): List<String> {
-        val args = arrayOf<String>(invocation.alias(), *invocation.arguments())
-        val players = mutableListOf<String>()
-        plugin.proxy.allPlayers.forEach {
-            players += it.username
+        val sender = when (val source = invocation.source()) {
+            is Player -> SeleneChatPlayerVelocity(source)
+            is ConsoleCommandSource -> SeleneChatPlayerVelocityConsole(source)
+            else -> return emptyList()
         }
-        return command.onTabComplete(args, players)
+        val args = if (invocation.arguments().isNotEmpty()) invocation.arguments() else invocation.arguments() + ""
+        return command.suggest(sender, args)
     }
 }
