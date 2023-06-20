@@ -9,6 +9,8 @@ import com.velocitypowered.api.proxy.ProxyServer
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier
 import io.github.bluesheep2804.selenechat.command.MessageCommand
 import io.github.bluesheep2804.selenechat.command.MessageCommandVelocity
+import io.github.bluesheep2804.selenechat.command.SeleneChatCommand
+import io.github.bluesheep2804.selenechat.command.SeleneChatCommandVelocity
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerVelocity
 import org.slf4j.Logger
@@ -29,11 +31,16 @@ class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger:
         proxy.channelRegistrar.register(MinecraftChannelIdentifier.create("selenechat", "message"))
 
         val commandManager = proxy.commandManager
-        val commandMeta = commandManager.metaBuilder(MessageCommand.COMMAND_NAME)
+        val seleneChatCommandMeta = commandManager.metaBuilder(SeleneChatCommand.COMMAND_NAME)
+                .aliases(*SeleneChatCommand.COMMAND_ALIASES)
+                .plugin(this)
+                .build()
+        val messageCommandMeta = commandManager.metaBuilder(MessageCommand.COMMAND_NAME)
                 .aliases(*MessageCommand.COMMAND_ALIASES)
                 .plugin(this)
                 .build()
-        commandManager.register(commandMeta, MessageCommandVelocity(this))
+        commandManager.register(seleneChatCommandMeta, SeleneChatCommandVelocity(this))
+        commandManager.register(messageCommandMeta, MessageCommandVelocity(this))
 
         logger.info("Loaded!")
     }
