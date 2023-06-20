@@ -21,6 +21,10 @@ class SeleneChatCommandVelocity(val plugin: SeleneChatVelocity) : SimpleCommand 
         command.execute(sender, args)
     }
 
+    override fun hasPermission(invocation: Invocation): Boolean {
+        return invocation.source().hasPermission(SeleneChatCommand.PERMISSION)
+    }
+
     override fun suggest(invocation: Invocation): List<String> {
         val sender = when (val source = invocation.source()) {
             is Player -> SeleneChatPlayerVelocity(source)
