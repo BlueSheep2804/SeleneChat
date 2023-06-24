@@ -1,6 +1,7 @@
 package io.github.bluesheep2804.selenechat.config
 
 import com.charleskorn.kaml.Yaml
+import io.github.bluesheep2804.selenechat.SeleneChat
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -26,14 +27,8 @@ class SeleneChatConfigManager(private val file: File) {
     }
 
     fun checkVersion(): String {
-        return if (config.configVersion < SeleneChatConfigData().configVersion) TEXT_VERSION_OUTDATED
-        else if (config.configVersion > SeleneChatConfigData().configVersion) TEXT_VERSION_NEWER
-        else TEXT_VERSION_LATEST
-    }
-
-    companion object {
-        const val TEXT_VERSION_OUTDATED = "The config file appears to be out of date. Please back up the current file and check the differences. The config file will be loaded, but unexpected glitches may occur."
-        const val TEXT_VERSION_NEWER = "The config file has been created with a newer version than the current one. The config file will be loaded, but unexpected glitches may occur."
-        const val TEXT_VERSION_LATEST = "The config file is up-to-date!"
+        return if (config.configVersion < SeleneChatConfigData().configVersion) SeleneChat.resource.configVersionOutdated
+        else if (config.configVersion > SeleneChatConfigData().configVersion) SeleneChat.resource.configVersionNewer
+        else SeleneChat.resource.configVersionLatest
     }
 }

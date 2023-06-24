@@ -7,6 +7,7 @@ import io.github.bluesheep2804.selenechat.command.SeleneChatCommandSpigot
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerSpigot
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerSpigot
+import io.github.bluesheep2804.selenechat.resource.ResourceManager
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
@@ -14,10 +15,11 @@ import java.util.*
 class SeleneChatSpigot : JavaPlugin(), PluginInterface {
     private lateinit var adventure: BukkitAudiences
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataFolder)
+    override val resourceManager: ResourceManager = ResourceManager(dataFolder)
     init {
-        logger.info(configManager.checkVersion())
-
         SeleneChat.setPluginInstance(this)
+
+        logger.info(configManager.checkVersion())
     }
 
     override fun onEnable() {

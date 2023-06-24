@@ -14,6 +14,7 @@ import io.github.bluesheep2804.selenechat.command.SeleneChatCommandVelocity
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerVelocity
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerVelocity
+import io.github.bluesheep2804.selenechat.resource.ResourceManager
 import org.slf4j.Logger
 import java.nio.file.Path
 import java.util.*
@@ -21,10 +22,11 @@ import java.util.*
 @Plugin(id = "selenechat", name = "SeleneChat", version = "0.1.0-SNAPSHOT", description = "Chat plugin inspired by LunaChat", authors = ["BlueSheep2804"])
 class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger: Logger, @DataDirectory val dataDirectory: Path) : PluginInterface {
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataDirectory.toFile())
+    override val resourceManager: ResourceManager = ResourceManager(dataDirectory.toFile())
     init {
-        logger.info(configManager.checkVersion())
-
         SeleneChat.setPluginInstance(this)
+
+        logger.info(configManager.checkVersion())
     }
 
     @Subscribe

@@ -2,18 +2,17 @@ package io.github.bluesheep2804.selenechat.command
 
 import io.github.bluesheep2804.selenechat.SeleneChat
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 
 class SeleneChatCommand : ICommand {
     override fun execute(sender: SeleneChatPlayer, args: Array<String>): Boolean {
         if (args.isEmpty()) {
-            sender.sendMessage(Component.text("empty", NamedTextColor.RED))
+            sender.sendMessage(SeleneChat.resource.command.selenechatErrorSubCommandEmpty)
             return false
         }
         if (args[0] == "reload") {
             SeleneChat.configManager.reload()
-            sender.sendMessage(Component.text("reloaded!"))
+            SeleneChat.resourceManager.reload()
+            sender.sendMessage(SeleneChat.resource.command.selenechatSuccessReload)
         }
         return true
     }

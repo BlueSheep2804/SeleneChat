@@ -5,6 +5,7 @@ import io.github.bluesheep2804.selenechat.command.SeleneChatCommandBungee
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerBungee
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerBungee
+import io.github.bluesheep2804.selenechat.resource.ResourceManager
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences
 import net.md_5.bungee.api.plugin.Plugin
 import java.util.*
@@ -12,10 +13,11 @@ import java.util.*
 class SeleneChatBungee : Plugin(), PluginInterface {
     private lateinit var adventure: BungeeAudiences
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataFolder)
+    override val resourceManager: ResourceManager = ResourceManager(dataFolder)
     init {
-        logger.info(configManager.checkVersion())
-
         SeleneChat.setPluginInstance(this)
+
+        logger.info(configManager.checkVersion())
     }
 
     override fun onEnable() {

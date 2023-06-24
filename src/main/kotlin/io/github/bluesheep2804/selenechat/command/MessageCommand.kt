@@ -6,23 +6,22 @@ import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
-import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 
 class MessageCommand : ICommand {
     override fun execute(sender: SeleneChatPlayer, args: Array<String>): Boolean {
         if (args.isEmpty()) {
-            sender.sendMessage(Component.text("A player is required", NamedTextColor.RED))
+            sender.sendMessage(SeleneChat.resource.command.messageErrorPlayer)
             return false
         }
         if (args.size == 1) {
-            sender.sendMessage(Component.text("A message is required.", NamedTextColor.RED))
+            sender.sendMessage(SeleneChat.resource.command.messageErrorMessage)
             return false
         }
         val receiver = SeleneChat.plugin.getPlayer(args[0])
         receiver ?: run {
-            sender.sendMessage(Component.text("The specified player ${args[0]} does not exist.", NamedTextColor.RED))
+            sender.sendMessage(SeleneChat.resource.command.messageErrorPlayerNotFoundComponent(args[0]))
             return false
         }
 
