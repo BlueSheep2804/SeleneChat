@@ -22,6 +22,8 @@ data class SeleneChatConfigData(
                 "MiniMessage tags can be used.",
                 "<sender> -> Display name of sender",
                 "<server:[prefix]:[suffix]> -> Name of the server where the sender is located",
+                "<date> -> Date",
+                "<time> -> Time",
                 "<message> -> Message body"
         )
         var chatFormat: String = "<sender><server:@:><green>:</green> <message>",
@@ -39,7 +41,13 @@ data class SeleneChatConfigData(
                 "<senderserver:[prefix]:[suffix]> -> Name of the server where the sender is located",
                 "<receiver> -> Display name of receiver",
                 "<receiverserver:[prefix]:[suffix]> -> Name of the server where the receiver is located",
+                "<date> -> Date",
+                "<time> -> Time",
                 "<message> -> Message body"
         )
-        var chatFormatPrivateMessage: String = "<gray>[<sender><senderserver:@:> -> <receiver><receiverserver:@:>]</gray> <message>"
+        var chatFormatPrivateMessage: String = "<gray>[<sender><senderserver:@:> -> <receiver><receiverserver:@:>]</gray> <message>",
+        @YamlComment("Specifies the format of the date displayed in the chat.")
+        var dateFormat: String = "yyyy/MM/dd",
+        @YamlComment("Specifies the format of the time displayed in the chat.")
+        var timeFormat: String = "HH:mm:ss"
 )

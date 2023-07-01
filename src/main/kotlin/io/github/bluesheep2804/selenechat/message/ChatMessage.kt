@@ -13,8 +13,14 @@ import net.kyori.adventure.text.minimessage.tag.Tag
 import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
+import java.text.SimpleDateFormat
+import java.util.*
 
 object ChatMessage {
+    private val dateFormat: SimpleDateFormat
+        get() = SimpleDateFormat(config.dateFormat)
+    private val timeFormat: SimpleDateFormat
+        get() = SimpleDateFormat(config.timeFormat)
     fun message(msg: String): Component {
         val mm = MiniMessage.miniMessage()
         val japaneseConversion = Japanizer(msg)
@@ -49,12 +55,16 @@ object ChatMessage {
             return@resolver serverTag(sender, args)
         }
         val messageTagResolver = Placeholder.component("message", message(msg))
+        val dateTagResolver = Placeholder.component("date", Component.text(dateFormat.format(Date())))
+        val timeTagResolver = Placeholder.component("time", Component.text(timeFormat.format(Date())))
 
         return mm.deserialize(
                 config.chatFormat,
                 senderTagResolver,
                 serverTagResolver,
-                messageTagResolver
+                messageTagResolver,
+                dateTagResolver,
+                timeTagResolver
         )
     }
 
@@ -80,6 +90,8 @@ object ChatMessage {
                 "message",
                 message(msg)
         )
+        val dateTagResolver = Placeholder.component("date", Component.text(dateFormat.format(Date())))
+        val timeTagResolver = Placeholder.component("time", Component.text(timeFormat.format(Date())))
 
         return mm.deserialize(
                 config.chatFormatPrivateMessage,
@@ -87,7 +99,9 @@ object ChatMessage {
                 senderServerTagResolver,
                 receiverTagResolver,
                 receiverServerTagResolver,
-                messageTagResolver
+                messageTagResolver,
+                dateTagResolver,
+                timeTagResolver
         )
     }
 
