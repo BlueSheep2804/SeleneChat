@@ -32,24 +32,7 @@ class MessageCommand : ICommand {
             }
         }
 
-        val mm = MiniMessage.miniMessage()
-        val senderTagResolver = Placeholder.component(
-                "sender",
-                Component.text(sender.displayName)
-                        .hoverEvent(sender.asHoverEvent())
-                        .clickEvent(ClickEvent.suggestCommand("/tell ${sender.displayName} "))
-        )
-        val receiverTagResolver = Placeholder.component(
-                "receiver",
-                Component.text(receiver.displayName)
-                        .hoverEvent(receiver.asHoverEvent())
-                        .clickEvent(ClickEvent.suggestCommand("/tell ${receiver.displayName} "))
-        )
-        val messageTagResolver = Placeholder.component(
-                "message",
-                ChatMessage.message(message)
-        )
-        val returnMessage = mm.deserialize(config.chatFormatPrivateMessage, senderTagResolver, receiverTagResolver, messageTagResolver)
+        val returnMessage = ChatMessage.privateMessage(message, sender, receiver)
         sender.sendMessage(returnMessage)
         receiver.sendMessage(returnMessage)
         return true

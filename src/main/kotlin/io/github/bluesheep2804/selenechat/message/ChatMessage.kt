@@ -40,31 +40,80 @@ object ChatMessage {
 
     fun message(msg: String, sender: SeleneChatPlayer): Component {
         val mm = MiniMessage.miniMessage()
-        val usernameTagResolver = Placeholder.component(
-                "username",
-                Component.text(sender.displayName)
-                        .hoverEvent(sender.asHoverEvent())
-                        .clickEvent(ClickEvent.suggestCommand("/tell ${sender.displayName} "))
+        val senderTagResolver = Placeholder.component(
+                "sender",
+                playerClickableComponent(sender)
         )
-        val serverNameTagResolver = TagResolver.resolver("servername")
+        val serverTagResolver = TagResolver.resolver("server")
         { args: ArgumentQueue, _: Context ->
-            if (sender.currentServerName == "") {
-                return@resolver Tag.selfClosingInserting(Component.text(""))
-            }
-            val prefix = args.popOr("prefix").value()
-            val suffix = args.popOr("suffix").value()
-
-            return@resolver Tag.selfClosingInserting(
-                    Component.text(prefix)
-                            .append(
-                                    Component.text(sender.currentServerName)
-                                        .hoverEvent(HoverEvent.showText(Component.text("このサーバーに接続")))
-                                        .clickEvent(ClickEvent.runCommand("/server ${sender.currentServerName}")))
-                            .append(Component.text(suffix))
-            )
+            return@resolver serverTag(sender, args)
         }
-
         val messageTagResolver = Placeholder.component("message", message(msg))
-        return mm.deserialize(config.chatFormat, usernameTagResolver, serverNameTagResolver, messageTagResolver)
+
+        return mm.deserialize(
+                config.chatFormat,
+                senderTagResolver,
+                serverTagResolver,
+                messageTagResolver
+        )
+    }
+
+    fun privateMessage(msg: String, sender: SeleneChatPlayer, receiver: SeleneChatPlayer): Component {
+        val mm = MiniMessage.miniMessage()
+        val senderTagResolver = Placeholder.component(
+                "sender",
+                playerClickableComponent(sender)
+        )
+        val senderServerTagResolver = TagResolver.resolver("senderserver")
+        { args: ArgumentQueue, _: Context ->
+            return@resolver serverTag(sender, args)
+        }
+        val receiverTagResolver = Placeholder.component(
+                "receiver",
+                playerClickableComponent(receiver)
+        )
+        val receiverServerTagResolver = TagResolver.resolver("receiverserver")
+        { args: ArgumentQueue, _: Context ->
+            return@resolver serverTag(receiver, args)
+        }
+        val messageTagResolver = Placeholder.component(
+                "message",
+                message(msg)
+        )
+
+        return mm.deserialize(
+                config.chatFormatPrivateMessage,
+                senderTagResolver,
+                senderServerTagResolver,
+                receiverTagResolver,
+                receiverServerTagResolver,
+                messageTagResolver
+        )
+    }
+
+    private fun playerClickableComponent(player: SeleneChatPlayer): Component {
+        return Component.text(player.displayName)
+                .hoverEvent(player.asHoverEvent())
+                .clickEvent(ClickEvent.suggestCommand("/tell ${player.displayName} "))
+    }
+
+    private fun serverClickableComponent(serverName: String): Component {
+        return Component.text(serverName)
+                .hoverEvent(HoverEvent.showText(Component.text("このサーバーに接続")))
+                .clickEvent(ClickEvent.runCommand("/server $serverName"))
+    }
+
+    private fun serverTag(player: SeleneChatPlayer, args: ArgumentQueue): Tag {
+        if (player.currentServerName == "") {
+            return Tag.selfClosingInserting(Component.text(""))
+        }
+        val prefix = args.popOr("prefix").value()
+        val suffix = args.popOr("suffix").value()
+
+        return Tag.selfClosingInserting(
+                Component.text(prefix)
+                        .append(serverClickableComponent(player.currentServerName))
+                        .append(Component.text(suffix))
+        )
     }
 }

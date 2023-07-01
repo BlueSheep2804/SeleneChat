@@ -20,11 +20,11 @@ data class SeleneChatConfigData(
         @YamlComment(
                 "Specifies the format of the chat.",
                 "MiniMessage tags can be used.",
-                "<username> -> Display name of speaker",
-                "<servername:[prefix]:[suffix]> -> Name of the server where the speaker is located",
+                "<sender> -> Display name of sender",
+                "<server:[prefix]:[suffix]> -> Name of the server where the sender is located",
                 "<message> -> Message body"
         )
-        var chatFormat: String = "<username><servername:@:><green>:</green> <message>",
+        var chatFormat: String = "<sender><server:@:><green>:</green> <message>",
         @YamlComment(
                 "Specifies the format of the message portion of the chat.",
                 "MiniMessage tags can be used.",
@@ -36,8 +36,10 @@ data class SeleneChatConfigData(
                 "Specifies the format of the private chat.",
                 "MiniMessage tags can be used.",
                 "<sender> -> Display name of sender",
+                "<senderserver:[prefix]:[suffix]> -> Name of the server where the sender is located",
                 "<receiver> -> Display name of receiver",
+                "<receiverserver:[prefix]:[suffix]> -> Name of the server where the receiver is located",
                 "<message> -> Message body"
         )
-        var chatFormatPrivateMessage: String = "<gray>[<sender> -> <receiver>]</gray> <message>"
+        var chatFormatPrivateMessage: String = "<gray>[<sender><senderserver:@:> -> <receiver><receiverserver:@:>]</gray> <message>"
 )
