@@ -5,7 +5,7 @@ import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.resource.ResourceData
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
-import java.util.UUID
+import java.util.*
 
 interface IPlugin {
     val configManager: SeleneChatConfigManager

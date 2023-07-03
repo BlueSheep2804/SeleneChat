@@ -3,11 +3,7 @@ package io.github.bluesheep2804.selenechat.command
 import io.github.bluesheep2804.selenechat.SeleneChatSpigot
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerSpigot
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerSpigotConsole
-import org.bukkit.command.Command
-import org.bukkit.command.CommandExecutor
-import org.bukkit.command.CommandSender
-import org.bukkit.command.ConsoleCommandSender
-import org.bukkit.command.TabExecutor
+import org.bukkit.command.*
 import org.bukkit.entity.Player
 
 class SeleneChatCommandSpigot(val plugin: SeleneChatSpigot) : CommandExecutor, TabExecutor {

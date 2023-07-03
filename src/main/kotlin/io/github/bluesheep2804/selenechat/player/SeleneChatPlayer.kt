@@ -4,7 +4,7 @@ import net.kyori.adventure.key.Key
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.examination.Examinable
-import java.util.UUID
+import java.util.*
 
 abstract class SeleneChatPlayer {
     abstract val displayName: String

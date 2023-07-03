@@ -1,7 +1,7 @@
 package io.github.bluesheep2804.selenechat.command
 
-import com.velocitypowered.api.command.SimpleCommand.Invocation
 import com.velocitypowered.api.command.SimpleCommand
+import com.velocitypowered.api.command.SimpleCommand.Invocation
 import com.velocitypowered.api.proxy.ConsoleCommandSource
 import com.velocitypowered.api.proxy.Player
 import io.github.bluesheep2804.selenechat.SeleneChatVelocity

@@ -1,13 +1,8 @@
 package io.github.bluesheep2804.selenechat.command
 
 import io.github.bluesheep2804.selenechat.SeleneChat
-import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.event.ClickEvent
-import net.kyori.adventure.text.minimessage.MiniMessage
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 
 class MessageCommand : ICommand {
     override fun execute(sender: SeleneChatPlayer, args: Array<String>): Boolean {
