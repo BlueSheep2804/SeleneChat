@@ -28,7 +28,7 @@ class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
         proxy.scheduler.runAsync(plugin) {
             val message = event.message
             val sender = SeleneChatPlayerBungee.getPlayer(event.sender)
-            val returnMessage = ChatMessage.message(message, sender)
+            val returnMessage = ChatMessage.chat(message, sender)
             proxy.broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
         }
         event.isCancelled = true
@@ -46,7 +46,7 @@ class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
         val pm = PluginMessage.fromByteArrayDataInput(input)
         val sender = SeleneChatPlayerBungee(proxy.getPlayer(pm.playerUUID))
         val serverName = (event.sender as Server).info.name
-        val returnMessage = ChatMessage.message(pm.message, sender)
+        val returnMessage = ChatMessage.chat(pm.message, sender)
 
         for (player in proxy.players) {
             if (player.server.info.name != serverName) {

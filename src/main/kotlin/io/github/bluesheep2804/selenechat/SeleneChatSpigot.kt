@@ -12,7 +12,7 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
-class SeleneChatSpigot : JavaPlugin(), PluginInterface {
+class SeleneChatSpigot : JavaPlugin(), IPlugin {
     private lateinit var adventure: BukkitAudiences
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataFolder)
     override val resourceManager: ResourceManager = ResourceManager(dataFolder)

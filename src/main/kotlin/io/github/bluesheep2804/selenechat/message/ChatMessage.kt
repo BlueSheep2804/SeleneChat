@@ -41,10 +41,10 @@ object ChatMessage {
                             .append(Component.text(suffix))
             )
         }
-        return mm.deserialize(config.chatFormatMessage, messageTagResolver, jpTagResolver)
+        return mm.deserialize(config.messageFormat, messageTagResolver, jpTagResolver)
     }
 
-    fun message(msg: String, sender: SeleneChatPlayer): Component {
+    fun chat(msg: String, sender: SeleneChatPlayer): Component {
         val mm = MiniMessage.miniMessage()
         val senderTagResolver = Placeholder.component(
                 "sender",
@@ -94,7 +94,7 @@ object ChatMessage {
         val timeTagResolver = Placeholder.component("time", Component.text(timeFormat.format(Date())))
 
         return mm.deserialize(
-                config.chatFormatPrivateMessage,
+                config.privateMessageFormat,
                 senderTagResolver,
                 senderServerTagResolver,
                 receiverTagResolver,

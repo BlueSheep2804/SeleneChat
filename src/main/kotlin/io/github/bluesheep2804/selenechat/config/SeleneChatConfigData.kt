@@ -33,7 +33,7 @@ data class SeleneChatConfigData(
                 "<message> -> Message body",
                 "<jp:[prefix]:[suffix]> -> Message after Japanese conversion"
         )
-        var chatFormatMessage: String = "<message><gold><jp: (:)></gold>",
+        var messageFormat: String = "<message><gold><jp: (:)></gold>",
         @YamlComment(
                 "Specifies the format of the private chat.",
                 "MiniMessage tags can be used.",
@@ -45,7 +45,7 @@ data class SeleneChatConfigData(
                 "<time> -> Time",
                 "<message> -> Message body"
         )
-        var chatFormatPrivateMessage: String = "<gray>[<sender><senderserver:@:> -> <receiver><receiverserver:@:>]</gray> <message>",
+        var privateMessageFormat: String = "<gray>[<sender><senderserver:@:> -> <receiver><receiverserver:@:>]</gray> <message>",
         @YamlComment("Specifies the format of the date displayed in the chat.")
         var dateFormat: String = "yyyy/MM/dd",
         @YamlComment("Specifies the format of the time displayed in the chat.")

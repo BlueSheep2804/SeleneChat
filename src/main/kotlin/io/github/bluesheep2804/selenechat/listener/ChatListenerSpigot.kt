@@ -19,7 +19,7 @@ class ChatListenerSpigot(private val plugin: SeleneChatSpigot) : Listener {
         val sender = SeleneChatPlayerSpigot(event.player)
 
         if (config.useSeleneChatFormat) {
-            val returnMessage = ChatMessage.message(message, sender)
+            val returnMessage = ChatMessage.chat(message, sender)
             plugin.server.spigot().broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
             event.isCancelled = true
         } else {

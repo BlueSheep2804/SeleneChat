@@ -6,7 +6,7 @@ import io.github.bluesheep2804.selenechat.resource.ResourceData
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
 
 object SeleneChat {
-    lateinit var plugin: PluginInterface
+    lateinit var plugin: IPlugin
     lateinit var configManager: SeleneChatConfigManager
     val config: SeleneChatConfigData
         get() = configManager.config
@@ -14,7 +14,7 @@ object SeleneChat {
     val resource: ResourceData
         get() = resourceManager.resource
 
-    fun setPluginInstance(plugin: PluginInterface) {
+    fun setPluginInstance(plugin: IPlugin) {
         this.plugin = plugin
         this.configManager = plugin.configManager
         this.resourceManager = plugin.resourceManager

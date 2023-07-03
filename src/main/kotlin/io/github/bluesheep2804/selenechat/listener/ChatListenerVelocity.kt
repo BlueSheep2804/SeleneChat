@@ -21,7 +21,7 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
         // デフォルトのイベントを無効化する
         // クライアントのバージョンが1.19.1以降だとキックされるがUnSignedVelocityで回避できる
         event.result = PlayerChatEvent.ChatResult.denied()
-        proxy.sendMessage(ChatMessage.message(message, sender))
+        proxy.sendMessage(ChatMessage.chat(message, sender))
     }
 
     @Subscribe
@@ -36,7 +36,7 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
         val pm = PluginMessage.fromByteArrayDataInput(input)
         val sender = SeleneChatPlayerVelocity(proxy.getPlayer(pm.playerUUID).get())
         val serverName = (event.source as ServerConnection).serverInfo.name
-        val returnMessage = ChatMessage.message(pm.message, sender)
+        val returnMessage = ChatMessage.chat(pm.message, sender)
 
         for (server in proxy.allServers) {
             if (server.serverInfo.name != serverName) {
