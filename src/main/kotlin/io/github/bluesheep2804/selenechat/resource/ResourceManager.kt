@@ -8,7 +8,7 @@ import java.io.FileOutputStream
 
 class ResourceManager(private val file: File) {
     lateinit var resource: ResourceData
-    private val yamlConfiguration = YamlConfiguration(strictMode = false)
+    private val yamlConfiguration = YamlConfiguration(strictMode = false, breakScalarsAt = 160)
     private val yaml = Yaml(configuration = yamlConfiguration)
     init {
         reload()
