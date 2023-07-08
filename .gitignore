@@ -8,6 +8,8 @@ build/
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
+.idea/uiDesigner.xml
+.idea/discord.xml
 .idea/libraries/
 *.iws
 *.iml
@@ -40,3 +42,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+/run_paper
+/run_velocity
+/run_waterfall

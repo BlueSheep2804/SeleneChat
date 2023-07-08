@@ -1,0 +1,28 @@
+name: SeleneChat
+version: 0.1.0-SNAPSHOT
+description: Chat plugin inspired by LunaChat
+main: io.github.bluesheep2804.selenechat.SeleneChatSpigot
+author: BlueSheep2804
+api-version: 1.16
+
+commands:
+  selenechat:
+    description: SeleneChat command
+    aliases:
+      - sc
+    permission: selenechat.command.selenechat
+  message:
+    description: Selenechat message command
+    aliases:
+      - msg
+      - tell
+      - w
+    permission: selenechat.command.message
+
+permissions:
+  selenechat.command.selenechat:
+    description: Allow using SeleneChat command
+    default: true
+  selenechat.command.message:
+    description: Allow using SeleneChat message command
+    default: true
