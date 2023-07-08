@@ -1,5 +1,5 @@
 name: SeleneChat
-version: 0.1.0-SNAPSHOT
+version: 0.1.0
 description: Chat plugin inspired by LunaChat
 main: io.github.bluesheep2804.selenechat.SeleneChatBungee
 author: BlueSheep2804

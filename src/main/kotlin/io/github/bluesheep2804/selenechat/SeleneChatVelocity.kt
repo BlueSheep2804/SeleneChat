@@ -19,7 +19,7 @@ import org.slf4j.Logger
 import java.nio.file.Path
 import java.util.*
 
-@Plugin(id = "selenechat", name = "SeleneChat", version = "0.1.0-SNAPSHOT", description = "Chat plugin inspired by LunaChat", authors = ["BlueSheep2804"])
+@Plugin(id = "selenechat", name = "SeleneChat", version = "0.1.0", description = "Chat plugin inspired by LunaChat", authors = ["BlueSheep2804"])
 class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger: Logger, @DataDirectory val dataDirectory: Path) : IPlugin {
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataDirectory.toFile())
     override val resourceManager: ResourceManager = ResourceManager(dataDirectory.toFile())
