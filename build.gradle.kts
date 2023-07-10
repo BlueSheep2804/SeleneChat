@@ -3,12 +3,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("com.github.johnrengelman.shadow").version("7.1.2")
     id("java")
-    id("xyz.jpenilla.run-paper").version("2.1.0")
-    id("xyz.jpenilla.run-waterfall").version("2.1.0")
-    id("xyz.jpenilla.run-velocity").version("2.1.0")
     kotlin("jvm") version "1.8.21"
     kotlin("kapt") version "1.8.21"
     kotlin("plugin.serialization") version "1.4.20"
+    id("xyz.jpenilla.run-paper").version("2.1.0")
+    id("xyz.jpenilla.run-waterfall").version("2.1.0")
+    id("xyz.jpenilla.run-velocity").version("2.1.0")
 }
 
 group = "io.github.bluesheep2804"
@@ -27,13 +27,20 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+
+    // Spigot
+    compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
+    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
+
+    //BungeeCord
+    compileOnly("net.md-5:bungeecord-api:1.20-R0.1-SNAPSHOT")
+    implementation("net.kyori:adventure-platform-bungeecord:4.3.0")
+
+    // Velocity
     compileOnly("com.velocitypowered:velocity-api:3.2.0-SNAPSHOT")
     kapt("com.velocitypowered:velocity-api:3.2.0-SNAPSHOT")
+
     implementation("org.apache.commons:commons-lang3:3.12.0")
-    compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
-    compileOnly("net.md-5:bungeecord-api:1.20-R0.1-SNAPSHOT")
-    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
-    implementation("net.kyori:adventure-platform-bungeecord:4.3.0")
     implementation("com.charleskorn.kaml:kaml:0.54.0")
     implementation("net.kyori:adventure-text-minimessage:4.14.0")
 }
