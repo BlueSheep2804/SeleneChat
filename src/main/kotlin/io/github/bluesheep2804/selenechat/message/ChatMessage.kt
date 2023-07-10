@@ -1,6 +1,7 @@
 package io.github.bluesheep2804.selenechat.message
 
 import io.github.bluesheep2804.selenechat.SeleneChat.config
+import io.github.bluesheep2804.selenechat.SeleneChat.resource
 import io.github.bluesheep2804.selenechat.config.ConvertMode
 import io.github.bluesheep2804.selenechat.japanize.Japanizer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
@@ -113,7 +114,7 @@ object ChatMessage {
 
     private fun serverClickableComponent(serverName: String): Component {
         return Component.text(serverName)
-                .hoverEvent(HoverEvent.showText(Component.text("このサーバーに接続")))
+                .hoverEvent(HoverEvent.showText(resource.hoverTextServer))
                 .clickEvent(ClickEvent.runCommand("/server $serverName"))
     }
 
