@@ -27,15 +27,15 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-    compileOnly("com.velocitypowered:velocity-api:3.1.1")
-    kapt("com.velocitypowered:velocity-api:3.1.1")
+    compileOnly("com.velocitypowered:velocity-api:3.2.0-SNAPSHOT")
+    kapt("com.velocitypowered:velocity-api:3.2.0-SNAPSHOT")
     implementation("org.apache.commons:commons-lang3:3.12.0")
-    compileOnly("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
-    compileOnly("net.md-5:bungeecord-api:1.19-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
+    compileOnly("net.md-5:bungeecord-api:1.20-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-platform-bukkit:4.3.0")
     implementation("net.kyori:adventure-platform-bungeecord:4.3.0")
     implementation("com.charleskorn.kaml:kaml:0.54.0")
-    implementation("net.kyori:adventure-text-minimessage:4.13.1")
+    implementation("net.kyori:adventure-text-minimessage:4.14.0")
 }
 
 tasks.getByName<Test>("test") {
@@ -47,7 +47,7 @@ tasks {
         options.encoding = "UTF-8"
     }
     runServer {
-        minecraftVersion("1.19.4")
+        minecraftVersion("1.20.1")
         runDirectory(File("run_paper"))
     }
     runVelocity {
@@ -55,7 +55,7 @@ tasks {
         runDirectory(File("run_velocity"))
     }
     runWaterfall {
-        waterfallVersion("1.19")
+        waterfallVersion("1.20")
         runDirectory(File("run_waterfall"))
     }
 }
