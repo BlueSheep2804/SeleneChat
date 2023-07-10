@@ -3,7 +3,7 @@ version: 0.1.0
 description: Chat plugin inspired by LunaChat
 main: io.github.bluesheep2804.selenechat.SeleneChatSpigot
 author: BlueSheep2804
-api-version: 1.16
+api-version: 1.13
 
 commands:
   selenechat:
