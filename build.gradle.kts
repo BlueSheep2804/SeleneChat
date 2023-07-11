@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "io.github.bluesheep2804"
-version = "0.1.1-SNAPSHOT"
+version = "0.1.1"
 
 repositories {
     mavenCentral()
