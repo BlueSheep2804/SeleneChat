@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SeleneChatConfigData(
         @YamlComment("Version of the config file. Do not change.")
-        val configVersion: Int = 1,
+        val configVersion: Int = 2,
 
         @YamlComment("Specifying the chat conversion mode.", "Possible values: none, hiragana, ime")
         var convertMode: ConvertMode = ConvertMode.IME,
@@ -16,6 +16,8 @@ data class SeleneChatConfigData(
         var useSeleneChatFormat: Boolean = false,
         @YamlComment("Whether to receive plugin messages from the server to the proxy server.", "Applies to Bungeecord and Velocity only.")
         var shouldReceivePluginMessage: Boolean = false,
+        @YamlComment("Whether to use color codes (e.g. &4, &b) in the chat.")
+        var useColorCode: Boolean = true,
 
         @YamlComment(
                 "Specifies the format of the chat.",

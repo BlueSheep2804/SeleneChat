@@ -14,6 +14,8 @@ import net.kyori.adventure.text.minimessage.tag.Tag
 import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,10 +26,15 @@ object ChatMessage {
         get() = SimpleDateFormat(config.timeFormat)
     fun message(msg: String): Component {
         val mm = MiniMessage.miniMessage()
-        val japaneseConversion = Japanizer(msg)
+        val serializedMessage = if (config.useColorCode) {
+            LegacyComponentSerializer.legacyAmpersand().deserialize(msg)
+        } else {
+            Component.text(msg)
+        }
+        val japaneseConversion = Japanizer(PlainTextComponentSerializer.plainText().serialize(serializedMessage))
         val messageTagResolver = Placeholder.component(
                 "message",
-                Component.text(msg)
+                serializedMessage
         )
         val jpTagResolver = TagResolver.resolver("jp")
         { args: ArgumentQueue, _: Context ->
