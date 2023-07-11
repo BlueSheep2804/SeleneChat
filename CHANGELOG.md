@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/BlueSheep2804/SeleneChat/compare/v0.1.0...v0.1.1) (2023-07-11)
+
+
+### Bug Fixes
+
+* 🐛 サーバー名のホバーテキストがmessage.ymlで変更できない ([8ab298d](https://github.com/BlueSheep2804/SeleneChat/commit/8ab298d38035e4d253b2d9b7f81678ccb561bc57))
+
 ## 0.1.0 (2023-07-08)
 
 
