@@ -27,9 +27,9 @@ object ChatMessage {
     fun message(msg: String): Component {
         val mm = MiniMessage.miniMessage()
         val serializedMessage = if (config.useColorCode) {
-            LegacyComponentSerializer.legacyAmpersand().deserialize(msg)
+            LegacyComponentSerializer.legacyAmpersand().deserialize(msg.removePrefix("$"))
         } else {
-            Component.text(msg)
+            Component.text(msg.removePrefix("$"))
         }
         val japaneseConversion = Japanizer(PlainTextComponentSerializer.plainText().serialize(serializedMessage))
         val messageTagResolver = Placeholder.component(
@@ -38,7 +38,7 @@ object ChatMessage {
         )
         val jpTagResolver = TagResolver.resolver("jp")
         { args: ArgumentQueue, _: Context ->
-            if (config.convertMode == ConvertMode.NONE || !japaneseConversion.shouldConvert()) {
+            if (config.convertMode == ConvertMode.NONE || !japaneseConversion.shouldConvert() || msg[0] == '$') {
                 return@resolver Tag.selfClosingInserting(Component.text(""))
             }
             val prefix = args.popOr("prefix").value()
