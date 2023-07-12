@@ -2,14 +2,16 @@ package io.github.bluesheep2804.selenechat.message
 
 import com.google.common.io.ByteArrayDataInput
 import com.google.common.io.ByteStreams
+import io.github.bluesheep2804.selenechat.SeleneChat
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import java.util.*
 
-class PluginMessage(val message: String, val playerUUID: UUID, val playerDisplayName: String) {
+class PluginMessage(val message: String, val player: SeleneChatPlayer) {
     fun build(): ByteArray {
         val output = ByteStreams.newDataOutput()
         output.writeUTF(message)
-        output.writeUTF(playerUUID.toString())
-        output.writeUTF(playerDisplayName)
+        output.writeUTF(player.uniqueId.toString())
+        output.writeUTF(player.displayName)
         return output.toByteArray()
     }
 
@@ -18,7 +20,8 @@ class PluginMessage(val message: String, val playerUUID: UUID, val playerDisplay
             val message = input.readUTF()
             val playerUUID = input.readUTF()
             val playerDisplayName = input.readUTF()
-            return PluginMessage(message, UUID.fromString(playerUUID), playerDisplayName)
+            val player = SeleneChat.plugin.getPlayer(UUID.fromString(playerUUID))
+            return PluginMessage(message, player)
         }
     }
 }

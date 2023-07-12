@@ -26,7 +26,7 @@ class ChatListenerSpigot(private val plugin: SeleneChatSpigot) : Listener {
             event.message = LegacyComponentSerializer.legacySection().serialize(returnMessage)
         }
         if (config.shouldSendPluginMessage) {
-            plugin.sendPluginMessage(PluginMessage(event.message, sender.uniqueId, sender.displayName).build())
+            plugin.sendPluginMessage(PluginMessage(event.message, sender).build())
         }
     }
 }

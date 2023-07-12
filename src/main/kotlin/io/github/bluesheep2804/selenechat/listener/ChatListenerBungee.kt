@@ -1,6 +1,7 @@
 package io.github.bluesheep2804.selenechat.listener
 
 import com.google.common.io.ByteStreams
+import io.github.bluesheep2804.selenechat.SeleneChat
 import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.SeleneChatBungee
 import io.github.bluesheep2804.selenechat.message.ChatMessage
@@ -8,7 +9,6 @@ import io.github.bluesheep2804.selenechat.message.PluginMessage
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerBungee
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
 import net.md_5.bungee.api.connection.ProxiedPlayer
-import net.md_5.bungee.api.connection.Server
 import net.md_5.bungee.api.event.ChatEvent
 import net.md_5.bungee.api.event.PluginMessageEvent
 import net.md_5.bungee.api.plugin.Listener
@@ -44,13 +44,12 @@ class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
         }
         val input = ByteStreams.newDataInput(event.data)
         val pm = PluginMessage.fromByteArrayDataInput(input)
-        val sender = SeleneChatPlayerBungee(proxy.getPlayer(pm.playerUUID))
-        val serverName = (event.sender as Server).info.name
+        val sender = SeleneChat.plugin.getPlayer(pm.player.uniqueId)
         val returnMessage = ChatMessage.chat(pm.message, sender)
 
-        for (player in proxy.players) {
-            if (player.server.info.name != serverName) {
-                player.sendMessage(*BungeeComponentSerializer.get().serialize(returnMessage))
+        for (player in SeleneChat.plugin.getAllPlayers()) {
+            if (player.currentServerName != sender.currentServerName) {
+                player.sendMessage(returnMessage)
             }
         }
     }

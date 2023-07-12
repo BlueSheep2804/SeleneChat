@@ -3,8 +3,8 @@ package io.github.bluesheep2804.selenechat.listener
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.connection.PluginMessageEvent
 import com.velocitypowered.api.event.player.PlayerChatEvent
-import com.velocitypowered.api.proxy.ServerConnection
 import io.github.bluesheep2804.selenechat.SeleneChat.config
+import io.github.bluesheep2804.selenechat.SeleneChat.plugin
 import io.github.bluesheep2804.selenechat.SeleneChatVelocity
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
@@ -34,12 +34,11 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
         }
         val input = event.dataAsDataStream()
         val pm = PluginMessage.fromByteArrayDataInput(input)
-        val sender = SeleneChatPlayerVelocity(proxy.getPlayer(pm.playerUUID).get())
-        val serverName = (event.source as ServerConnection).serverInfo.name
+        val sender = plugin.getPlayer(pm.player.uniqueId)
         val returnMessage = ChatMessage.chat(pm.message, sender)
 
         for (server in proxy.allServers) {
-            if (server.serverInfo.name != serverName) {
+            if (server.serverInfo.name != sender.currentServerName) {
                 server.sendMessage(returnMessage)
             }
         }
