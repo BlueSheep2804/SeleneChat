@@ -10,6 +10,7 @@ abstract class SeleneChatPlayer {
     abstract val displayName: String
     abstract val uniqueId: UUID
     abstract val currentServerName: String
+    open val isOnline = true
     abstract fun sendMessage(msg: Component)
     open fun asHoverEvent(): HoverEvent<out Examinable> {
         return HoverEvent.showEntity(HoverEvent.ShowEntity.of(Key.key("player"), uniqueId, Component.text(displayName)))

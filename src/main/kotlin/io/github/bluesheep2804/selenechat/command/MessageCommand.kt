@@ -3,6 +3,7 @@ package io.github.bluesheep2804.selenechat.command
 import io.github.bluesheep2804.selenechat.SeleneChat
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerOffline
 
 class MessageCommand : ICommand {
     override fun execute(sender: SeleneChatPlayer, args: Array<String>): Boolean {
@@ -15,7 +16,7 @@ class MessageCommand : ICommand {
             return false
         }
         val receiver = SeleneChat.plugin.getPlayer(args[0])
-        receiver ?: run {
+        if (receiver is SeleneChatPlayerOffline) {
             sender.sendMessage(SeleneChat.resource.command.messageErrorPlayerNotFoundComponent(args[0]))
             return false
         }

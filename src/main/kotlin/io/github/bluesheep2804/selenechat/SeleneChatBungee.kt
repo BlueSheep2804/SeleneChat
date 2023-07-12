@@ -4,7 +4,9 @@ import io.github.bluesheep2804.selenechat.command.MessageCommandBungee
 import io.github.bluesheep2804.selenechat.command.SeleneChatCommandBungee
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerBungee
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerBungee
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerOffline
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences
 import net.md_5.bungee.api.plugin.Plugin
@@ -36,16 +38,23 @@ class SeleneChatBungee : Plugin(), IPlugin {
     }
 
     override fun getAllPlayers(): List<SeleneChatPlayerBungee> {
-        return proxy.players.map { getPlayer(it.uniqueId)!! }
+        val players = mutableListOf<SeleneChatPlayerBungee>()
+        for (p in proxy.players) {
+            when (val player = getPlayer(p.uniqueId)) {
+                is SeleneChatPlayerBungee -> players += player
+                is SeleneChatPlayerOffline -> continue
+            }
+        }
+        return players.toList()
     }
 
-    override fun getPlayer(name: String): SeleneChatPlayerBungee? {
+    override fun getPlayer(name: String): SeleneChatPlayer {
         val player = proxy.getPlayer(name)
-        return if (player == null) null else SeleneChatPlayerBungee(player)
+        return if (player == null) SeleneChatPlayerOffline(displayName = name) else SeleneChatPlayerBungee(player)
     }
 
-    override fun getPlayer(uuid: UUID): SeleneChatPlayerBungee? {
+    override fun getPlayer(uuid: UUID): SeleneChatPlayer {
         val player = proxy.getPlayer(uuid)
-        return if (player == null) null else SeleneChatPlayerBungee(player)
+        return if (player == null) SeleneChatPlayerOffline(uuid) else SeleneChatPlayerBungee(player)
     }
 }

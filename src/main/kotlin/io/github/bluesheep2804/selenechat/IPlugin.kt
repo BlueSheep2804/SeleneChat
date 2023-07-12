@@ -15,6 +15,6 @@ interface IPlugin {
     val resource: ResourceData
         get() = resourceManager.resource
     fun getAllPlayers(): List<SeleneChatPlayer>
-    fun getPlayer(name: String): SeleneChatPlayer?
-    fun getPlayer(uuid: UUID): SeleneChatPlayer?
+    fun getPlayer(name: String): SeleneChatPlayer
+    fun getPlayer(uuid: UUID): SeleneChatPlayer
 }

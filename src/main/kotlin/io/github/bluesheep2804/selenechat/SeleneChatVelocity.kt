@@ -13,6 +13,8 @@ import io.github.bluesheep2804.selenechat.command.SeleneChatCommand
 import io.github.bluesheep2804.selenechat.command.SeleneChatCommandVelocity
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerVelocity
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerOffline
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerVelocity
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
 import org.slf4j.Logger
@@ -50,16 +52,23 @@ class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger:
     }
 
     override fun getAllPlayers(): List<SeleneChatPlayerVelocity> {
-        return proxy.allPlayers.map { getPlayer(it.uniqueId)!! }
+        val players = mutableListOf<SeleneChatPlayerVelocity>()
+        for (p in proxy.allPlayers) {
+            when (val player = getPlayer(p.uniqueId)) {
+                is SeleneChatPlayerVelocity -> players += player
+                is SeleneChatPlayerOffline -> continue
+            }
+        }
+        return players.toList()
     }
 
-    override fun getPlayer(name: String): SeleneChatPlayerVelocity? {
+    override fun getPlayer(name: String): SeleneChatPlayer {
         val player = proxy.getPlayer(name)
-        return if (player.isEmpty) null else SeleneChatPlayerVelocity(player.get())
+        return if (player.isEmpty) SeleneChatPlayerOffline(displayName = name) else SeleneChatPlayerVelocity(player.get())
     }
 
-    override fun getPlayer(uuid: UUID): SeleneChatPlayerVelocity? {
+    override fun getPlayer(uuid: UUID): SeleneChatPlayer {
         val player = proxy.getPlayer(uuid)
-        return if (player.isEmpty) null else SeleneChatPlayerVelocity(player.get())
+        return if (player.isEmpty) SeleneChatPlayerOffline(uuid) else SeleneChatPlayerVelocity(player.get())
     }
 }

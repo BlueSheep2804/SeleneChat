@@ -6,6 +6,8 @@ import io.github.bluesheep2804.selenechat.command.SeleneChatCommand
 import io.github.bluesheep2804.selenechat.command.SeleneChatCommandSpigot
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerSpigot
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerOffline
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerSpigot
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
@@ -42,16 +44,23 @@ class SeleneChatSpigot : JavaPlugin(), IPlugin {
     }
 
     override fun getAllPlayers(): List<SeleneChatPlayerSpigot> {
-        return server.onlinePlayers.map { getPlayer(it.uniqueId)!! }
+        val players = mutableListOf<SeleneChatPlayerSpigot>()
+        for (p in server.onlinePlayers) {
+            when (val player = getPlayer(p.uniqueId)) {
+                is SeleneChatPlayerSpigot -> players += player
+                is SeleneChatPlayerOffline -> continue
+            }
+        }
+        return players.toList()
     }
 
-    override fun getPlayer(name: String): SeleneChatPlayerSpigot? {
+    override fun getPlayer(name: String): SeleneChatPlayer {
         val player = server.getPlayerExact(name)
-        return if (player == null) null else SeleneChatPlayerSpigot(player)
+        return if (player == null) SeleneChatPlayerOffline(displayName = name) else SeleneChatPlayerSpigot(player)
     }
 
-    override fun getPlayer(uuid: UUID): SeleneChatPlayerSpigot? {
+    override fun getPlayer(uuid: UUID): SeleneChatPlayer {
         val player = server.getPlayer(uuid)
-        return if (player == null) null else SeleneChatPlayerSpigot(player)
+        return if (player == null) SeleneChatPlayerOffline(uuid) else SeleneChatPlayerSpigot(player)
     }
 }
