@@ -29,6 +29,15 @@ class SeleneChatConfigManager(private val file: File) {
         config = yaml.decodeFromStream(SeleneChatConfigData.serializer(), configFileInputStream)
     }
 
+    fun save() {
+        val configFile = File(file, "config.yml")
+        if (!file.exists()) {
+            file.mkdir()
+        }
+        val output = FileOutputStream(configFile)
+        yaml.encodeToStream(SeleneChatConfigData.serializer(), config, output)
+    }
+
     fun checkVersion(): String {
         return if (config.configVersion < SeleneChatConfigData().configVersion) SeleneChat.resource.configVersionOutdated
         else if (config.configVersion > SeleneChatConfigData().configVersion) SeleneChat.resource.configVersionNewer
