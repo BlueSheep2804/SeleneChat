@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.2.0](https://github.com/BlueSheep2804/SeleneChat/compare/v0.1.1...v0.2.0) (2023-07-13)
+
+
+### Features
+
+* 🎸 PluginMessageの仕様を変更 ([eea1729](https://github.com/BlueSheep2804/SeleneChat/commit/eea17292a70b6a6dcfa899aca1f29e04918134aa))
+* 🎸 オフラインプレイヤーを追加 ([82a3457](https://github.com/BlueSheep2804/SeleneChat/commit/82a34578d5aa8d4cf459d16d5a0f463ef3a92de7))
+* 🎸 コンフィグを保存するメソッドの追加 ([d9a1481](https://github.com/BlueSheep2804/SeleneChat/commit/d9a148104815ca7043034c044d24d023ebd696d1))
+* 🎸 チャット内でカラーコードを使用できるように ([b14fd9f](https://github.com/BlueSheep2804/SeleneChat/commit/b14fd9fbf8e8ac8a9d570af4a5693ca2a8c080ca))
+* 🎸 一時的に日本語化を無効化できるように ([9e42abf](https://github.com/BlueSheep2804/SeleneChat/commit/9e42abf5f2ea3b887b1ea32569712124feddc83b))
+* 🎸 日本語化のデフォルト設定を追加 ([f1df210](https://github.com/BlueSheep2804/SeleneChat/commit/f1df2109c6f14348483b3a02f7e090ffa4d2dce3))
+* 🎸 日本語化の有無をコマンドで切り替えできるように ([069b3d3](https://github.com/BlueSheep2804/SeleneChat/commit/069b3d34e967821be7d5b10268cc9130f184a27b))
+
 ## [0.1.1](https://github.com/BlueSheep2804/SeleneChat/compare/v0.1.0...v0.1.1) (2023-07-11)
 
 
