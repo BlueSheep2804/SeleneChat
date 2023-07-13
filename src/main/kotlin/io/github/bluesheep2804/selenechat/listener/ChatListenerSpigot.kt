@@ -22,7 +22,7 @@ class ChatListenerSpigot(private val plugin: SeleneChatSpigot) : Listener {
             plugin.server.spigot().broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
             event.isCancelled = true
         } else {
-            val returnMessage = ChatMessage.message(message)
+            val returnMessage = ChatMessage.message(message, sender.isEnabledJapanize)
             event.message = LegacyComponentSerializer.legacySection().serialize(returnMessage)
         }
         if (config.shouldSendPluginMessage) {

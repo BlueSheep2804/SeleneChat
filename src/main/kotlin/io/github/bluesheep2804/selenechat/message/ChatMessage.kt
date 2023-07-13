@@ -24,7 +24,7 @@ object ChatMessage {
         get() = SimpleDateFormat(config.dateFormat)
     private val timeFormat: SimpleDateFormat
         get() = SimpleDateFormat(config.timeFormat)
-    fun message(msg: String): Component {
+    fun message(msg: String, shouldJapanize: Boolean): Component {
         val mm = MiniMessage.miniMessage()
         val serializedMessage = if (config.useColorCode) {
             LegacyComponentSerializer.legacyAmpersand().deserialize(msg.removePrefix("$"))
@@ -38,7 +38,7 @@ object ChatMessage {
         )
         val jpTagResolver = TagResolver.resolver("jp")
         { args: ArgumentQueue, _: Context ->
-            if (config.convertMode == ConvertMode.NONE || !japaneseConversion.shouldConvert() || msg[0] == '$') {
+            if (!shouldJapanize || config.convertMode == ConvertMode.NONE || !japaneseConversion.shouldConvert() || msg[0] == '$') {
                 return@resolver Tag.selfClosingInserting(Component.text(""))
             }
             val prefix = args.popOr("prefix").value()
@@ -62,7 +62,7 @@ object ChatMessage {
         { args: ArgumentQueue, _: Context ->
             return@resolver serverTag(sender, args)
         }
-        val messageTagResolver = Placeholder.component("message", message(msg))
+        val messageTagResolver = Placeholder.component("message", message(msg, sender.isEnabledJapanize))
         val dateTagResolver = Placeholder.component("date", Component.text(dateFormat.format(Date())))
         val timeTagResolver = Placeholder.component("time", Component.text(timeFormat.format(Date())))
 
@@ -96,7 +96,7 @@ object ChatMessage {
         }
         val messageTagResolver = Placeholder.component(
                 "message",
-                message(msg)
+                message(msg, sender.isEnabledJapanize)
         )
         val dateTagResolver = Placeholder.component("date", Component.text(dateFormat.format(Date())))
         val timeTagResolver = Placeholder.component("time", Component.text(timeFormat.format(Date())))

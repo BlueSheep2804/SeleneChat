@@ -2,6 +2,8 @@ package io.github.bluesheep2804.selenechat
 
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigData
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
+import io.github.bluesheep2804.selenechat.japanize.JapanizePlayers
+import io.github.bluesheep2804.selenechat.japanize.JapanizePlayersManager
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.resource.ResourceData
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
@@ -14,6 +16,9 @@ interface IPlugin {
     val resourceManager: ResourceManager
     val resource: ResourceData
         get() = resourceManager.resource
+    val japanizePlayersManager: JapanizePlayersManager
+    val japanizePlayers: JapanizePlayers
+        get() = japanizePlayersManager.japanizePlayers
     fun getAllPlayers(): List<SeleneChatPlayer>
     fun getPlayer(name: String): SeleneChatPlayer
     fun getPlayer(uuid: UUID): SeleneChatPlayer

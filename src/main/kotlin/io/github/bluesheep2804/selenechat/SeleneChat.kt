@@ -2,6 +2,8 @@ package io.github.bluesheep2804.selenechat
 
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigData
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
+import io.github.bluesheep2804.selenechat.japanize.JapanizePlayers
+import io.github.bluesheep2804.selenechat.japanize.JapanizePlayersManager
 import io.github.bluesheep2804.selenechat.resource.ResourceData
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
 
@@ -13,6 +15,10 @@ object SeleneChat {
     lateinit var resourceManager: ResourceManager
     val resource: ResourceData
         get() = resourceManager.resource
+    val japanizePlayersManager: JapanizePlayersManager
+        get() = plugin.japanizePlayersManager
+    val japanizePlayers: JapanizePlayers
+        get() = japanizePlayersManager.japanizePlayers
 
     fun setPluginInstance(plugin: IPlugin) {
         this.plugin = plugin

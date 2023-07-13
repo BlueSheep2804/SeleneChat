@@ -1,8 +1,10 @@
 package io.github.bluesheep2804.selenechat
 
+import io.github.bluesheep2804.selenechat.command.JapanizeCommandBungee
 import io.github.bluesheep2804.selenechat.command.MessageCommandBungee
 import io.github.bluesheep2804.selenechat.command.SeleneChatCommandBungee
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
+import io.github.bluesheep2804.selenechat.japanize.JapanizePlayersManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerBungee
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerBungee
@@ -16,6 +18,7 @@ class SeleneChatBungee : Plugin(), IPlugin {
     private lateinit var adventure: BungeeAudiences
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataFolder)
     override val resourceManager: ResourceManager = ResourceManager(dataFolder)
+    override val japanizePlayersManager: JapanizePlayersManager = JapanizePlayersManager(dataFolder)
     init {
         SeleneChat.setPluginInstance(this)
 
@@ -29,12 +32,14 @@ class SeleneChatBungee : Plugin(), IPlugin {
 
         proxy.pluginManager.registerCommand(this, SeleneChatCommandBungee(this))
         proxy.pluginManager.registerCommand(this, MessageCommandBungee(this))
+        proxy.pluginManager.registerCommand(this, JapanizeCommandBungee(this))
 
         logger.info("Loaded!")
     }
 
     override fun onDisable() {
         adventure.close()
+        japanizePlayersManager.save()
     }
 
     override fun getAllPlayers(): List<SeleneChatPlayerBungee> {

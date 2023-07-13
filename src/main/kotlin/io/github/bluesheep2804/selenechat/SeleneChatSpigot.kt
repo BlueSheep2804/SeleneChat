@@ -1,10 +1,8 @@
 package io.github.bluesheep2804.selenechat
 
-import io.github.bluesheep2804.selenechat.command.MessageCommand
-import io.github.bluesheep2804.selenechat.command.MessageCommandSpigot
-import io.github.bluesheep2804.selenechat.command.SeleneChatCommand
-import io.github.bluesheep2804.selenechat.command.SeleneChatCommandSpigot
+import io.github.bluesheep2804.selenechat.command.*
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
+import io.github.bluesheep2804.selenechat.japanize.JapanizePlayersManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerSpigot
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerOffline
@@ -18,6 +16,7 @@ class SeleneChatSpigot : JavaPlugin(), IPlugin {
     private lateinit var adventure: BukkitAudiences
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataFolder)
     override val resourceManager: ResourceManager = ResourceManager(dataFolder)
+    override val japanizePlayersManager: JapanizePlayersManager = JapanizePlayersManager(dataFolder)
     init {
         SeleneChat.setPluginInstance(this)
 
@@ -31,12 +30,14 @@ class SeleneChatSpigot : JavaPlugin(), IPlugin {
 
         this.getCommand(SeleneChatCommand.COMMAND_NAME)?.setExecutor(SeleneChatCommandSpigot(this))
         this.getCommand(MessageCommand.COMMAND_NAME)?.setExecutor(MessageCommandSpigot(this))
+        this.getCommand(JapanizeCommand.COMMAND_NAME)?.setExecutor(JapanizeCommandSpigot(this))
 
         logger.info("Loaded!")
     }
 
     override fun onDisable() {
         adventure.close()
+        japanizePlayersManager.save()
     }
 
     fun sendPluginMessage(msg: ByteArray) {
