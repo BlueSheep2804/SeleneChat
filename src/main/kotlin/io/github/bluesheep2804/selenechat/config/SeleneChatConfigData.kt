@@ -12,6 +12,8 @@ data class SeleneChatConfigData(
         var convertMode: ConvertMode = ConvertMode.IME,
         @YamlComment("Set a marker to indicate that you do not want to Japanize temporarily.")
         var nonJapanizeMarker: String = "$",
+        @YamlComment("Whether to Japanize by default.")
+        var japanizeDefault: Boolean = true,
         @YamlComment("Whether to send message content to proxy servers using plugin messages.", "Applies to Spigot only.")
         var shouldSendPluginMessage: Boolean = false,
         @YamlComment("Choose whether to send the message in the standard Minecraft message format or in SeleneChat's own format.", "If true, SeleneChat's format will be used.", "Applies to Spigot only.")

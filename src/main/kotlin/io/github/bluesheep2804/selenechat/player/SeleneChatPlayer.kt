@@ -1,6 +1,7 @@
 package io.github.bluesheep2804.selenechat.player
 
 import io.github.bluesheep2804.selenechat.SeleneChat
+import io.github.bluesheep2804.selenechat.SeleneChat.config
 import net.kyori.adventure.key.Key
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.HoverEvent
@@ -13,7 +14,13 @@ abstract class SeleneChatPlayer {
     abstract val currentServerName: String
     open val isOnline = true
     val isEnabledJapanize: Boolean
-        get() = SeleneChat.japanizePlayers.enable.contains(uniqueId.toString())
+        get() {
+            return if (!SeleneChat.japanizePlayers.enable.contains(uniqueId.toString()) && !SeleneChat.japanizePlayers.disable.contains(uniqueId.toString())) {
+                config.japanizeDefault
+            } else {
+                SeleneChat.japanizePlayers.enable.contains(uniqueId.toString())
+            }
+        }
     abstract fun sendMessage(msg: Component)
     open fun asHoverEvent(): HoverEvent<out Examinable> {
         return HoverEvent.showEntity(HoverEvent.ShowEntity.of(Key.key("player"), uniqueId, Component.text(displayName)))
