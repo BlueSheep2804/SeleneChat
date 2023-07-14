@@ -28,9 +28,9 @@ class SeleneChatSpigot : JavaPlugin(), IPlugin {
         server.pluginManager.registerEvents(ChatListenerSpigot(this), this)
         server.messenger.registerOutgoingPluginChannel(this, "selenechat:message")
 
-        this.getCommand(SeleneChatCommand.COMMAND_NAME)?.setExecutor(SeleneChatCommandSpigot(this))
-        this.getCommand(MessageCommand.COMMAND_NAME)?.setExecutor(MessageCommandSpigot(this))
-        this.getCommand(JapanizeCommand.COMMAND_NAME)?.setExecutor(JapanizeCommandSpigot(this))
+        this.getCommand(SeleneChatCommand.COMMAND_NAME)?.setExecutor(SeleneChatCommandSpigot())
+        this.getCommand(MessageCommand.COMMAND_NAME)?.setExecutor(MessageCommandSpigot())
+        this.getCommand(JapanizeCommand.COMMAND_NAME)?.setExecutor(JapanizeCommandSpigot())
 
         logger.info("Loaded!")
     }

@@ -6,6 +6,10 @@ import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerOffline
 
 class MessageCommand : ICommand {
+    override val COMMAND_NAME: String = MessageCommand.COMMAND_NAME
+    override val COMMAND_ALIASES: Array<String> = MessageCommand.COMMAND_ALIASES
+    override val PERMISSION: String = MessageCommand.PERMISSION
+
     override fun execute(sender: SeleneChatPlayer, args: Array<String>): Boolean {
         if (args.isEmpty()) {
             sender.sendMessage(SeleneChat.resource.command.messageErrorPlayer)

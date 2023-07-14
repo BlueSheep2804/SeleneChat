@@ -30,9 +30,9 @@ class SeleneChatBungee : Plugin(), IPlugin {
         proxy.pluginManager.registerListener(this, ChatListenerBungee(this))
         proxy.registerChannel("selenechat:message")
 
-        proxy.pluginManager.registerCommand(this, SeleneChatCommandBungee(this))
-        proxy.pluginManager.registerCommand(this, MessageCommandBungee(this))
-        proxy.pluginManager.registerCommand(this, JapanizeCommandBungee(this))
+        proxy.pluginManager.registerCommand(this, SeleneChatCommandBungee())
+        proxy.pluginManager.registerCommand(this, MessageCommandBungee())
+        proxy.pluginManager.registerCommand(this, JapanizeCommandBungee())
 
         logger.info("Loaded!")
     }
