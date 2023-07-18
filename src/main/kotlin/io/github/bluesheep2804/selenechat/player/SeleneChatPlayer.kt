@@ -26,10 +26,12 @@ abstract class SeleneChatPlayer {
         return HoverEvent.showEntity(HoverEvent.ShowEntity.of(Key.key("player"), uniqueId, Component.text(displayName)))
     }
     fun enableJapanize() {
+        if (this.isEnabledJapanize) return
         SeleneChat.japanizePlayers.enable.add(uniqueId.toString())
         SeleneChat.japanizePlayers.disable.remove(uniqueId.toString())
     }
     fun disableJapanize() {
+        if (!this.isEnabledJapanize) return
         SeleneChat.japanizePlayers.disable.add(uniqueId.toString())
         SeleneChat.japanizePlayers.enable.remove(uniqueId.toString())
     }
