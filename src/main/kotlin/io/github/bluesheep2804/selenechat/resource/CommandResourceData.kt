@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.selenechat.resource
 
+import io.github.bluesheep2804.selenechat.SeleneChat
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -16,11 +17,35 @@ data class CommandResourceData(
         @Serializable(with = ComponentSerializer::class)
         val selenechatErrorSubCommandEmpty: Component = Component.text("empty", NamedTextColor.RED),  // TODO: 後で書き直す
         @Serializable(with = ComponentSerializer::class)
-        val selenechatSuccessReload: Component = Component.text("reloaded!")  // TODO: 書き直す
+        val selenechatSuccessReload: Component = Component.text("reloaded!"),  // TODO: 書き直す
+        @Serializable(with = ComponentSerializer::class)
+        val japanizeErrorUnexpectedArgs: Component = Component.text("The argument must be one of [on, off].", NamedTextColor.RED),
+        val japanizeSuccessCurrentValue: String = "Your Japanize conversion is currently set to <value>.",
+        val japanizeSuccessChanged: String = "Your Japanize conversion is set to <value>."
 ) {
     fun messageErrorPlayerNotFoundComponent(playerName: String): Component {
         val mm = MiniMessage.miniMessage()
         val playerTagResolver = Placeholder.component("player", Component.text(playerName))
         return mm.deserialize(messageErrorPlayerNotFound, playerTagResolver)
+    }
+    fun japanizeSuccessCurrentValueComponent(value: Boolean): Component {
+        val mm = MiniMessage.miniMessage()
+        val valueComponent = if (value) {
+            SeleneChat.resource.enabled
+        } else {
+            SeleneChat.resource.disabled
+        }
+        val valueTagResolver = Placeholder.component("value", valueComponent)
+        return mm.deserialize(japanizeSuccessCurrentValue, valueTagResolver)
+    }
+    fun japanizeSuccessChangedComponent(value: Boolean): Component {
+        val mm = MiniMessage.miniMessage()
+        val valueComponent = if (value) {
+            SeleneChat.resource.enabled
+        } else {
+            SeleneChat.resource.disabled
+        }
+        val valueTagResolver = Placeholder.component("value", valueComponent)
+        return mm.deserialize(japanizeSuccessChanged, valueTagResolver)
     }
 }
