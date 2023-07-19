@@ -14,7 +14,7 @@ class JapanizePlayersManager(private val file: File) {
         reload()
     }
     fun reload() {
-        val japanizeFile = File(file, "jp.yml")
+        val japanizeFile = File(file, "japanize.yml")
         if (!file.exists()) {
             file.mkdir()
         }
@@ -28,7 +28,7 @@ class JapanizePlayersManager(private val file: File) {
         japanizePlayers = Yaml.default.decodeFromStream(japanizePlayersSerializer, japanizeFileInputStream).toMutableMap()
     }
     fun save() {
-        val japanizeFile = File(file, "jp.yml")
+        val japanizeFile = File(file, "japanize.yml")
         if (!file.exists()) {
             file.mkdir()
         }
