@@ -16,6 +16,7 @@ class SeleneChatCommand : ICommand {
         if (args[0] == "reload") {
             SeleneChat.configManager.reload()
             SeleneChat.resourceManager.reload()
+            SeleneChat.japanizePlayersManager.reload()
             sender.sendMessage(SeleneChat.resource.command.selenechatSuccessReload)
         }
         return true
