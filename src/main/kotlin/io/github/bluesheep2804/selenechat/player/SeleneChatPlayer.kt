@@ -23,7 +23,7 @@ abstract class SeleneChatPlayer {
         }
     abstract fun sendMessage(msg: Component)
     open fun asHoverEvent(): HoverEvent<out Examinable> {
-        return HoverEvent.showEntity(HoverEvent.ShowEntity.of(Key.key("player"), uniqueId, Component.text(displayName)))
+        return HoverEvent.showEntity(Key.key("player"), uniqueId, Component.text(displayName))
     }
     fun enableJapanize() {
         SeleneChat.japanizePlayers[uniqueId.toString()] = true
