@@ -1,12 +1,15 @@
 package io.github.bluesheep2804.selenechat.japanize
 
 import com.charleskorn.kaml.Yaml
+import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.serializer
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
 class JapanizePlayersManager(private val file: File) {
-    lateinit var japanizePlayers: JapanizePlayers
+    lateinit var japanizePlayers: MutableMap<String, Boolean>
+    private val japanizePlayersSerializer = MapSerializer(String.serializer(), Boolean.serializer())
     init {
         reload()
     }
@@ -17,12 +20,12 @@ class JapanizePlayersManager(private val file: File) {
         }
         if (!japanizeFile.exists()) {
             japanizeFile.createNewFile()
-            val japanizePlayers = JapanizePlayers()
+            val japanizePlayers = emptyMap<String, Boolean>()
             val output = FileOutputStream(japanizeFile)
-            Yaml.default.encodeToStream(JapanizePlayers.serializer(), japanizePlayers, output)
+            Yaml.default.encodeToStream(japanizePlayersSerializer, japanizePlayers, output)
         }
         val japanizeFileInputStream = FileInputStream(japanizeFile)
-        japanizePlayers = Yaml.default.decodeFromStream(JapanizePlayers.serializer(), japanizeFileInputStream)
+        japanizePlayers = Yaml.default.decodeFromStream(japanizePlayersSerializer, japanizeFileInputStream).toMutableMap()
     }
     fun save() {
         val japanizeFile = File(file, "jp.yml")
@@ -30,6 +33,6 @@ class JapanizePlayersManager(private val file: File) {
             file.mkdir()
         }
         val output = FileOutputStream(japanizeFile)
-        Yaml.default.encodeToStream(JapanizePlayers.serializer(), japanizePlayers, output)
+        Yaml.default.encodeToStream(japanizePlayersSerializer, japanizePlayers, output)
     }
 }

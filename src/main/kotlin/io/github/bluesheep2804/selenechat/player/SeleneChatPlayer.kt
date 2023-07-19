@@ -15,10 +15,10 @@ abstract class SeleneChatPlayer {
     open val isOnline = true
     val isEnabledJapanize: Boolean
         get() {
-            return if (!SeleneChat.japanizePlayers.enable.contains(uniqueId.toString()) && !SeleneChat.japanizePlayers.disable.contains(uniqueId.toString())) {
-                config.japanizeDefault
+            return if (SeleneChat.japanizePlayers.containsKey(uniqueId.toString())) {
+                SeleneChat.japanizePlayers[uniqueId.toString()]!!
             } else {
-                SeleneChat.japanizePlayers.enable.contains(uniqueId.toString())
+                config.japanizeDefault
             }
         }
     abstract fun sendMessage(msg: Component)
@@ -26,14 +26,10 @@ abstract class SeleneChatPlayer {
         return HoverEvent.showEntity(HoverEvent.ShowEntity.of(Key.key("player"), uniqueId, Component.text(displayName)))
     }
     fun enableJapanize() {
-        if (this.isEnabledJapanize) return
-        SeleneChat.japanizePlayers.enable.add(uniqueId.toString())
-        SeleneChat.japanizePlayers.disable.remove(uniqueId.toString())
+        SeleneChat.japanizePlayers[uniqueId.toString()] = true
     }
     fun disableJapanize() {
-        if (!this.isEnabledJapanize) return
-        SeleneChat.japanizePlayers.disable.add(uniqueId.toString())
-        SeleneChat.japanizePlayers.enable.remove(uniqueId.toString())
+        SeleneChat.japanizePlayers[uniqueId.toString()] = false
     }
     fun toggleJapanize() {
         if (isEnabledJapanize) disableJapanize() else enableJapanize()
