@@ -27,9 +27,11 @@ abstract class SeleneChatPlayer {
     }
     fun enableJapanize() {
         SeleneChat.japanizePlayers[uniqueId.toString()] = true
+        SeleneChat.japanizePlayersManager.save()
     }
     fun disableJapanize() {
         SeleneChat.japanizePlayers[uniqueId.toString()] = false
+        SeleneChat.japanizePlayersManager.save()
     }
     fun toggleJapanize() {
         if (isEnabledJapanize) disableJapanize() else enableJapanize()
