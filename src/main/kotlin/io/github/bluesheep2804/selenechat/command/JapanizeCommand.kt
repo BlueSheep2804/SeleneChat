@@ -27,7 +27,7 @@ class JapanizeCommand : ICommand {
 
     override fun suggest(sender: SeleneChatPlayer, args: Array<String>): List<String> {
         return when (args.size) {
-            1 -> listOf("on", "off")
+            1 -> listOf("on", "off").filter { it.startsWith(args[0]) || args[0] == "" }
             else -> emptyList()
         }
     }

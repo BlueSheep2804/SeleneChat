@@ -40,8 +40,8 @@ class MessageCommand : ICommand {
 
     override fun suggest(sender: SeleneChatPlayer, args: Array<String>): List<String> {
         return when (args.size) {
-            1 -> SeleneChat.plugin.getAllPlayers().map { it.displayName }
-            else -> listOf()
+            1 -> (SeleneChat.plugin.getAllPlayers().map { it.displayName }).filter { it.startsWith(args[0]) || args[0] == "" }
+            else -> emptyList()
         }
     }
 

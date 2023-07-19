@@ -22,10 +22,9 @@ class SeleneChatCommand : ICommand {
     }
 
     override fun suggest(sender: SeleneChatPlayer, args: Array<String>): List<String> {
-        if (args.size == 1) {
-            return listOf("reload")
-        } else {
-            return emptyList()
+        return when (args.size) {
+            1 -> listOf("reload").filter { it.startsWith(args[0]) || args[0] == "" }
+            else -> emptyList()
         }
     }
 
