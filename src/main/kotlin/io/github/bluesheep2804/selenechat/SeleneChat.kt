@@ -8,12 +8,14 @@ import io.github.bluesheep2804.selenechat.resource.ResourceManager
 
 object SeleneChat {
     lateinit var plugin: IPlugin
-    lateinit var configManager: SeleneChatConfigManager
+    val configManager: SeleneChatConfigManager
+        get() = plugin.configManager
     val config: SeleneChatConfigData
-        get() = configManager.config
-    lateinit var resourceManager: ResourceManager
+        get() = plugin.config
+    val resourceManager: ResourceManager
+        get() = plugin.resourceManager
     val resource: ResourceData
-        get() = resourceManager.resource
+        get() = plugin.resource
     val japanizePlayersManager: JapanizePlayersManager
         get() = plugin.japanizePlayersManager
     val japanizePlayers: MutableMap<String, Boolean>
@@ -21,7 +23,5 @@ object SeleneChat {
 
     fun setPluginInstance(plugin: IPlugin) {
         this.plugin = plugin
-        this.configManager = plugin.configManager
-        this.resourceManager = plugin.resourceManager
     }
 }
