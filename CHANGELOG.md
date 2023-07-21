@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.2.0](https://github.com/BlueSheep2804/SeleneChat/compare/v0.1.1...v0.2.0) (2023-07-21)
+
+
+### Features
+
+* 🎸 Bukkitに対応 ([7d10843](https://github.com/BlueSheep2804/SeleneChat/commit/7d10843bea08581c151d4fb81b0ab9862a775bd8))
+* 🎸 japanize.ymlを再読込できるように ([763bd50](https://github.com/BlueSheep2804/SeleneChat/commit/763bd50f3aef50217affaf0a39cd0b526fa5bad8))
+* 🎸 japanizeコマンドをLunaChatの仕様に近い構文に変更 ([90569df](https://github.com/BlueSheep2804/SeleneChat/commit/90569dfc5145ad7fc10b93c465f45d4905959b8e))
+* 🎸 japanize変換の状態を保存するファイルの仕様を変更 ([d28c4d7](https://github.com/BlueSheep2804/SeleneChat/commit/d28c4d7ece67371ed4ce23311a2a9aef9cbf8480))
+* 🎸 japanize変換の状態を保存するファイルの名前を変更 ([a28e13a](https://github.com/BlueSheep2804/SeleneChat/commit/a28e13ac3b34ee877d178696240df843e3255320))
+* 🎸 japanize変換の状態を変更したタイミングでファイルに書き込まれる仕様に変更 ([cf5d68e](https://github.com/BlueSheep2804/SeleneChat/commit/cf5d68eff9fef98e6d62b0700cfb86cb0f7005ea))
+* 🎸 PluginMessageの仕様を変更 ([eea1729](https://github.com/BlueSheep2804/SeleneChat/commit/eea17292a70b6a6dcfa899aca1f29e04918134aa))
+* 🎸 selenechatのサブコマンドに権限を割り当てた ([e318061](https://github.com/BlueSheep2804/SeleneChat/commit/e3180611ce5f01ffd327a70a7d5c185da1e0313f))
+* 🎸 アイコンを追加 ([3213cb7](https://github.com/BlueSheep2804/SeleneChat/commit/3213cb77824af76954b25217e4b55cce6125293e))
+* 🎸 オフラインプレイヤーを追加 ([82a3457](https://github.com/BlueSheep2804/SeleneChat/commit/82a34578d5aa8d4cf459d16d5a0f463ef3a92de7))
+* 🎸 カラーコードによる装飾に権限を設定できるように ([e7a60c7](https://github.com/BlueSheep2804/SeleneChat/commit/e7a60c731fa537bad734b370cf84e1b5493e00a0))
+* 🎸 コンフィグを保存するメソッドの追加 ([d9a1481](https://github.com/BlueSheep2804/SeleneChat/commit/d9a148104815ca7043034c044d24d023ebd696d1))
+* 🎸 チャット内でカラーコードを使用できるように ([b14fd9f](https://github.com/BlueSheep2804/SeleneChat/commit/b14fd9fbf8e8ac8a9d570af4a5693ca2a8c080ca))
+* 🎸 プレイヤークラスに権限を検証するメソッドを追加 ([28161cd](https://github.com/BlueSheep2804/SeleneChat/commit/28161cd8f9ebec5dcfedcce00081d517acaaadbd))
+* 🎸 一時的に日本語化を無効化できるように ([9e42abf](https://github.com/BlueSheep2804/SeleneChat/commit/9e42abf5f2ea3b887b1ea32569712124feddc83b))
+* 🎸 文字列リソースを更新 ([8bf2fd1](https://github.com/BlueSheep2804/SeleneChat/commit/8bf2fd15f444c21cc72d7bd6895f3a3a8650faf2))
+* 🎸 日本語化のデフォルト設定を追加 ([f1df210](https://github.com/BlueSheep2804/SeleneChat/commit/f1df2109c6f14348483b3a02f7e090ffa4d2dce3))
+* 🎸 日本語化の有無をコマンドで切り替えできるように ([069b3d3](https://github.com/BlueSheep2804/SeleneChat/commit/069b3d34e967821be7d5b10268cc9130f184a27b))
+* 🎸 権限周りの調整 ([e15f9cc](https://github.com/BlueSheep2804/SeleneChat/commit/e15f9ccbf8e337bed2df1a770ec28b16bd5a9be1))
+
+
+### Bug Fixes
+
+* 🐛 japanize変換の状態が重複する不具合 ([f3d71e9](https://github.com/BlueSheep2804/SeleneChat/commit/f3d71e945adf96a0deac0099e2e9e1904c6b9af2))
+* 🐛 PlainTextSerializerがインポートできない ([e48247f](https://github.com/BlueSheep2804/SeleneChat/commit/e48247f01ba49c10d44e5172c3666567452023c6))
+* 🐛 コマンド引数のサジェストがうまく機能しない不具合 ([00add08](https://github.com/BlueSheep2804/SeleneChat/commit/00add08409401d42078a2d7f193152d874a11ae3))
+
 ## [0.1.1](https://github.com/BlueSheep2804/SeleneChat/compare/v0.1.0...v0.1.1) (2023-07-11)
 
 
