@@ -17,6 +17,8 @@ data class CommandResourceData(
         @Serializable(with = ComponentSerializer::class)
         val selenechatErrorSubCommandEmpty: Component = Component.text("Argument is missing.", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
+        val selenechatErrorSubCommandPermission: Component = Component.text("You do not have permission to execute that command.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
         val selenechatSuccessReload: Component = Component.text("Reloaded!"),
         @Serializable(with = ComponentSerializer::class)
         val japanizeErrorUnexpectedArgs: Component = Component.text("The argument must be one of [on, off].", NamedTextColor.RED),

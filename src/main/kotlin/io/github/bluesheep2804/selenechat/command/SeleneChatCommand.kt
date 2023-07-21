@@ -14,6 +14,10 @@ class SeleneChatCommand : ICommand {
             return false
         }
         if (args[0] == "reload") {
+            if (!sender.hasPermission("selenechat.command.selenechat.reload")) {
+                sender.sendMessage(SeleneChat.resource.command.selenechatErrorSubCommandPermission)
+                return false
+            }
             SeleneChat.configManager.reload()
             SeleneChat.resourceManager.reload()
             SeleneChat.japanizePlayersManager.reload()

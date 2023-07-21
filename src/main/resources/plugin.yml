@@ -31,6 +31,9 @@ permissions:
   selenechat.command.selenechat:
     description: Allow the use of SeleneChat commands
     default: op
+  selenechat.command.selenechat.reload:
+    description: Allow use of SeleneChat reload command
+    default: op
   selenechat.command.message:
     description: Allow use of SeleneChat message command
     default: true
