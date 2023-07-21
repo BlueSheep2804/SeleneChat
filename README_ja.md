@@ -1,10 +1,9 @@
 # SeleneChat
 [![License](https://img.shields.io/github/license/BlueSheep2804/SeleneChat)](https://github.com/BlueSheep2804/SeleneChat/blob/main/LICENSE)
 [![GitHub release (with filter)](https://img.shields.io/github/v/release/BlueSheep2804/SeleneChat)](https://github.com/BlueSheep2804/SeleneChat/releases/latest)
-[![Modrinth Game Versions](https://img.shields.io/modrinth/game-versions/gaVZKFel)](https://modrinth.com/plugin/selenechat/versions)
 
 SeleneChatは、LunaChatに影響を受けたMinecraft用チャットプラグインです。  
-Spigot, BungeeCord, Velocityで利用可能です。  
+Bukkit, BungeeCord, Velocityで利用可能です。  
 動作確認済みのMinecraftバージョン: 1.12.2-1.20.1
 
 ## Feature
@@ -22,6 +21,7 @@ Spigot, BungeeCord, Velocityで利用可能です。
 ## Links
 - [ソースコード](https://github.com/BlueSheep2804/SeleneChat)
 - [SpigotMC project page](https://www.spigotmc.org/resources/selenechat.111119/)
+- [CurseForge project page](https://curseforge.com/minecraft/bukkit-plugins/selenechat)
 - [Modrinth project page](https://modrinth.com/plugin/selenechat)
 - [Hangar project page](https://hangar.papermc.io/BlueSheep/SeleneChat)
 - [Twitter](https://twitter.com/BlueSheep2804)
