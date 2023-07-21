@@ -25,6 +25,9 @@ commands:
     permission: selenechat.command.japanize
 
 permissions:
+  selenechat.colorcode:
+    description: Allow color codes to be used in chat
+    default: true
   selenechat.command.selenechat:
     description: Allow the use of SeleneChat commands
     default: op
