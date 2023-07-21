@@ -66,6 +66,11 @@ tasks {
         waterfallVersion("1.20")
         runDirectory(File("run_waterfall"))
     }
+    processResources {
+        filesMatching(listOf("plugin.yml", "bungee.yml")) {
+            expand("version" to project.version)
+        }
+    }
 }
 
 val compileKotlin: KotlinCompile by tasks
