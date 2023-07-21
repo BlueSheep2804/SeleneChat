@@ -23,4 +23,8 @@ class SeleneChatPlayerBungeeConsole(private val player: CommandSender) : SeleneC
     override fun sendMessage(msg: Component) {
         player.sendMessage(*BungeeComponentSerializer.get().serialize(msg))
     }
+
+    override fun hasPermission(permission: String): Boolean {
+        return player.hasPermission(permission)
+    }
 }

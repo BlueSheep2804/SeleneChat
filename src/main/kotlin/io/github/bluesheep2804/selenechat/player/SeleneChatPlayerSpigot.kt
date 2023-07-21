@@ -25,6 +25,10 @@ open class SeleneChatPlayerSpigot(private val player: Player) : SeleneChatPlayer
         }
     }
 
+    override fun hasPermission(permission: String): Boolean {
+        return player.hasPermission(permission)
+    }
+
     companion object {
         fun getPlayer(source: CommandSender): SeleneChatPlayerSpigot {
             return SeleneChatPlayerSpigot(source as Player)

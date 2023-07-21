@@ -19,6 +19,10 @@ class SeleneChatPlayerVelocity(private val player: Player) : SeleneChatPlayer() 
         player.sendMessage(msg)
     }
 
+    override fun hasPermission(permission: String): Boolean {
+        return player.hasPermission(permission)
+    }
+
     companion object {
         fun getPlayer(source: CommandSource): SeleneChatPlayerVelocity {
             return SeleneChatPlayerVelocity(source as Player)

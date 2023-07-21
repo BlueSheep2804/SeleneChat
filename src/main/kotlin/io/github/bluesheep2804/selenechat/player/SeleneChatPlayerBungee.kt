@@ -21,6 +21,10 @@ class SeleneChatPlayerBungee(private val player: ProxiedPlayer) : SeleneChatPlay
         player.sendMessage(*BungeeComponentSerializer.get().serialize(msg))
     }
 
+    override fun hasPermission(permission: String): Boolean {
+        return player.hasPermission(permission)
+    }
+
     companion object {
         fun getPlayer(source: CommandSender): SeleneChatPlayerBungee {
             return SeleneChatPlayerBungee(source as ProxiedPlayer)

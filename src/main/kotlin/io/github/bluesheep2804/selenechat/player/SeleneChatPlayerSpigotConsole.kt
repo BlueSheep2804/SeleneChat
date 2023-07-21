@@ -30,6 +30,10 @@ class SeleneChatPlayerSpigotConsole(private val player: ConsoleCommandSender) : 
         return HoverEvent.showText(Component.text("CONSOLE"))
     }
 
+    override fun hasPermission(permission: String): Boolean {
+        return player.hasPermission(permission)
+    }
+
     companion object {
         fun getPlayer(source: CommandSender): SeleneChatPlayerSpigotConsole {
             return SeleneChatPlayerSpigotConsole(source as ConsoleCommandSender)

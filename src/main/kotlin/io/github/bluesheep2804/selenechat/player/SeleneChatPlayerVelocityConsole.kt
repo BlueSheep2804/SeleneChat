@@ -24,6 +24,10 @@ class SeleneChatPlayerVelocityConsole(private val player: ConsoleCommandSource) 
         return HoverEvent.showText(Component.text("CONSOLE"))
     }
 
+    override fun hasPermission(permission: String): Boolean {
+        return player.hasPermission(permission)
+    }
+
     companion object {
         fun getPlayer(source: CommandSource): SeleneChatPlayerVelocityConsole {
             return SeleneChatPlayerVelocityConsole(source as ConsoleCommandSource)

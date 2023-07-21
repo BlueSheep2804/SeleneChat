@@ -25,6 +25,7 @@ abstract class SeleneChatPlayer {
     open fun asHoverEvent(): HoverEvent<out Examinable> {
         return HoverEvent.showEntity(Key.key("player"), uniqueId, Component.text(displayName))
     }
+    abstract fun hasPermission(permission: String): Boolean
     fun enableJapanize() {
         SeleneChat.japanizePlayers[uniqueId.toString()] = true
         SeleneChat.japanizePlayersManager.save()
