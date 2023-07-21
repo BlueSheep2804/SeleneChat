@@ -15,9 +15,9 @@ data class CommandResourceData(
         val messageErrorMessage: Component = Component.text("A message is required.", NamedTextColor.RED),
         val messageErrorPlayerNotFound: String = "<red>The specified player <player> does not exist.",
         @Serializable(with = ComponentSerializer::class)
-        val selenechatErrorSubCommandEmpty: Component = Component.text("empty", NamedTextColor.RED),  // TODO: 後で書き直す
+        val selenechatErrorSubCommandEmpty: Component = Component.text("Argument is missing.", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
-        val selenechatSuccessReload: Component = Component.text("reloaded!"),  // TODO: 書き直す
+        val selenechatSuccessReload: Component = Component.text("Reloaded!"),
         @Serializable(with = ComponentSerializer::class)
         val japanizeErrorUnexpectedArgs: Component = Component.text("The argument must be one of [on, off].", NamedTextColor.RED),
         val japanizeSuccessCurrentValue: String = "Your Japanize conversion is currently set to <value>.",
