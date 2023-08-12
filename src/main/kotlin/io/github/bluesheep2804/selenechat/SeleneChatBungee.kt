@@ -39,7 +39,6 @@ class SeleneChatBungee : Plugin(), IPlugin {
 
     override fun onDisable() {
         adventure.close()
-        japanizePlayersManager.save()
     }
 
     override fun getAllPlayers(): List<SeleneChatPlayerBungee> {

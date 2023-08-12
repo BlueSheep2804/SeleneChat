@@ -32,11 +32,6 @@ class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger:
     }
 
     @Subscribe
-    fun onProxyShutdown(event: ProxyShutdownEvent) {
-        japanizePlayersManager.save()
-    }
-
-    @Subscribe
     fun onProxyInitialize(event: ProxyInitializeEvent) {
         proxy.eventManager.register(this, ChatListenerVelocity(this))
         proxy.channelRegistrar.register(MinecraftChannelIdentifier.create("selenechat", "message"))

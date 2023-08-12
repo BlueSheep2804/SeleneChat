@@ -37,7 +37,6 @@ class SeleneChatSpigot : JavaPlugin(), IPlugin {
 
     override fun onDisable() {
         adventure.close()
-        japanizePlayersManager.save()
     }
 
     fun sendPluginMessage(msg: ByteArray) {
