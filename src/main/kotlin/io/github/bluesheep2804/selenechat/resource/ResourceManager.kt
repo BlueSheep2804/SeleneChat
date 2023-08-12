@@ -28,4 +28,13 @@ class ResourceManager(private val file: File) {
         val resourceFileInputStream = FileInputStream(resourceFile)
         this.resource = yaml.decodeFromStream(ResourceData.serializer(), resourceFileInputStream)
     }
+
+    fun save() {
+        val resourceFile = File(file, "message.yml")
+        if (!file.exists()) {
+            file.mkdir()
+        }
+        val output = FileOutputStream(resourceFile)
+        yaml.encodeToStream(ResourceData.serializer(), resource, output)
+    }
 }
