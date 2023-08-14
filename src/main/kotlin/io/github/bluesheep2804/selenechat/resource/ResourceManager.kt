@@ -10,6 +10,7 @@ class ResourceManager(private val file: File) {
     lateinit var resource: ResourceData
     private val yamlConfiguration = YamlConfiguration(strictMode = false, breakScalarsAt = 160)
     private val yaml = Yaml(configuration = yamlConfiguration)
+    private val defaultResource = ResourceData()
     init {
         reload()
     }
@@ -27,6 +28,11 @@ class ResourceManager(private val file: File) {
         }
         val resourceFileInputStream = FileInputStream(resourceFile)
         this.resource = yaml.decodeFromStream(ResourceData.serializer(), resourceFileInputStream)
+
+        if (resource.resourceVersion < defaultResource.resourceVersion) {
+            resource.resourceVersion = defaultResource.resourceVersion
+            save()
+        }
     }
 
     fun save() {
