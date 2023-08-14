@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SeleneChatConfigData(
         @YamlComment("Version of the config file. Do not change.")
-        val configVersion: Int = 2,
+        var configVersion: Int = 2,
 
         @YamlComment("Specifying the chat conversion mode.", "Possible values: none, hiragana, ime")
         var convertMode: ConvertMode = ConvertMode.IME,

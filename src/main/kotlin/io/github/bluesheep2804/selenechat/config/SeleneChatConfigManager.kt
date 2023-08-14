@@ -11,6 +11,7 @@ class SeleneChatConfigManager(private val file: File) {
     lateinit var config: SeleneChatConfigData
     private val yamlConfiguration = YamlConfiguration(strictMode = false, breakScalarsAt = 120)
     private val yaml = Yaml(configuration = yamlConfiguration)
+    private val defaultConfig = SeleneChatConfigData()
     init {
         reload()
     }
@@ -27,6 +28,11 @@ class SeleneChatConfigManager(private val file: File) {
         }
         val configFileInputStream = FileInputStream(configFile)
         config = yaml.decodeFromStream(SeleneChatConfigData.serializer(), configFileInputStream)
+
+        if (config.configVersion < defaultConfig.configVersion) {
+            config.configVersion = defaultConfig.configVersion
+            save()
+        }
     }
 
     fun save() {
@@ -39,8 +45,8 @@ class SeleneChatConfigManager(private val file: File) {
     }
 
     fun checkVersion(): String {
-        return if (config.configVersion < SeleneChatConfigData().configVersion) SeleneChat.resource.configVersionOutdated
-        else if (config.configVersion > SeleneChatConfigData().configVersion) SeleneChat.resource.configVersionNewer
+        return if (config.configVersion < defaultConfig.configVersion) SeleneChat.resource.configVersionOutdated
+        else if (config.configVersion > defaultConfig.configVersion) SeleneChat.resource.configVersionNewer
         else SeleneChat.resource.configVersionLatest
     }
 }
