@@ -10,18 +10,18 @@ class SeleneChatCommand : ICommand {
 
     override fun execute(sender: SeleneChatPlayer, args: Array<String>): Boolean {
         if (args.isEmpty()) {
-            sender.sendMessage(SeleneChat.resource.command.selenechatErrorSubCommandEmpty)
+            sender.sendCommandResult(SeleneChat.resource.command.selenechatErrorSubCommandEmpty)
             return false
         }
         if (args[0] == "reload") {
             if (!sender.hasPermission("selenechat.command.selenechat.reload")) {
-                sender.sendMessage(SeleneChat.resource.command.selenechatErrorSubCommandPermission)
+                sender.sendCommandResult(SeleneChat.resource.command.selenechatErrorSubCommandPermission)
                 return false
             }
             SeleneChat.configManager.reload()
             SeleneChat.resourceManager.reload()
             SeleneChat.japanizePlayersManager.reload()
-            sender.sendMessage(SeleneChat.resource.command.selenechatSuccessReload)
+            sender.sendCommandResult(SeleneChat.resource.command.selenechatSuccessReload)
         }
         return true
     }

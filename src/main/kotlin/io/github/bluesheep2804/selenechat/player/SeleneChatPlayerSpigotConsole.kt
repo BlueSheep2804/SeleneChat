@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.selenechat.player
 
+import io.github.bluesheep2804.selenechat.SeleneChat.resource
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
@@ -24,6 +25,10 @@ class SeleneChatPlayerSpigotConsole(private val player: ConsoleCommandSender) : 
         } catch (_: NoSuchMethodError) {
             player.sendMessage(LegacyComponentSerializer.legacySection().serialize(msg))
         }
+    }
+
+    override fun sendCommandResult(msg: Component) {
+        sendMessage(resource.prefix.append(msg))
     }
 
     override fun asHoverEvent(): HoverEvent<Component> {

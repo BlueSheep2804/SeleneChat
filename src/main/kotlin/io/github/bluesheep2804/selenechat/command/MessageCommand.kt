@@ -12,16 +12,16 @@ class MessageCommand : ICommand {
 
     override fun execute(sender: SeleneChatPlayer, args: Array<String>): Boolean {
         if (args.isEmpty()) {
-            sender.sendMessage(SeleneChat.resource.command.messageErrorPlayer)
+            sender.sendCommandResult(SeleneChat.resource.command.messageErrorPlayer)
             return false
         }
         if (args.size == 1) {
-            sender.sendMessage(SeleneChat.resource.command.messageErrorMessage)
+            sender.sendCommandResult(SeleneChat.resource.command.messageErrorMessage)
             return false
         }
         val receiver = SeleneChat.plugin.getPlayer(args[0])
         if (receiver is SeleneChatPlayerOffline) {
-            sender.sendMessage(SeleneChat.resource.command.messageErrorPlayerNotFoundComponent(args[0]))
+            sender.sendCommandResult(SeleneChat.resource.command.messageErrorPlayerNotFoundComponent(args[0]))
             return false
         }
 
@@ -33,8 +33,8 @@ class MessageCommand : ICommand {
         }
 
         val returnMessage = ChatMessage.privateMessage(message, sender, receiver)
-        sender.sendMessage(returnMessage)
-        receiver.sendMessage(returnMessage)
+        sender.sendCommandResult(returnMessage)
+        receiver.sendCommandResult(returnMessage)
         return true
     }
 

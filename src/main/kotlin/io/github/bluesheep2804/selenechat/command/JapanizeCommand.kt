@@ -10,17 +10,17 @@ class JapanizeCommand : ICommand {
 
     override fun execute(sender: SeleneChatPlayer, args: Array<String>): Boolean {
         if (args.isEmpty()) {
-            sender.sendMessage(resource.command.japanizeSuccessCurrentValueComponent(sender.isEnabledJapanize))
+            sender.sendCommandResult(resource.command.japanizeSuccessCurrentValueComponent(sender.isEnabledJapanize))
         } else {
             if (args[0] == "on") {
                 sender.enableJapanize()
             } else if (args[0] == "off") {
                 sender.disableJapanize()
             } else {
-                sender.sendMessage(resource.command.japanizeErrorUnexpectedArgs)
+                sender.sendCommandResult(resource.command.japanizeErrorUnexpectedArgs)
                 return false
             }
-            sender.sendMessage(resource.command.japanizeSuccessChangedComponent(sender.isEnabledJapanize))
+            sender.sendCommandResult(resource.command.japanizeSuccessChangedComponent(sender.isEnabledJapanize))
         }
         return true
     }

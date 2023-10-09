@@ -22,6 +22,7 @@ abstract class SeleneChatPlayer {
             }
         }
     abstract fun sendMessage(msg: Component)
+    abstract fun sendCommandResult(msg: Component)
     open fun asHoverEvent(): HoverEvent<out Examinable> {
         return HoverEvent.showEntity(Key.key("player"), uniqueId, Component.text(displayName))
     }
