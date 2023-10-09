@@ -23,7 +23,16 @@ data class CommandResourceData(
         @Serializable(with = ComponentSerializer::class)
         val japanizeErrorUnexpectedArgs: Component = Component.text("The argument must be one of [on, off].", NamedTextColor.RED),
         val japanizeSuccessCurrentValue: String = "Your Japanize conversion is currently set to <value>.",
-        val japanizeSuccessChanged: String = "Your Japanize conversion is set to <value>."
+        val japanizeSuccessChanged: String = "Your Japanize conversion is set to <value>.",
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorSubCommandEmpty: Component = Component.text("Argument is missing.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorSubCommandNotFound: Component = Component.text("That subcommand does not exist.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorCreateEmpty: Component = Component.text("The channel name is not specified.", NamedTextColor.RED),
+        val channelSuccessCreate: String = "Channel created: <channel>",
+        @Serializable(with = ComponentSerializer::class)
+        val channelSuccessList: Component = Component.text("Channel list"),
 ) {
     fun messageErrorPlayerNotFoundComponent(playerName: String): Component {
         val mm = MiniMessage.miniMessage()
@@ -49,5 +58,10 @@ data class CommandResourceData(
         }
         val valueTagResolver = Placeholder.component("value", valueComponent)
         return mm.deserialize(japanizeSuccessChanged, valueTagResolver)
+    }
+
+    fun channelSuccessCreate(channelName: String): Component {
+        val channelNameTagResolver = Placeholder.component("channel", Component.text(channelName))
+        return MiniMessage.miniMessage().deserialize(channelSuccessCreate, channelNameTagResolver)
     }
 }

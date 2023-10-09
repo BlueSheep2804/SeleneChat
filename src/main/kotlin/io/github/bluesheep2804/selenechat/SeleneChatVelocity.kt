@@ -51,9 +51,14 @@ class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger:
                 .aliases(*JapanizeCommand.COMMAND_ALIASES)
                 .plugin(this)
                 .build()
+        val channelCommandMeta = commandManager.metaBuilder(ChannelCommand.COMMAND_NAME)
+                .aliases(*ChannelCommand.COMMAND_ALIASES)
+                .plugin(this)
+                .build()
         commandManager.register(seleneChatCommandMeta, SeleneChatCommandVelocity())
         commandManager.register(messageCommandMeta, MessageCommandVelocity())
         commandManager.register(japanizeCommandMeta, JapanizeCommandVelocity())
+        commandManager.register(channelCommandMeta, ChannelCommandVelocity())
 
         logger.info("Loaded!")
     }

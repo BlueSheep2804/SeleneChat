@@ -33,6 +33,7 @@ class SeleneChatSpigot : JavaPlugin(), IPlugin {
         this.getCommand(SeleneChatCommand.COMMAND_NAME)?.setExecutor(SeleneChatCommandSpigot())
         this.getCommand(MessageCommand.COMMAND_NAME)?.setExecutor(MessageCommandSpigot())
         this.getCommand(JapanizeCommand.COMMAND_NAME)?.setExecutor(JapanizeCommandSpigot())
+        this.getCommand(ChannelCommand.COMMAND_NAME)?.setExecutor(ChannelCommandSpigot())
 
         logger.info("Loaded!")
     }

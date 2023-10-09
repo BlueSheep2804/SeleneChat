@@ -1,6 +1,7 @@
 package io.github.bluesheep2804.selenechat
 
 import io.github.bluesheep2804.selenechat.channel.ChannelManager
+import io.github.bluesheep2804.selenechat.command.ChannelCommandBungee
 import io.github.bluesheep2804.selenechat.command.JapanizeCommandBungee
 import io.github.bluesheep2804.selenechat.command.MessageCommandBungee
 import io.github.bluesheep2804.selenechat.command.SeleneChatCommandBungee
@@ -35,6 +36,7 @@ class SeleneChatBungee : Plugin(), IPlugin {
         proxy.pluginManager.registerCommand(this, SeleneChatCommandBungee())
         proxy.pluginManager.registerCommand(this, MessageCommandBungee())
         proxy.pluginManager.registerCommand(this, JapanizeCommandBungee())
+        proxy.pluginManager.registerCommand(this, ChannelCommandBungee())
 
         logger.info("Loaded!")
     }

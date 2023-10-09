@@ -23,6 +23,11 @@ commands:
     aliases:
       - jp
     permission: selenechat.command.japanize
+  channel:
+    description: SeleneChat channel command
+    aliases:
+      - ch
+    permission: selenechat.command.channel
 
 permissions:
   selenechat.colorcode:
@@ -40,3 +45,6 @@ permissions:
   selenechat.command.japanize:
     description: Allow use of SeleneChat japanize command
     default: true
+  selenechat.command.channel:
+    description: Allow use of SeleneChat channel command
+    default: op
