@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.selenechat
 
+import io.github.bluesheep2804.selenechat.channel.ChannelManager
 import io.github.bluesheep2804.selenechat.command.JapanizeCommandBungee
 import io.github.bluesheep2804.selenechat.command.MessageCommandBungee
 import io.github.bluesheep2804.selenechat.command.SeleneChatCommandBungee
@@ -19,6 +20,7 @@ class SeleneChatBungee : Plugin(), IPlugin {
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataFolder)
     override val resourceManager: ResourceManager = ResourceManager(dataFolder)
     override val japanizePlayersManager: JapanizePlayersManager = JapanizePlayersManager(dataFolder)
+    override val channelManager: ChannelManager = ChannelManager(dataFolder)
     init {
         SeleneChat.setPluginInstance(this)
 

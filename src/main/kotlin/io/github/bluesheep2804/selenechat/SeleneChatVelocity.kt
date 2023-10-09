@@ -8,6 +8,7 @@ import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.annotation.DataDirectory
 import com.velocitypowered.api.proxy.ProxyServer
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier
+import io.github.bluesheep2804.selenechat.channel.ChannelManager
 import io.github.bluesheep2804.selenechat.command.*
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.japanize.JapanizePlayersManager
@@ -25,6 +26,7 @@ class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger:
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataDirectory.toFile())
     override val resourceManager: ResourceManager = ResourceManager(dataDirectory.toFile())
     override val japanizePlayersManager: JapanizePlayersManager = JapanizePlayersManager(dataDirectory.toFile())
+    override val channelManager: ChannelManager = ChannelManager(dataDirectory.toFile())
     init {
         SeleneChat.setPluginInstance(this)
 

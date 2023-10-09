@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.selenechat
 
+import io.github.bluesheep2804.selenechat.channel.ChannelManager
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigData
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.japanize.JapanizePlayersManager
@@ -18,6 +19,7 @@ interface IPlugin {
     val japanizePlayersManager: JapanizePlayersManager
     val japanizePlayers: MutableMap<String, Boolean>
         get() = japanizePlayersManager.japanizePlayers
+    val channelManager: ChannelManager
     fun getAllPlayers(): List<SeleneChatPlayer>
     fun getPlayer(name: String): SeleneChatPlayer
     fun getPlayer(uuid: UUID): SeleneChatPlayer

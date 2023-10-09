@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.selenechat
 
+import io.github.bluesheep2804.selenechat.channel.ChannelManager
 import io.github.bluesheep2804.selenechat.command.*
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.japanize.JapanizePlayersManager
@@ -17,6 +18,7 @@ class SeleneChatSpigot : JavaPlugin(), IPlugin {
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataFolder)
     override val resourceManager: ResourceManager = ResourceManager(dataFolder)
     override val japanizePlayersManager: JapanizePlayersManager = JapanizePlayersManager(dataFolder)
+    override val channelManager: ChannelManager = ChannelManager(dataFolder)
     init {
         SeleneChat.setPluginInstance(this)
 
