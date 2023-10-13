@@ -1,7 +1,9 @@
 package io.github.bluesheep2804.selenechat.command
 
+import arrow.core.Either
 import io.github.bluesheep2804.selenechat.SeleneChat.channelManager
 import io.github.bluesheep2804.selenechat.SeleneChat.resource
+import io.github.bluesheep2804.selenechat.channel.ChannelManager.ChannelCreateError
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -21,8 +23,15 @@ class ChannelCommand : ICommand {
                         sender.sendCommandResult(resource.command.channelErrorCreateEmpty)
                         return false
                     }
-                    channelManager.create(args[1])
-                    sender.sendCommandResult(resource.command.channelSuccessCreate(args[1]))
+                    when (val result = channelManager.create(args[1])) {
+                        is Either.Left -> {
+                            sender.sendCommandResult(when (val it = result.value) {
+                                is ChannelCreateError.AlreadyExists -> resource.command.channelErrorCreateExists
+                            })
+                            return false
+                        }
+                        is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessCreate(result.value.name))
+                    }
                 }
                 "list" -> {
                     val returnMessage = Component.text().append(resource.command.channelSuccessList)

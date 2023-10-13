@@ -30,6 +30,8 @@ data class CommandResourceData(
         val channelErrorSubCommandNotFound: Component = Component.text("That subcommand does not exist.", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
         val channelErrorCreateEmpty: Component = Component.text("The channel name is not specified.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorCreateExists: Component = Component.text("The channel with the specified name already exists.", NamedTextColor.RED),
         val channelSuccessCreate: String = "Channel created: <channel>",
         @Serializable(with = ComponentSerializer::class)
         val channelSuccessList: Component = Component.text("Channel list"),

@@ -1,5 +1,8 @@
 package io.github.bluesheep2804.selenechat.channel
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import java.io.File
@@ -26,7 +29,10 @@ class ChannelManager(private val file: File) {
         }
     }
 
-    fun create(name: String) {
+    fun create(name: String): Either<ChannelCreateError, ChannelData> {
+        if (!allChannels.none { it.name == name }) {
+            return ChannelCreateError.AlreadyExists.left()
+        }
         val channelFile = File(channelDirectory, "${name}.yml")
         val channel = ChannelData(name)
         if (!channelDirectory.exists()) {
@@ -36,5 +42,10 @@ class ChannelManager(private val file: File) {
         val output = FileOutputStream(channelFile)
         yaml.encodeToStream(ChannelData.serializer(), channel, output)
         allChannels += channel
+        return channel.right()
+    }
+
+    sealed interface ChannelCreateError {
+        object AlreadyExists : ChannelCreateError
     }
 }
