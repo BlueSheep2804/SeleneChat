@@ -13,7 +13,7 @@ class ChannelManager(private val file: File) {
     private val channelDirectory = File(file, "channel")
     private val yamlConfiguration = YamlConfiguration(strictMode = false)
     private val yaml = Yaml(configuration = yamlConfiguration)
-    val allChannels = mutableListOf<ChannelData>()
+    val allChannels = mutableMapOf<String, ChannelData>()
 
     init {
         reload()
@@ -25,12 +25,13 @@ class ChannelManager(private val file: File) {
         }
         channelDirectory.listFiles()?.forEach {
             val input = FileInputStream(it)
-            allChannels += yaml.decodeFromStream(ChannelData.serializer(), input)
+            val channel = yaml.decodeFromStream(ChannelData.serializer(), input)
+            allChannels[channel.name] = channel
         }
     }
 
     fun create(name: String): Either<ChannelCreateError, ChannelData> {
-        if (!allChannels.none { it.name == name }) {
+        if (!allChannels.none { it.key == name }) {
             return ChannelCreateError.AlreadyExists.left()
         }
         val channelFile = File(channelDirectory, "${name}.yml")
@@ -41,7 +42,7 @@ class ChannelManager(private val file: File) {
         channelFile.createNewFile()
         val output = FileOutputStream(channelFile)
         yaml.encodeToStream(ChannelData.serializer(), channel, output)
-        allChannels += channel
+        allChannels[channel.name] = channel
         return channel.right()
     }
 

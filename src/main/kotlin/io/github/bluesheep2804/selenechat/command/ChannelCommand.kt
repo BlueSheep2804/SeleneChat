@@ -35,10 +35,10 @@ class ChannelCommand : ICommand {
                 }
                 "list" -> {
                     val returnMessage = Component.text().append(resource.command.channelSuccessList)
-                    channelManager.allChannels.forEach {
+                    channelManager.allChannels.forEach { (key, channel) ->
                         returnMessage.appendNewline()
-                                .append(Component.text("- ${it.displayName}"))
-                                .append(Component.text("(${it.name})", NamedTextColor.GRAY))
+                                .append(Component.text("- ${channel.displayName}"))
+                                .append(Component.text("(${key})", NamedTextColor.GRAY))
                     }
                     sender.sendCommandResult(returnMessage.build())
                 }
