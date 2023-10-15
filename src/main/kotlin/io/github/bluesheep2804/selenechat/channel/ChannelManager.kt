@@ -49,4 +49,17 @@ class ChannelManager(private val file: File) {
     sealed interface ChannelCreateError {
         object AlreadyExists : ChannelCreateError
     }
+
+    fun delete(name: String): Either<ChannelDeleteError, ChannelData> {
+        val channel = allChannels.remove(name) ?: return ChannelDeleteError.ChannelNotFound.left()
+        val channelFile = File(channelDirectory, "${name}.yml")
+        if (channelFile.exists()) {
+            channelFile.delete()
+        }
+        return channel.right()
+    }
+
+    sealed interface ChannelDeleteError {
+        object ChannelNotFound : ChannelDeleteError
+    }
 }

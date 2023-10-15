@@ -34,6 +34,11 @@ data class CommandResourceData(
         val channelErrorCreateExists: Component = Component.text("The channel with the specified name already exists.", NamedTextColor.RED),
         val channelSuccessCreate: String = "Channel created: <channel>",
         @Serializable(with = ComponentSerializer::class)
+        val channelErrorDeleteEmpty: Component = Component.text("The channel name is not specified.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorDeleteNotExists: Component = Component.text("The specified channel does not exist.", NamedTextColor.RED),
+        val channelSuccessDelete: String = "Channel deleted: <channel>",
+        @Serializable(with = ComponentSerializer::class)
         val channelSuccessList: Component = Component.text("Channel list"),
 ) {
     fun messageErrorPlayerNotFoundComponent(playerName: String): Component {
@@ -65,5 +70,10 @@ data class CommandResourceData(
     fun channelSuccessCreate(channelName: String): Component {
         val channelNameTagResolver = Placeholder.component("channel", Component.text(channelName))
         return MiniMessage.miniMessage().deserialize(channelSuccessCreate, channelNameTagResolver)
+    }
+
+    fun channelSuccessDelete(channelName: String): Component {
+        val channelNameTagResolver = Placeholder.component("channel", Component.text(channelName))
+        return MiniMessage.miniMessage().deserialize(channelSuccessDelete, channelNameTagResolver)
     }
 }
