@@ -30,6 +30,12 @@ class ChannelManager(private val file: File) {
         }
     }
 
+    fun save(channel: ChannelData) {
+        val channelFile = File(channelDirectory, "${channel.name}.yml")
+        val output = FileOutputStream(channelFile)
+        yaml.encodeToStream(ChannelData.serializer(), channel, output)
+    }
+
     fun create(name: String): Either<ChannelCreateError, ChannelData> {
         if (!allChannels.none { it.key == name }) {
             return ChannelCreateError.AlreadyExists.left()

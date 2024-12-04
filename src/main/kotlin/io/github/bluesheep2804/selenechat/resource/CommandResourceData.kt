@@ -40,6 +40,20 @@ data class CommandResourceData(
         val channelSuccessDelete: String = "Channel deleted: <channel>",
         @Serializable(with = ComponentSerializer::class)
         val channelSuccessList: Component = Component.text("Channel list"),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorJoinEmpty: Component = Component.text("The channel name is not specified.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorJoinNotFound: Component = Component.text("The specified channel cannot be found.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorJoinAlreadyJoins: Component = Component.text("You are already in this channel.", NamedTextColor.RED),
+        val channelSuccessJoin: String = "You joined channel <channel>.",
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorLeaveEmpty: Component = Component.text("The channel name is not specified.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorLeaveNotFound: Component = Component.text("The specified channel cannot be found.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorLeaveNotInChannel: Component = Component.text("You are not in the specified channel.", NamedTextColor.RED),
+        val channelSuccessLeave: String = "You left channel <channel>.",
 ) {
     fun messageErrorPlayerNotFoundComponent(playerName: String): Component {
         val mm = MiniMessage.miniMessage()
@@ -75,5 +89,15 @@ data class CommandResourceData(
     fun channelSuccessDelete(channelName: String): Component {
         val channelNameTagResolver = Placeholder.component("channel", Component.text(channelName))
         return MiniMessage.miniMessage().deserialize(channelSuccessDelete, channelNameTagResolver)
+    }
+
+    fun channelSuccessJoin(channelName: String): Component {
+        val channelNameTagResolver = Placeholder.component("channel", Component.text(channelName))
+        return MiniMessage.miniMessage().deserialize(channelSuccessJoin, channelNameTagResolver)
+    }
+
+    fun channelSuccessLeave(channelName: String): Component {
+        val channelNameTagResolver = Placeholder.component("channel", Component.text(channelName))
+        return MiniMessage.miniMessage().deserialize(channelSuccessLeave, channelNameTagResolver)
     }
 }

@@ -3,6 +3,9 @@ package io.github.bluesheep2804.selenechat.command
 import arrow.core.Either
 import io.github.bluesheep2804.selenechat.SeleneChat.channelManager
 import io.github.bluesheep2804.selenechat.SeleneChat.resource
+import io.github.bluesheep2804.selenechat.channel.ChannelData
+import io.github.bluesheep2804.selenechat.channel.ChannelData.ChannelJoinError
+import io.github.bluesheep2804.selenechat.channel.ChannelData.ChannelLeaveError
 import io.github.bluesheep2804.selenechat.channel.ChannelManager.ChannelDeleteError
 import io.github.bluesheep2804.selenechat.channel.ChannelManager.ChannelCreateError
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
@@ -57,6 +60,48 @@ class ChannelCommand : ICommand {
                     }
                     sender.sendCommandResult(returnMessage.build())
                 }
+                "join" -> {
+                    if (args.size < 2) {
+                        sender.sendCommandResult(resource.command.channelErrorJoinEmpty)
+                        return false
+                    }
+                    val channel = channelManager.allChannels[args[1]]
+                    if (channel is ChannelData) {
+                        when (val result = channel.join(sender)) {
+                            is Either.Left -> {
+                                sender.sendCommandResult(when (result.value) {
+                                    is ChannelJoinError.AlreadyJoins -> resource.command.channelErrorJoinAlreadyJoins
+                                })
+                                return false
+                            }
+                            is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessJoin(channel.displayName))
+                        }
+                    } else {
+                        sender.sendCommandResult(resource.command.channelErrorJoinNotFound)
+                        return false
+                    }
+                }
+                "leave" -> {
+                    if (args.size < 2) {  // TODO: 会話中のチャンネルから抜けるようにする
+                        sender.sendCommandResult(resource.command.channelErrorLeaveEmpty)
+                        return false
+                    }
+                    val channel = channelManager.allChannels[args[1]]
+                    if (channel is ChannelData) {
+                        when (val result = channel.leave(sender)) {
+                            is Either.Left -> {
+                                sender.sendCommandResult(when (result.value) {
+                                    is ChannelLeaveError.NotInChannel -> resource.command.channelErrorLeaveNotInChannel
+                                })
+                            }
+                            is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessLeave(channel.displayName))
+                        }
+
+                    } else {
+                        sender.sendCommandResult(resource.command.channelErrorLeaveNotFound)
+                        return false
+                    }
+                }
                 else -> {
                     sender.sendCommandResult(resource.command.channelErrorSubCommandNotFound)
                 }
@@ -67,9 +112,9 @@ class ChannelCommand : ICommand {
 
     override fun suggest(sender: SeleneChatPlayer, args: Array<String>): List<String> {
         return when (args.size) {
-            1 -> listOf("list", "create", "delete").filter { it.startsWith(args[0]) || args[0] == "" }
+            1 -> listOf("list", "create", "delete", "join", "leave").filter { it.startsWith(args[0]) || args[0] == "" }
             2 -> when (args[0]) {
-                "delete" -> channelManager.allChannels.keys.filter { it.startsWith(args[1]) || args[1] == "" }
+                "delete", "join", "leave" -> channelManager.allChannels.keys.filter { it.startsWith(args[1]) || args[1] == "" }
                 else -> emptyList()
             }
             else -> emptyList()
