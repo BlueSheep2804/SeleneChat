@@ -34,7 +34,7 @@ class ChannelCommand : ICommand {
                             })
                             return false
                         }
-                        is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessCreate(result.value.name))
+                        is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessCreate(result.value))
                     }
                 }
                 "delete" -> {
@@ -48,14 +48,15 @@ class ChannelCommand : ICommand {
                                 is ChannelDeleteError.ChannelNotFound -> resource.command.channelErrorDeleteNotExists
                             })
                         }
-                        is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessDelete(result.value.name))
+                        is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessDelete(result.value))
                     }
                 }
                 "list" -> {
                     val returnMessage = Component.text().append(resource.command.channelSuccessList)
                     channelManager.allChannels.forEach { (key, channel) ->
                         returnMessage.appendNewline()
-                                .append(Component.text("- ${channel.displayName}"))
+                                .append(Component.text("- "))
+                                .append(channel.displayName)
                                 .append(Component.text("(${key})", NamedTextColor.GRAY))
                     }
                     sender.sendCommandResult(returnMessage.build())
@@ -74,7 +75,7 @@ class ChannelCommand : ICommand {
                                 })
                                 return false
                             }
-                            is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessJoin(channel.displayName))
+                            is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessJoin(channel))
                         }
                     } else {
                         sender.sendCommandResult(resource.command.channelErrorJoinNotFound)
@@ -94,7 +95,7 @@ class ChannelCommand : ICommand {
                                     is ChannelLeaveError.NotInChannel -> resource.command.channelErrorLeaveNotInChannel
                                 })
                             }
-                            is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessLeave(channel.displayName))
+                            is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessLeave(channel))
                         }
 
                     } else {

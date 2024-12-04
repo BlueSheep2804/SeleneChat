@@ -5,13 +5,15 @@ import arrow.core.left
 import arrow.core.right
 import io.github.bluesheep2804.selenechat.SeleneChat
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
+import io.github.bluesheep2804.selenechat.util.ComponentSerializer
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 
 @Serializable
 data class ChannelData(
         val name: String,
-        val displayName: String = name,
+        @Serializable(with = ComponentSerializer::class)
+        val displayName: Component = Component.text(name),
         val playerList: MutableList<String> = mutableListOf()
 ) {
     fun join(player: SeleneChatPlayer): Either<ChannelJoinError, SeleneChatPlayer> {

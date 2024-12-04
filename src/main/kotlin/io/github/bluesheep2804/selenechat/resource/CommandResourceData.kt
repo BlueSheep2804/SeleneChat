@@ -1,6 +1,7 @@
 package io.github.bluesheep2804.selenechat.resource
 
 import io.github.bluesheep2804.selenechat.SeleneChat
+import io.github.bluesheep2804.selenechat.channel.ChannelData
 import io.github.bluesheep2804.selenechat.util.ComponentSerializer
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
@@ -82,23 +83,23 @@ data class CommandResourceData(
         return mm.deserialize(japanizeSuccessChanged, valueTagResolver)
     }
 
-    fun channelSuccessCreate(channelName: String): Component {
-        val channelNameTagResolver = Placeholder.component("channel", Component.text(channelName))
+    fun channelSuccessCreate(channel: ChannelData): Component {
+        val channelNameTagResolver = Placeholder.component("channel", channel.displayName)
         return MiniMessage.miniMessage().deserialize(channelSuccessCreate, channelNameTagResolver)
     }
 
-    fun channelSuccessDelete(channelName: String): Component {
-        val channelNameTagResolver = Placeholder.component("channel", Component.text(channelName))
+    fun channelSuccessDelete(channel: ChannelData): Component {
+        val channelNameTagResolver = Placeholder.component("channel", channel.displayName)
         return MiniMessage.miniMessage().deserialize(channelSuccessDelete, channelNameTagResolver)
     }
 
-    fun channelSuccessJoin(channelName: String): Component {
-        val channelNameTagResolver = Placeholder.component("channel", Component.text(channelName))
+    fun channelSuccessJoin(channel: ChannelData): Component {
+        val channelNameTagResolver = Placeholder.component("channel", channel.displayName)
         return MiniMessage.miniMessage().deserialize(channelSuccessJoin, channelNameTagResolver)
     }
 
-    fun channelSuccessLeave(channelName: String): Component {
-        val channelNameTagResolver = Placeholder.component("channel", Component.text(channelName))
+    fun channelSuccessLeave(channel: ChannelData): Component {
+        val channelNameTagResolver = Placeholder.component("channel", channel.displayName)
         return MiniMessage.miniMessage().deserialize(channelSuccessLeave, channelNameTagResolver)
     }
 }
