@@ -33,8 +33,8 @@ class MessageCommand : ICommand {
         }
 
         val returnMessage = ChatMessage.privateMessage(message, sender, receiver)
-        sender.sendCommandResult(returnMessage)
-        receiver.sendCommandResult(returnMessage)
+        sender.sendMessage(returnMessage)
+        receiver.sendMessage(returnMessage)
         return true
     }
 
