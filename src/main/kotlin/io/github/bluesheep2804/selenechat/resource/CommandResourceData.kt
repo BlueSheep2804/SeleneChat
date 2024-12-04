@@ -1,6 +1,7 @@
 package io.github.bluesheep2804.selenechat.resource
 
 import io.github.bluesheep2804.selenechat.SeleneChat
+import io.github.bluesheep2804.selenechat.util.ComponentSerializer
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor

@@ -1,4 +1,4 @@
-package io.github.bluesheep2804.selenechat.resource
+package io.github.bluesheep2804.selenechat.util
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
