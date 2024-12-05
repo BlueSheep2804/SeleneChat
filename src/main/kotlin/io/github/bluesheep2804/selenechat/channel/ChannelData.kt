@@ -8,6 +8,7 @@ import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.util.ComponentSerializer
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
+import java.util.*
 
 @Serializable
 data class ChannelData(
@@ -32,7 +33,7 @@ data class ChannelData(
 
     fun sendMessage(text: Component) {
         playerList.forEach {
-            SeleneChat.plugin.getPlayer(it).sendMessage(text)
+            SeleneChat.plugin.getPlayer(UUID.fromString(it)).sendMessage(text)  // TODO: プレイヤーのキャッシュをするべきな気がする
         }
     }
 

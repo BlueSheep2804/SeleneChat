@@ -3,9 +3,11 @@ package io.github.bluesheep2804.selenechat.listener
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.connection.PluginMessageEvent
 import com.velocitypowered.api.event.player.PlayerChatEvent
+import io.github.bluesheep2804.selenechat.SeleneChat.channelManager
 import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.SeleneChat.plugin
 import io.github.bluesheep2804.selenechat.SeleneChatVelocity
+import io.github.bluesheep2804.selenechat.channel.ChannelData
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerVelocity
@@ -21,7 +23,13 @@ class ChatListenerVelocity(plugin: SeleneChatVelocity) {
         // デフォルトのイベントを無効化する
         // クライアントのバージョンが1.19.1以降だとキックされるがUnSignedVelocityで回避できる
         event.result = PlayerChatEvent.ChatResult.denied()
-        proxy.sendMessage(ChatMessage.chat(message, sender))
+
+        val channel = channelManager.getPlayerChannel(sender)
+        if (channel is ChannelData) {
+            channel.sendMessage(ChatMessage.chat(message, sender))
+        } else {
+            proxy.sendMessage(ChatMessage.chat(message, sender))
+        }
     }
 
     @Subscribe

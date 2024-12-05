@@ -5,6 +5,8 @@ import arrow.core.left
 import arrow.core.right
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
+import io.github.bluesheep2804.selenechat.SeleneChat
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -69,5 +71,10 @@ class ChannelManager(private val file: File) {
 
     sealed interface ChannelDeleteError {
         object ChannelNotFound : ChannelDeleteError
+    }
+
+    fun getPlayerChannel(player: SeleneChatPlayer): ChannelData? {
+        val channelName = playerChannelMap[player.uniqueId]
+        return allChannels[channelName]
     }
 }
