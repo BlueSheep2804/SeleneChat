@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.3.0](https://github.com/BlueSheep2804/SeleneChat/compare/v0.2.0...v0.3.0) (2024-12-05)
+
+
+### Features
+
+* 🎸 ResourceDataにバージョンを追加 ([6ac76ab](https://github.com/BlueSheep2804/SeleneChat/commit/6ac76ab02f17d2e5d0529f63d7c6c19734fe10de))
+* 🎸 ResourceManagerに保存機能を追加 ([1e4d51e](https://github.com/BlueSheep2804/SeleneChat/commit/1e4d51ea720753b14dfd466b5adedfb2422f8325))
+* 🎸 コマンドの結果に接頭辞を追加 ([6fbe2e0](https://github.com/BlueSheep2804/SeleneChat/commit/6fbe2e00d39cb8fa20b571faa0d5816f3b0f2b77))
+* 🎸 コンフィグファイルのアップデート時に自動で更新するように変更 ([ecf4175](https://github.com/BlueSheep2804/SeleneChat/commit/ecf41753eba028f460ab8ca6ecae438b13132b1c))
+
+
+### Bug Fixes
+
+* 🐛 プライベートメッセージにSeleneChatの接頭辞が付いていた問題を修正 ([85cd6c0](https://github.com/BlueSheep2804/SeleneChat/commit/85cd6c082d982ad74d33ff3d2d89217d5c903161))
+
 ## [0.2.0](https://github.com/BlueSheep2804/SeleneChat/compare/v0.1.1...v0.2.0) (2023-07-21)
 
 
