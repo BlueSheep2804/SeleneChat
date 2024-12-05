@@ -8,12 +8,14 @@ import com.charleskorn.kaml.YamlConfiguration
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.util.*
 
 class ChannelManager(private val file: File) {
     private val channelDirectory = File(file, "channel")
     private val yamlConfiguration = YamlConfiguration(strictMode = false)
     private val yaml = Yaml(configuration = yamlConfiguration)
     val allChannels = mutableMapOf<String, ChannelData>()
+    val playerChannelMap = mutableMapOf<UUID, String>()
 
     init {
         reload()

@@ -49,6 +49,7 @@ data class CommandResourceData(
         @Serializable(with = ComponentSerializer::class)
         val channelErrorJoinAlreadyJoins: Component = Component.text("You are already in this channel.", NamedTextColor.RED),
         val channelSuccessJoin: String = "You joined channel <channel>.",
+        val channelSuccessJoinSwitch: String = "Your chat channel has been changed to <channel>.",
         @Serializable(with = ComponentSerializer::class)
         val channelErrorLeaveEmpty: Component = Component.text("The channel name is not specified.", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
@@ -96,6 +97,11 @@ data class CommandResourceData(
     fun channelSuccessJoin(channel: ChannelData): Component {
         val channelNameTagResolver = Placeholder.component("channel", channel.displayName)
         return MiniMessage.miniMessage().deserialize(channelSuccessJoin, channelNameTagResolver)
+    }
+
+    fun channelSuccessJoinSwitch(channel: ChannelData): Component {
+        val channelNameTagResolver = Placeholder.component("channel", channel.displayName)
+        return MiniMessage.miniMessage().deserialize(channelSuccessJoinSwitch, channelNameTagResolver)
     }
 
     fun channelSuccessLeave(channel: ChannelData): Component {

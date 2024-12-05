@@ -69,14 +69,11 @@ class ChannelCommand : ICommand {
                     val channel = channelManager.allChannels[args[1]]
                     if (channel is ChannelData) {
                         when (val result = channel.join(sender)) {
-                            is Either.Left -> {
-                                sender.sendCommandResult(when (result.value) {
-                                    is ChannelJoinError.AlreadyJoins -> resource.command.channelErrorJoinAlreadyJoins
-                                })
-                                return false
-                            }
+                            is Either.Left -> {}
                             is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessJoin(channel))
                         }
+                        channelManager.playerChannelMap[sender.uniqueId] = channel.name
+                        sender.sendCommandResult(resource.command.channelSuccessJoinSwitch(channel))
                     } else {
                         sender.sendCommandResult(resource.command.channelErrorJoinNotFound)
                         return false
