@@ -17,12 +17,15 @@ import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerOffline
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerVelocity
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
+import io.github.bluesheep2804.selenechat.util.Platforms
+import net.kyori.adventure.text.Component
 import org.slf4j.Logger
 import java.nio.file.Path
 import java.util.*
 
 @Plugin(id = "selenechat", name = "SeleneChat", version = "0.3.0-SNAPSHOT", description = "Chat plugin inspired by LunaChat", authors = ["BlueSheep2804"])
 class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger: Logger, @DataDirectory val dataDirectory: Path) : IPlugin {
+    override val platform = Platforms.VELOCITY
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataDirectory.toFile())
     override val resourceManager: ResourceManager = ResourceManager(dataDirectory.toFile())
     override val japanizePlayersManager: JapanizePlayersManager = JapanizePlayersManager(dataDirectory.toFile())
@@ -82,5 +85,9 @@ class SeleneChatVelocity @Inject constructor(val proxy: ProxyServer, val logger:
     override fun getPlayer(uuid: UUID): SeleneChatPlayer {
         val player = proxy.getPlayer(uuid)
         return if (player.isEmpty) SeleneChatPlayerOffline(uuid) else SeleneChatPlayerVelocity(player.get())
+    }
+
+    override fun sendMessage(component: Component) {
+        proxy.sendMessage(component)
     }
 }

@@ -1,13 +1,10 @@
 package io.github.bluesheep2804.selenechat.listener
 
-import io.github.bluesheep2804.selenechat.SeleneChat.channelManager
 import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.SeleneChatSpigot
-import io.github.bluesheep2804.selenechat.channel.ChannelData
-import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerSpigot
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
+import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -19,24 +16,12 @@ class ChatListenerSpigot(private val plugin: SeleneChatSpigot) : Listener {
         val message = event.message
         val sender = SeleneChatPlayerSpigot(event.player)
 
-        val channel = channelManager.getPlayerChannel(sender)
-        if (channel is ChannelData) {
-            channel.sendMessage(ChatMessage.chat(message, sender))
+        val result = ChatListener.chat(message, sender)
+        if (result is Component)
+            event.message = LegacyComponentSerializer.legacySection().serialize(result)
+        else
             event.isCancelled = true
-        } else {
-            if (config.useSeleneChatFormat) {
-                val returnMessage = ChatMessage.chat(message, sender)
-                try {
-                    plugin.server.spigot().broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
-                } catch (_: NoSuchMethodError) {
-                    plugin.server.broadcastMessage(LegacyComponentSerializer.legacySection().serialize(returnMessage))
-                }
-                event.isCancelled = true
-            } else {
-                val returnMessage = ChatMessage.message(message, sender)
-                event.message = LegacyComponentSerializer.legacySection().serialize(returnMessage)
-            }
-        }
+
         if (config.shouldSendPluginMessage) {
             plugin.sendPluginMessage(PluginMessage(event.message, sender).build())
         }

@@ -2,14 +2,11 @@ package io.github.bluesheep2804.selenechat.listener
 
 import com.google.common.io.ByteStreams
 import io.github.bluesheep2804.selenechat.SeleneChat
-import io.github.bluesheep2804.selenechat.SeleneChat.channelManager
 import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.SeleneChatBungee
-import io.github.bluesheep2804.selenechat.channel.ChannelData
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.message.PluginMessage
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerBungee
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
 import net.md_5.bungee.api.connection.ProxiedPlayer
 import net.md_5.bungee.api.event.ChatEvent
 import net.md_5.bungee.api.event.PluginMessageEvent
@@ -30,15 +27,7 @@ class ChatListenerBungee(private val plugin: SeleneChatBungee) : Listener {
         proxy.scheduler.runAsync(plugin) {
             val message = event.message
             val sender = SeleneChatPlayerBungee.getPlayer(event.sender)
-
-            val channel = channelManager.getPlayerChannel(sender)
-            if (channel is ChannelData) {
-                val returnMessage = ChatMessage.chat(message, sender)
-                channel.sendMessage(returnMessage)
-            } else {
-                val returnMessage = ChatMessage.chat(message, sender)
-                proxy.broadcast(*BungeeComponentSerializer.get().serialize(returnMessage))
-            }
+            ChatListener.chat(message, sender)
         }
         event.isCancelled = true
     }

@@ -9,12 +9,17 @@ import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerOffline
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerSpigot
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
+import io.github.bluesheep2804.selenechat.util.Platforms
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
 class SeleneChatSpigot : JavaPlugin(), IPlugin {
     private lateinit var adventure: BukkitAudiences
+    override val platform = Platforms.BUKKIT
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataFolder)
     override val resourceManager: ResourceManager = ResourceManager(dataFolder)
     override val japanizePlayersManager: JapanizePlayersManager = JapanizePlayersManager(dataFolder)
@@ -65,5 +70,13 @@ class SeleneChatSpigot : JavaPlugin(), IPlugin {
     override fun getPlayer(uuid: UUID): SeleneChatPlayer {
         val player = server.getPlayer(uuid)
         return if (player == null) SeleneChatPlayerOffline(uuid) else SeleneChatPlayerSpigot(player)
+    }
+
+    override fun sendMessage(component: Component) {
+        try {
+            server.spigot().broadcast(*BungeeComponentSerializer.get().serialize(component))
+        } catch (_: NoSuchMethodError) {
+            server.broadcastMessage(LegacyComponentSerializer.legacySection().serialize(component))
+        }
     }
 }
