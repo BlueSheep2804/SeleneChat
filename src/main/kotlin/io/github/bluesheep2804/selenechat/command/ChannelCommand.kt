@@ -98,7 +98,14 @@ class ChannelCommand : ICommand {
                                     is ChannelLeaveError.NotInChannel -> resource.command.channelErrorLeaveNotInChannel
                                 })
                             }
-                            is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessLeave(channel))
+                            is Either.Right -> {
+                                sender.sendCommandResult(resource.command.channelSuccessLeave(channel))
+
+                                if (channel.name == channelManager.playerChannelMap[sender.uniqueId]) {
+                                    channelManager.playerChannelMap.remove(sender.uniqueId)
+                                    sender.sendCommandResult(resource.command.channelSuccessJoinSwitchGlobal)
+                                }
+                            }
                         }
 
                     } else {
