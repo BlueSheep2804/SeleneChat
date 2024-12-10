@@ -2,6 +2,7 @@ package io.github.bluesheep2804.selenechat.command
 
 import arrow.core.Either
 import io.github.bluesheep2804.selenechat.SeleneChat.channelManager
+import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.SeleneChat.resource
 import io.github.bluesheep2804.selenechat.channel.ChannelData
 import io.github.bluesheep2804.selenechat.channel.ChannelData.ChannelJoinError
@@ -75,8 +76,13 @@ class ChannelCommand : ICommand {
                         channelManager.playerChannelMap[sender.uniqueId] = channel.name
                         sender.sendCommandResult(resource.command.channelSuccessJoinSwitch(channel))
                     } else {
-                        sender.sendCommandResult(resource.command.channelErrorJoinNotFound)
-                        return false
+                        if (args[1] == config.globalMarker) {
+                            channelManager.playerChannelMap.remove(sender.uniqueId)
+                            sender.sendCommandResult(resource.command.channelSuccessJoinSwitchGlobal)
+                        } else {
+                            sender.sendCommandResult(resource.command.channelErrorJoinNotFound)
+                            return false
+                        }
                     }
                 }
                 "leave" -> {

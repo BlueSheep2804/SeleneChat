@@ -51,6 +51,8 @@ data class CommandResourceData(
         val channelSuccessJoin: String = "You joined channel <channel>.",
         val channelSuccessJoinSwitch: String = "Your chat channel has been changed to <channel>.",
         @Serializable(with = ComponentSerializer::class)
+        val channelSuccessJoinSwitchGlobal: Component = Component.text("Your chat channel has been changed to global channel."),
+        @Serializable(with = ComponentSerializer::class)
         val channelErrorLeaveEmpty: Component = Component.text("The channel name is not specified.", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
         val channelErrorLeaveNotFound: Component = Component.text("The specified channel cannot be found.", NamedTextColor.RED),
