@@ -14,6 +14,8 @@ data class SeleneChatConfigData(
         var nonJapanizeMarker: String = "$",
         @YamlComment("Whether to Japanize by default.")
         var japanizeDefault: Boolean = true,
+        @YamlComment("Set a marker for the global channel.")
+        var globalMarker: String = "!",
         @YamlComment("Whether to send message content to proxy servers using plugin messages.", "Applies to Spigot only.")
         var shouldSendPluginMessage: Boolean = false,
         @YamlComment("Choose whether to send the message in the standard Minecraft message format or in SeleneChat's own format.", "If true, SeleneChat's format will be used.", "Applies to Spigot only.")

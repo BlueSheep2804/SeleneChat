@@ -12,11 +12,12 @@ import net.kyori.adventure.text.Component
 
 object ChatListener {
     fun chat(message: String, sender: SeleneChatPlayer): Component? {
-        val channel = channelManager.getPlayerChannel(sender)
+        val channel = if (message.startsWith(config.globalMarker)) null else channelManager.getPlayerChannel(sender)
         return if (channel is ChannelData) {
             channel.sendMessage(ChatMessage.chat(message, sender))
             null
         } else {
+            val message = if (message.startsWith(config.globalMarker)) message.removePrefix(config.globalMarker) else message
             if (plugin.platform == Platforms.BUKKIT && !config.useSeleneChatFormat) {
                 ChatMessage.message(message, sender)
             } else {
