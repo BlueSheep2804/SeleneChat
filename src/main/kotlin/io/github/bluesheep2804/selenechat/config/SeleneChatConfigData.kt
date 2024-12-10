@@ -36,6 +36,17 @@ data class SeleneChatConfigData(
         )
         var chatFormat: String = "<sender><server:@:><green>:</green> <message>",
         @YamlComment(
+                "Specifies the format of the channel chat.",
+                "MiniMessage tags can be used.",
+                "<channel> -> Displays the name of the channel.",
+                "<sender> -> Display name of sender",
+                "<server:[prefix]:[suffix]> -> Name of the server where the sender is located",
+                "<date> -> Date",
+                "<time> -> Time",
+                "<message> -> Message body"
+        )
+        var channelChatFormat: String = "[<channel>]<sender><server:@:><green>:</green> <message>",
+        @YamlComment(
                 "Specifies the format of the message portion of the chat.",
                 "MiniMessage tags can be used.",
                 "<message> -> Message body",

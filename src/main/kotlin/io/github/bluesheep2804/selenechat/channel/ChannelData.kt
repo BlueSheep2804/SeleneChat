@@ -4,6 +4,7 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import io.github.bluesheep2804.selenechat.SeleneChat
+import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.util.ComponentSerializer
 import kotlinx.serialization.Serializable
@@ -15,6 +16,7 @@ data class ChannelData(
         val name: String,
         @Serializable(with = ComponentSerializer::class)
         val displayName: Component = Component.text(name),
+        val format: String = "",
         val playerList: MutableList<String> = mutableListOf()
 ) {
     fun join(player: SeleneChatPlayer): Either<ChannelJoinError, SeleneChatPlayer> {

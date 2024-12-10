@@ -20,5 +20,7 @@ data class ResourceData(
         val disabled: Component = Component.text("Disabled", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
         val hoverTextServer: Component = Component.translatable("selectServer.select"),
+        @Serializable(with = ComponentSerializer::class)
+        val hoverTextChannel: Component = Component.text("Change chat channel"),
         val command: CommandResourceData = CommandResourceData()
 )

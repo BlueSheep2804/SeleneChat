@@ -14,7 +14,7 @@ object ChatListener {
     fun chat(message: String, sender: SeleneChatPlayer): Component? {
         val channel = if (message.startsWith(config.globalMarker)) null else channelManager.getPlayerChannel(sender)
         return if (channel is ChannelData) {
-            channel.sendMessage(ChatMessage.chat(message, sender))
+            channel.sendMessage(ChatMessage.channelChat(message, sender, channel))
             null
         } else {
             val message = if (message.startsWith(config.globalMarker)) message.removePrefix(config.globalMarker) else message

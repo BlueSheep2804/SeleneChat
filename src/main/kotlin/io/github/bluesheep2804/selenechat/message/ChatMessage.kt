@@ -2,6 +2,7 @@ package io.github.bluesheep2804.selenechat.message
 
 import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.SeleneChat.resource
+import io.github.bluesheep2804.selenechat.channel.ChannelData
 import io.github.bluesheep2804.selenechat.config.ConvertMode
 import io.github.bluesheep2804.selenechat.japanize.Japanizer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
@@ -76,6 +77,35 @@ object ChatMessage {
         )
     }
 
+    fun channelChat(msg: String, sender: SeleneChatPlayer, channel: ChannelData): Component {
+        val mm = MiniMessage.miniMessage()
+        val senderTagResolver = Placeholder.component(
+                "sender",
+                playerClickableComponent(sender)
+        )
+        val channelTagResolver = Placeholder.component(
+                "channel",
+                channelClickableComponent(channel)
+        )
+        val serverTagResolver = TagResolver.resolver("server")
+        { args: ArgumentQueue, _: Context ->
+            return@resolver serverTag(sender, args)
+        }
+        val messageTagResolver = Placeholder.component("message", message(msg, sender))
+        val dateTagResolver = Placeholder.component("date", Component.text(dateFormat.format(Date())))
+        val timeTagResolver = Placeholder.component("time", Component.text(timeFormat.format(Date())))
+
+        return mm.deserialize(
+                channel.format.ifEmpty { config.channelChatFormat },
+                senderTagResolver,
+                channelTagResolver,
+                serverTagResolver,
+                messageTagResolver,
+                dateTagResolver,
+                timeTagResolver
+        )
+    }
+
     fun privateMessage(msg: String, sender: SeleneChatPlayer, receiver: SeleneChatPlayer): Component {
         val mm = MiniMessage.miniMessage()
         val senderTagResolver = Placeholder.component(
@@ -117,6 +147,12 @@ object ChatMessage {
         return Component.text(player.displayName)
                 .hoverEvent(player.asHoverEvent())
                 .clickEvent(ClickEvent.suggestCommand("/tell ${player.displayName} "))
+    }
+
+    private fun channelClickableComponent(channel: ChannelData): Component {
+        return channel.displayName
+                .hoverEvent(resource.hoverTextChannel)
+                .clickEvent(ClickEvent.runCommand("/channel join ${channel.name}"))
     }
 
     private fun serverClickableComponent(serverName: String): Component {
