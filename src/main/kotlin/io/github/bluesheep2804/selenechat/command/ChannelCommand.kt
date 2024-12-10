@@ -86,11 +86,11 @@ class ChannelCommand : ICommand {
                     }
                 }
                 "leave" -> {
-                    if (args.size < 2) {  // TODO: 会話中のチャンネルから抜けるようにする
-                        sender.sendCommandResult(resource.command.channelErrorLeaveEmpty)
-                        return false
+                    val channel = if (args.size < 2) {
+                        channelManager.getPlayerChannel(sender)
+                    } else {
+                        channelManager.allChannels[args[1]]
                     }
-                    val channel = channelManager.allChannels[args[1]]
                     if (channel is ChannelData) {
                         when (val result = channel.leave(sender)) {
                             is Either.Left -> {
