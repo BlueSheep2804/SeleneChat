@@ -1,6 +1,7 @@
 package io.github.bluesheep2804.selenechat.config
 
 import com.charleskorn.kaml.YamlComment
+import io.github.bluesheep2804.selenechat.common.ConvertMode
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -3,7 +3,7 @@ package io.github.bluesheep2804.selenechat.message
 import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.SeleneChat.resource
 import io.github.bluesheep2804.selenechat.channel.ChannelData
-import io.github.bluesheep2804.selenechat.config.ConvertMode
+import io.github.bluesheep2804.selenechat.common.ConvertMode
 import io.github.bluesheep2804.selenechat.japanize.Japanizer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import net.kyori.adventure.text.Component
@@ -25,7 +25,7 @@ object ChatMessage {
         get() = SimpleDateFormat(config.dateFormat)
     private val timeFormat: SimpleDateFormat
         get() = SimpleDateFormat(config.timeFormat)
-    fun message(msg: String, sender: SeleneChatPlayer): Component {
+    fun message(msg: String, sender: SeleneChatPlayer, convertMode: ConvertMode): Component {
         val mm = MiniMessage.miniMessage()
         val serializedMessage = if (config.useColorCode || sender.hasPermission("selenechat.colorcode")) {
             LegacyComponentSerializer.legacyAmpersand().deserialize(msg.removePrefix("$"))
@@ -39,18 +39,22 @@ object ChatMessage {
         )
         val jpTagResolver = TagResolver.resolver("jp")
         { args: ArgumentQueue, _: Context ->
-            if (!sender.isEnabledJapanize || config.convertMode == ConvertMode.NONE || !japaneseConversion.shouldConvert() || msg[0] == '$') {
+            if (!sender.isEnabledJapanize || convertMode == ConvertMode.NONE || !japaneseConversion.shouldConvert() || msg[0] == '$') {
                 return@resolver Tag.selfClosingInserting(Component.text(""))
             }
             val prefix = args.popOr("prefix").value()
             val suffix = args.popOr("suffix").value()
             return@resolver Tag.selfClosingInserting(
                     Component.text(prefix)
-                            .append(Component.text(japaneseConversion.japanize()))
+                            .append(Component.text(japaneseConversion.japanize(convertMode)))
                             .append(Component.text(suffix))
             )
         }
         return mm.deserialize(config.messageFormat, messageTagResolver, jpTagResolver)
+    }
+
+    fun message(msg: String, sender: SeleneChatPlayer): Component {
+        return message(msg, sender, config.convertMode)
     }
 
     fun chat(msg: String, sender: SeleneChatPlayer): Component {
@@ -91,7 +95,7 @@ object ChatMessage {
         { args: ArgumentQueue, _: Context ->
             return@resolver serverTag(sender, args)
         }
-        val messageTagResolver = Placeholder.component("message", message(msg, sender))
+        val messageTagResolver = Placeholder.component("message", message(msg, sender, channel.japanize))
         val dateTagResolver = Placeholder.component("date", Component.text(dateFormat.format(Date())))
         val timeTagResolver = Placeholder.component("time", Component.text(timeFormat.format(Date())))
 

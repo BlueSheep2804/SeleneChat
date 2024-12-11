@@ -5,6 +5,7 @@ import arrow.core.left
 import arrow.core.right
 import io.github.bluesheep2804.selenechat.SeleneChat
 import io.github.bluesheep2804.selenechat.common.ComponentSerializer
+import io.github.bluesheep2804.selenechat.common.ConvertMode
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
@@ -16,6 +17,7 @@ data class ChannelData(
         @Serializable(with = ComponentSerializer::class)
         var displayName: Component = Component.text(name),
         var format: String = "",
+        var japanize: ConvertMode = ConvertMode.IME,
         val playerList: MutableList<String> = mutableListOf()
 ) {
     fun join(player: SeleneChatPlayer): Either<ChannelJoinError, SeleneChatPlayer> {

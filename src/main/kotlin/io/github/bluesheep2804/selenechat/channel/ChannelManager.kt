@@ -5,6 +5,7 @@ import arrow.core.left
 import arrow.core.right
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
+import io.github.bluesheep2804.selenechat.SeleneChat
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import java.io.File
 import java.io.FileInputStream
@@ -45,6 +46,7 @@ class ChannelManager(private val file: File) {
         }
         val channelFile = File(channelDirectory, "${name}.yml")
         val channel = ChannelData(name)
+        channel.japanize = SeleneChat.plugin.config.convertMode
         if (!channelDirectory.exists()) {
             channelDirectory.mkdirs()
         }
