@@ -14,8 +14,8 @@ import java.util.*
 data class ChannelData(
         val name: String,
         @Serializable(with = ComponentSerializer::class)
-        val displayName: Component = Component.text(name),
-        val format: String = "",
+        var displayName: Component = Component.text(name),
+        var format: String = "",
         val playerList: MutableList<String> = mutableListOf()
 ) {
     fun join(player: SeleneChatPlayer): Either<ChannelJoinError, SeleneChatPlayer> {
