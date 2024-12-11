@@ -1,13 +1,13 @@
 package io.github.bluesheep2804.selenechat
 
 import io.github.bluesheep2804.selenechat.channel.ChannelManager
+import io.github.bluesheep2804.selenechat.common.Platforms
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigData
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.japanize.JapanizePlayersManager
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.resource.ResourceData
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
-import io.github.bluesheep2804.selenechat.util.Platforms
 import net.kyori.adventure.text.Component
 import java.util.*
 

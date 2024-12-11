@@ -5,6 +5,7 @@ import io.github.bluesheep2804.selenechat.command.ChannelCommandBungee
 import io.github.bluesheep2804.selenechat.command.JapanizeCommandBungee
 import io.github.bluesheep2804.selenechat.command.MessageCommandBungee
 import io.github.bluesheep2804.selenechat.command.SeleneChatCommandBungee
+import io.github.bluesheep2804.selenechat.common.Platforms
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.japanize.JapanizePlayersManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerBungee
@@ -12,7 +13,6 @@ import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerBungee
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerOffline
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
-import io.github.bluesheep2804.selenechat.util.Platforms
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer

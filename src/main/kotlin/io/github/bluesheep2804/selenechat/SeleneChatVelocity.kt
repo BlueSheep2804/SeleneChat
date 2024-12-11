@@ -3,13 +3,13 @@ package io.github.bluesheep2804.selenechat
 import com.google.inject.Inject
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent
-import com.velocitypowered.api.event.proxy.ProxyShutdownEvent
 import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.annotation.DataDirectory
 import com.velocitypowered.api.proxy.ProxyServer
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier
 import io.github.bluesheep2804.selenechat.channel.ChannelManager
 import io.github.bluesheep2804.selenechat.command.*
+import io.github.bluesheep2804.selenechat.common.Platforms
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.japanize.JapanizePlayersManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerVelocity
@@ -17,7 +17,6 @@ import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerOffline
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerVelocity
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
-import io.github.bluesheep2804.selenechat.util.Platforms
 import net.kyori.adventure.text.Component
 import org.slf4j.Logger
 import java.nio.file.Path

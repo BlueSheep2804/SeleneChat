@@ -5,10 +5,9 @@ import io.github.bluesheep2804.selenechat.SeleneChat.channelManager
 import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.SeleneChat.resource
 import io.github.bluesheep2804.selenechat.channel.ChannelData
-import io.github.bluesheep2804.selenechat.channel.ChannelData.ChannelJoinError
 import io.github.bluesheep2804.selenechat.channel.ChannelData.ChannelLeaveError
-import io.github.bluesheep2804.selenechat.channel.ChannelManager.ChannelDeleteError
 import io.github.bluesheep2804.selenechat.channel.ChannelManager.ChannelCreateError
+import io.github.bluesheep2804.selenechat.channel.ChannelManager.ChannelDeleteError
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor

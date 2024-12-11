@@ -5,7 +5,6 @@ import arrow.core.left
 import arrow.core.right
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
-import io.github.bluesheep2804.selenechat.SeleneChat
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import java.io.File
 import java.io.FileInputStream

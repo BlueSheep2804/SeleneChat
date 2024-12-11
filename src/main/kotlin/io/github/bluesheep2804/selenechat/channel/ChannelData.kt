@@ -4,9 +4,8 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import io.github.bluesheep2804.selenechat.SeleneChat
-import io.github.bluesheep2804.selenechat.SeleneChat.config
+import io.github.bluesheep2804.selenechat.common.ComponentSerializer
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
-import io.github.bluesheep2804.selenechat.util.ComponentSerializer
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 import java.util.*

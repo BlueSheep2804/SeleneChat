@@ -3,11 +3,10 @@ package io.github.bluesheep2804.selenechat.listener
 import io.github.bluesheep2804.selenechat.SeleneChat.channelManager
 import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.SeleneChat.plugin
-import io.github.bluesheep2804.selenechat.SeleneChatSpigot
 import io.github.bluesheep2804.selenechat.channel.ChannelData
+import io.github.bluesheep2804.selenechat.common.Platforms
 import io.github.bluesheep2804.selenechat.message.ChatMessage
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
-import io.github.bluesheep2804.selenechat.util.Platforms
 import net.kyori.adventure.text.Component
 
 object ChatListener {
