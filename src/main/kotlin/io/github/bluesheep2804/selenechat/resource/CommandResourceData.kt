@@ -3,8 +3,10 @@ package io.github.bluesheep2804.selenechat.resource
 import io.github.bluesheep2804.selenechat.SeleneChat
 import io.github.bluesheep2804.selenechat.channel.ChannelData
 import io.github.bluesheep2804.selenechat.common.ComponentSerializer
+import io.github.bluesheep2804.selenechat.common.ConvertMode
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
@@ -57,6 +59,16 @@ data class CommandResourceData(
         @Serializable(with = ComponentSerializer::class)
         val channelErrorLeaveNotInChannel: Component = Component.text("You are not in the specified channel.", NamedTextColor.RED),
         val channelSuccessLeave: String = "You left channel <channel>.",
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorEditNotFound: Component = Component.text("The specified channel cannot be found.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorEditSubCommandNotExists: Component = Component.text("That subcommand does not exist.", NamedTextColor.RED),
+        val channelSuccessEditFormatCurrentValue: String = "Current format: <newline><format>",
+        val channelSuccessEditFormat: String = "Changed format: <newline><format>",
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorEditJapanizeUnexpectedArgs: Component = Component.text("The argument must be one of [none, kana, ime].", NamedTextColor.RED),
+        val channelSuccessEditJapanizeCurrentValue: String = "Current value: <value>",
+        val channelSuccessEditJapanize: String = "Changed Japanize conversion mode to <value>.",
 ) {
     fun messageErrorPlayerNotFoundComponent(playerName: String): Component {
         val mm = MiniMessage.miniMessage()
@@ -107,5 +119,27 @@ data class CommandResourceData(
     fun channelSuccessLeave(channel: ChannelData): Component {
         val channelNameTagResolver = Placeholder.component("channel", channel.displayName)
         return MiniMessage.miniMessage().deserialize(channelSuccessLeave, channelNameTagResolver)
+    }
+
+    fun channelSuccessEditFormatCurrentValue(format: String): Component {
+        val formatComponent = Component.text(format).hoverEvent(Component.translatable("chat.copy.click")).clickEvent(ClickEvent.copyToClipboard(format))
+        val formatResolver = Placeholder.component("format", formatComponent)
+        return MiniMessage.miniMessage().deserialize(channelSuccessEditFormatCurrentValue, formatResolver)
+    }
+
+    fun channelSuccessEditFormat(format: String): Component {
+        val formatComponent = Component.text(format).hoverEvent(Component.translatable("chat.copy.click")).clickEvent(ClickEvent.copyToClipboard(format))
+        val formatResolver = Placeholder.component("format", formatComponent)
+        return MiniMessage.miniMessage().deserialize(channelSuccessEditFormat, formatResolver)
+    }
+
+    fun channelSuccessEditJapanizeCurrentValue(convertMode: ConvertMode): Component {
+        val convertModeResolver = Placeholder.component("value", Component.text(convertMode.toString().lowercase()))
+        return MiniMessage.miniMessage().deserialize(channelSuccessEditJapanizeCurrentValue, convertModeResolver)
+    }
+
+    fun channelSuccessEditJapanize(convertMode: ConvertMode): Component {
+        val convertModeResolver = Placeholder.component("value", Component.text(convertMode.toString().lowercase()))
+        return MiniMessage.miniMessage().deserialize(channelSuccessEditJapanize, convertModeResolver)
     }
 }

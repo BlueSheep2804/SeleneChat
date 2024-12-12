@@ -8,6 +8,7 @@ import io.github.bluesheep2804.selenechat.channel.ChannelData
 import io.github.bluesheep2804.selenechat.channel.ChannelData.ChannelLeaveError
 import io.github.bluesheep2804.selenechat.channel.ChannelManager.ChannelCreateError
 import io.github.bluesheep2804.selenechat.channel.ChannelManager.ChannelDeleteError
+import io.github.bluesheep2804.selenechat.common.ConvertMode
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -112,7 +113,52 @@ class ChannelCommand : ICommand {
                         return false
                     }
                 }
-                else -> {
+                else -> if (args[0].startsWith(":")) {
+                    val channel = channelManager.allChannels[args[0].removePrefix(":")]
+                    if (channel !is ChannelData) {
+                        sender.sendCommandResult(resource.command.channelErrorEditNotFound)
+                        return false
+                    }
+                    when (args[1]) {
+                        "format" -> {
+                            if (args.size < 3) {
+                                sender.sendCommandResult(resource.command.channelSuccessEditFormatCurrentValue(channel.format))
+                                return false
+                            } else {
+                                var format = args[2]
+                                if (args.size > 3) {
+                                    for (i in 3 until args.size) {
+                                        format += " ${args[i]}"
+                                    }
+                                }
+                                channel.format = format
+                                sender.sendCommandResult(resource.command.channelSuccessEditFormat(channel.format))
+                                channelManager.save(channel)
+                            }
+                        }
+                        "jp" -> {
+                            if (args.size < 3) {
+                                sender.sendCommandResult(resource.command.channelSuccessEditJapanizeCurrentValue(channel.japanize))
+                                return false
+                            }
+                            channel.japanize = when (args[2]) {
+                                "none" -> ConvertMode.NONE
+                                "kana" -> ConvertMode.KANA
+                                "ime" -> ConvertMode.IME
+                                else -> {
+                                    sender.sendCommandResult(resource.command.channelErrorEditJapanizeUnexpectedArgs)
+                                    return false
+                                }
+                            }
+                            sender.sendCommandResult(resource.command.channelSuccessEditJapanize(channel.japanize))
+                            channelManager.save(channel)
+                        }
+                        else -> {
+                            sender.sendCommandResult(resource.command.channelErrorEditSubCommandNotExists)
+                            return false
+                        }
+                    }
+                } else {
                     sender.sendCommandResult(resource.command.channelErrorSubCommandNotFound)
                 }
             }
@@ -122,11 +168,23 @@ class ChannelCommand : ICommand {
 
     override fun suggest(sender: SeleneChatPlayer, args: Array<String>): List<String> {
         return when (args.size) {
-            1 -> listOf("list", "create", "delete", "join", "leave").filter { it.startsWith(args[0]) || args[0] == "" }
+            1 -> if (args[0].startsWith(":")) {
+                channelManager.allChannels.keys.map { ":${it}" }
+            } else {
+                listOf("list", "create", "delete", "join", "leave", ":").filter { it.startsWith(args[0]) || args[0] == "" }
+            }
             2 -> when (args[0]) {
                 "delete", "join", "leave" -> channelManager.allChannels.keys.filter { it.startsWith(args[1]) || args[1] == "" }
-                else -> emptyList()
+                else -> if (args[0].startsWith(":")) {
+                    listOf("jp", "format")
+                } else {
+                    emptyList()
+                }
             }
+            3 -> if (args[0].startsWith(":")) when (args[1]) {
+                "jp" -> listOf("none", "kana", "ime")
+                else -> emptyList()
+            } else emptyList()
             else -> emptyList()
         }
     }
