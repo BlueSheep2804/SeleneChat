@@ -40,13 +40,14 @@ class ChannelManager(private val file: File) {
         yaml.encodeToStream(ChannelData.serializer(), channel, output)
     }
 
-    fun create(name: String): Either<ChannelCreateError, ChannelData> {
+    fun create(name: String, moderator: SeleneChatPlayer): Either<ChannelCreateError, ChannelData> {
         if (!allChannels.none { it.key == name }) {
             return ChannelCreateError.AlreadyExists.left()
         }
         val channelFile = File(channelDirectory, "${name}.yml")
         val channel = ChannelData(name)
         channel.japanize = SeleneChat.plugin.config.convertMode
+        channel.moderators += moderator.uniqueId.toString()
         if (!channelDirectory.exists()) {
             channelDirectory.mkdirs()
         }

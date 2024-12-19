@@ -4,6 +4,7 @@ import io.github.bluesheep2804.selenechat.SeleneChat
 import io.github.bluesheep2804.selenechat.channel.ChannelData
 import io.github.bluesheep2804.selenechat.common.ComponentSerializer
 import io.github.bluesheep2804.selenechat.common.ConvertMode
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
@@ -38,6 +39,8 @@ data class CommandResourceData(
         val channelErrorCreateExists: Component = Component.text("The channel with the specified name already exists.", NamedTextColor.RED),
         val channelSuccessCreate: String = "Channel created: <channel>",
         @Serializable(with = ComponentSerializer::class)
+        val channelErrorDeleteNotModerator: Component = Component.text("You are not a moderator of the given channel.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
         val channelErrorDeleteEmpty: Component = Component.text("The channel name is not specified.", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
         val channelErrorDeleteNotExists: Component = Component.text("The specified channel does not exist.", NamedTextColor.RED),
@@ -60,6 +63,8 @@ data class CommandResourceData(
         val channelErrorLeaveNotInChannel: Component = Component.text("You are not in the specified channel.", NamedTextColor.RED),
         val channelSuccessLeave: String = "You left channel <channel>.",
         @Serializable(with = ComponentSerializer::class)
+        val channelErrorEditNotModerator: Component = Component.text("You are not a moderator of the given channel.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
         val channelErrorEditNotFound: Component = Component.text("The specified channel cannot be found.", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
         val channelErrorEditSubCommandNotExists: Component = Component.text("That subcommand does not exist.", NamedTextColor.RED),
@@ -69,6 +74,16 @@ data class CommandResourceData(
         val channelErrorEditJapanizeUnexpectedArgs: Component = Component.text("The argument must be one of [none, kana, ime].", NamedTextColor.RED),
         val channelSuccessEditJapanizeCurrentValue: String = "Current value: <value>",
         val channelSuccessEditJapanize: String = "Changed Japanize conversion mode to <value>.",
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorEditModeratorNotOnline: Component = Component.text("Player is offline.\nModerator operations can only be performed when the player is online.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorEditModeratorNotModerator: Component = Component.text("The specified player is not a moderator.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorEditModeratorAlreadyModerator: Component = Component.text("The specified player is already a moderator.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelSuccessEditModeratorCurrentValue: Component = Component.text("Moderators"),
+        val channelSuccessEditModerator: String = "<player> set as moderator.",
+        val channelSuccessEditModeratorExclude: String = "Removed <player> from moderator.",
 ) {
     fun messageErrorPlayerNotFoundComponent(playerName: String): Component {
         val mm = MiniMessage.miniMessage()
@@ -141,5 +156,15 @@ data class CommandResourceData(
     fun channelSuccessEditJapanize(convertMode: ConvertMode): Component {
         val convertModeResolver = Placeholder.component("value", Component.text(convertMode.toString().lowercase()))
         return MiniMessage.miniMessage().deserialize(channelSuccessEditJapanize, convertModeResolver)
+    }
+
+    fun channelSuccessEditModerator(player: SeleneChatPlayer): Component {
+        val playerResolver = Placeholder.component("player", Component.text(player.displayName).hoverEvent(player.asHoverEvent()))
+        return MiniMessage.miniMessage().deserialize(channelSuccessEditModerator, playerResolver)
+    }
+
+    fun channelSuccessEditModeratorExclude(player: SeleneChatPlayer): Component {
+        val playerResolver = Placeholder.component("player", Component.text(player.displayName).hoverEvent(player.asHoverEvent()))
+        return MiniMessage.miniMessage().deserialize(channelSuccessEditModeratorExclude, playerResolver)
     }
 }

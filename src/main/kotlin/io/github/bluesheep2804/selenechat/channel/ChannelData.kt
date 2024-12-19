@@ -18,6 +18,7 @@ data class ChannelData(
         var displayName: Component = Component.text(name),
         var format: String = "",
         var japanize: ConvertMode = ConvertMode.IME,
+        var moderators: MutableList<String> = mutableListOf(),
         val playerList: MutableList<String> = mutableListOf()
 ) {
     fun join(player: SeleneChatPlayer): Either<ChannelJoinError, SeleneChatPlayer> {
@@ -38,6 +39,10 @@ data class ChannelData(
         playerList.forEach {
             SeleneChat.plugin.getPlayer(UUID.fromString(it)).sendMessage(text)  // TODO: プレイヤーのキャッシュをするべきな気がする
         }
+    }
+
+    fun isModerator(player: SeleneChatPlayer): Boolean {
+        return moderators.contains(player.uniqueId.toString())
     }
 
     sealed interface ChannelJoinError {

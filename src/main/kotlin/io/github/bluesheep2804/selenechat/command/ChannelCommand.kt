@@ -3,6 +3,7 @@ package io.github.bluesheep2804.selenechat.command
 import arrow.core.Either
 import io.github.bluesheep2804.selenechat.SeleneChat.channelManager
 import io.github.bluesheep2804.selenechat.SeleneChat.config
+import io.github.bluesheep2804.selenechat.SeleneChat.plugin
 import io.github.bluesheep2804.selenechat.SeleneChat.resource
 import io.github.bluesheep2804.selenechat.channel.ChannelData
 import io.github.bluesheep2804.selenechat.channel.ChannelData.ChannelLeaveError
@@ -10,8 +11,11 @@ import io.github.bluesheep2804.selenechat.channel.ChannelManager.ChannelCreateEr
 import io.github.bluesheep2804.selenechat.channel.ChannelManager.ChannelDeleteError
 import io.github.bluesheep2804.selenechat.common.ConvertMode
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
+import net.kyori.adventure.key.Key
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
+import java.util.*
 
 class ChannelCommand : ICommand {
     override val COMMAND_NAME: String = ChannelCommand.COMMAND_NAME
@@ -28,7 +32,7 @@ class ChannelCommand : ICommand {
                         sender.sendCommandResult(resource.command.channelErrorCreateEmpty)
                         return false
                     }
-                    when (val result = channelManager.create(args[1])) {
+                    when (val result = channelManager.create(args[1], sender)) {
                         is Either.Left -> {
                             sender.sendCommandResult(when (val it = result.value) {
                                 is ChannelCreateError.AlreadyExists -> resource.command.channelErrorCreateExists
@@ -43,11 +47,22 @@ class ChannelCommand : ICommand {
                         sender.sendCommandResult(resource.command.channelErrorDeleteEmpty)
                         return false
                     }
+                    val channel = channelManager.allChannels[args[1]]
+                    if (channel !is ChannelData) {
+                        sender.sendCommandResult(resource.command.channelErrorDeleteNotExists)
+                        return false
+                    }
+
+                    if (!channel.isModerator(sender)) {
+                        sender.sendCommandResult(resource.command.channelErrorDeleteNotModerator)
+                        return false
+                    }
                     when (val result = channelManager.delete(args[1])) {
                         is Either.Left -> {
                             sender.sendCommandResult(when (val it = result.value) {
                                 is ChannelDeleteError.ChannelNotFound -> resource.command.channelErrorDeleteNotExists
                             })
+                            return false
                         }
                         is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessDelete(result.value))
                     }
@@ -119,6 +134,10 @@ class ChannelCommand : ICommand {
                         sender.sendCommandResult(resource.command.channelErrorEditNotFound)
                         return false
                     }
+                    if (!channel.isModerator(sender)) {
+                        sender.sendCommandResult(resource.command.channelErrorEditNotModerator)
+                        return false
+                    }
                     when (args[1]) {
                         "format" -> {
                             if (args.size < 3) {
@@ -153,6 +172,49 @@ class ChannelCommand : ICommand {
                             sender.sendCommandResult(resource.command.channelSuccessEditJapanize(channel.japanize))
                             channelManager.save(channel)
                         }
+                        "moderator" -> {
+                            if (args.size < 3) {
+                                val moderators = Component.text().append(resource.command.channelSuccessEditModeratorCurrentValue)
+                                channel.moderators.forEach {
+                                    val player = plugin.getPlayer(UUID.fromString(it))
+                                    val playerComponent = if (player.isOnline) {
+                                        Component.text(player.displayName).hoverEvent(player.asHoverEvent())
+                                    } else {
+                                        Component.text().content("(")
+                                                .append(resource.offline)
+                                                .append(Component.text(")${it}"))
+                                                .color(NamedTextColor.GRAY)
+                                                .hoverEvent(HoverEvent.showEntity(Key.key("player"), player.uniqueId))
+                                    }
+                                    moderators.appendNewline()
+                                            .append(Component.text("- "))
+                                            .append(playerComponent)
+                                }
+                                sender.sendCommandResult(moderators.build())
+                                return false
+                            }
+                            val player = plugin.getPlayer(if (args[2].startsWith("-")) args[2].removePrefix("-") else args[2])
+                            if (!player.isOnline) {
+                                sender.sendCommandResult(resource.command.channelErrorEditModeratorNotOnline)
+                                return false
+                            }
+                            if (args[2].startsWith("-")) {
+                                if (!channel.isModerator(player)) {
+                                    sender.sendCommandResult(resource.command.channelErrorEditModeratorNotModerator)
+                                    return false
+                                }
+                                channel.moderators -= player.uniqueId.toString()
+                                sender.sendCommandResult(resource.command.channelSuccessEditModeratorExclude(player))
+                            } else {
+                                if (channel.isModerator(player)) {
+                                    sender.sendCommandResult(resource.command.channelErrorEditModeratorAlreadyModerator)
+                                    return false
+                                }
+                                channel.moderators += player.uniqueId.toString()
+                                sender.sendCommandResult(resource.command.channelSuccessEditModerator(player))
+                            }
+                            channelManager.save(channel)
+                        }
                         else -> {
                             sender.sendCommandResult(resource.command.channelErrorEditSubCommandNotExists)
                             return false
@@ -176,13 +238,14 @@ class ChannelCommand : ICommand {
             2 -> when (args[0]) {
                 "delete", "join", "leave" -> channelManager.allChannels.keys.filter { it.startsWith(args[1]) || args[1] == "" }
                 else -> if (args[0].startsWith(":")) {
-                    listOf("jp", "format")
+                    listOf("format", "jp", "moderator")
                 } else {
                     emptyList()
                 }
             }
             3 -> if (args[0].startsWith(":")) when (args[1]) {
                 "jp" -> listOf("none", "kana", "ime")
+                "moderator" -> plugin.getAllPlayers().map { it.displayName }.filter { it.startsWith(args[2]) || args[2] == "" }
                 else -> emptyList()
             } else emptyList()
             else -> emptyList()

@@ -19,6 +19,8 @@ data class ResourceData(
         @Serializable(with = ComponentSerializer::class)
         val disabled: Component = Component.text("Disabled", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
+        val offline: Component = Component.translatable("gui.socialInteractions.status_offline"),
+        @Serializable(with = ComponentSerializer::class)
         val hoverTextServer: Component = Component.translatable("selectServer.select"),
         @Serializable(with = ComponentSerializer::class)
         val hoverTextChannel: Component = Component.text("Change chat channel"),
