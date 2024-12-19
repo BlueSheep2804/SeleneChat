@@ -25,6 +25,7 @@ class ChannelCommand : ICommand {
     override fun execute(sender: SeleneChatPlayer, args: Array<String>): Boolean {
         if (args.isEmpty()) {
             sender.sendCommandResult(resource.command.channelErrorSubCommandEmpty)
+            return false
         } else {
             when (args[0]) {
                 "create" -> {
@@ -222,6 +223,7 @@ class ChannelCommand : ICommand {
                     }
                 } else {
                     sender.sendCommandResult(resource.command.channelErrorSubCommandNotFound)
+                    return false
                 }
             }
         }
