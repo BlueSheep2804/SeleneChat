@@ -233,14 +233,14 @@ class ChannelCommand : ICommand {
     override fun suggest(sender: SeleneChatPlayer, args: Array<String>): List<String> {
         return when (args.size) {
             1 -> if (args[0].startsWith(":")) {
-                channelManager.allChannels.keys.map { ":${it}" }
+                channelManager.allChannels.keys.map { ":${it}" }.filter { it.startsWith(args[0]) || args[0] == ":" }
             } else {
                 listOf("list", "create", "delete", "join", "leave", ":").filter { it.startsWith(args[0]) || args[0] == "" }
             }
             2 -> when (args[0]) {
                 "delete", "join", "leave" -> channelManager.allChannels.keys.filter { it.startsWith(args[1]) || args[1] == "" }
                 else -> if (args[0].startsWith(":")) {
-                    listOf("format", "jp", "moderator")
+                    listOf("format", "jp", "moderator").filter { it.startsWith(args[1]) || args[1] == "" }
                 } else {
                     emptyList()
                 }
