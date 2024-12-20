@@ -33,7 +33,7 @@ class ChannelCommand : ICommand {
                         sender.sendCommandResult(resource.command.channelErrorCreateEmpty)
                         return false
                     }
-                    when (val result = channelManager.create(args[1], sender)) {
+                    when (val result = channelManager.create(args[1].lowercase(), sender)) {
                         is Either.Left -> {
                             sender.sendCommandResult(when (val it = result.value) {
                                 is ChannelCreateError.AlreadyExists -> resource.command.channelErrorCreateExists
