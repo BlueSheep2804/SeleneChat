@@ -13,6 +13,7 @@ abstract class SeleneChatPlayer {
     abstract val uniqueId: UUID
     abstract val currentServerName: String
     open val isOnline = true
+    open val isConsole = false
     val isEnabledJapanize: Boolean
         get() {
             return if (SeleneChat.japanizePlayers.containsKey(uniqueId.toString())) {
