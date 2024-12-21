@@ -7,6 +7,7 @@ import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import io.github.bluesheep2804.selenechat.SeleneChat
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerConsole
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -47,7 +48,10 @@ class ChannelManager(private val file: File) {
         val channelFile = File(channelDirectory, "${name}.yml")
         val channel = ChannelData(name)
         channel.japanize = SeleneChat.plugin.config.convertMode
-        channel.moderators += moderator.uniqueId.toString()
+        if (moderator !is SeleneChatPlayerConsole) {
+            channel.moderators += moderator.uniqueId.toString()
+        }
+
         if (!channelDirectory.exists()) {
             channelDirectory.mkdirs()
         }

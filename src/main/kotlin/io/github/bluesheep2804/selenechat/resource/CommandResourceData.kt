@@ -53,6 +53,8 @@ data class CommandResourceData(
         val channelErrorJoinNotFound: Component = Component.text("The specified channel cannot be found.", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
         val channelErrorJoinAlreadyJoins: Component = Component.text("You are already in this channel.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorJoinConsole: Component = Component.text("You cannot join a channel from the console.", NamedTextColor.RED),
         val channelSuccessJoin: String = "You joined channel <channel>.",
         val channelSuccessJoinSwitch: String = "Your chat channel has been changed to <channel>.",
         @Serializable(with = ComponentSerializer::class)

@@ -6,11 +6,13 @@ import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.SeleneChat.plugin
 import io.github.bluesheep2804.selenechat.SeleneChat.resource
 import io.github.bluesheep2804.selenechat.channel.ChannelData
+import io.github.bluesheep2804.selenechat.channel.ChannelData.ChannelJoinError
 import io.github.bluesheep2804.selenechat.channel.ChannelData.ChannelLeaveError
 import io.github.bluesheep2804.selenechat.channel.ChannelManager.ChannelCreateError
 import io.github.bluesheep2804.selenechat.channel.ChannelManager.ChannelDeleteError
 import io.github.bluesheep2804.selenechat.common.ConvertMode
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerConsole
 import net.kyori.adventure.key.Key
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.HoverEvent
@@ -54,7 +56,7 @@ class ChannelCommand : ICommand {
                         return false
                     }
 
-                    if (!channel.isModerator(sender)) {
+                    if (!channel.isModerator(sender) && sender !is SeleneChatPlayerConsole) {
                         sender.sendCommandResult(resource.command.channelErrorDeleteNotModerator)
                         return false
                     }
@@ -86,7 +88,13 @@ class ChannelCommand : ICommand {
                     val channel = channelManager.allChannels[args[1]]
                     if (channel is ChannelData) {
                         when (val result = channel.join(sender)) {
-                            is Either.Left -> {}
+                            is Either.Left -> when (result.value) {
+                                ChannelJoinError.ConsolePlayer -> {
+                                    sender.sendCommandResult(resource.command.channelErrorJoinConsole)
+                                    return false
+                                }
+                                ChannelJoinError.AlreadyJoins -> {}
+                            }
                             is Either.Right -> sender.sendCommandResult(resource.command.channelSuccessJoin(channel))
                         }
                         channelManager.playerChannelMap[sender.uniqueId] = channel.name
@@ -135,7 +143,7 @@ class ChannelCommand : ICommand {
                         sender.sendCommandResult(resource.command.channelErrorEditNotFound)
                         return false
                     }
-                    if (!channel.isModerator(sender)) {
+                    if (!channel.isModerator(sender) && sender !is SeleneChatPlayerConsole) {
                         sender.sendCommandResult(resource.command.channelErrorEditNotModerator)
                         return false
                     }

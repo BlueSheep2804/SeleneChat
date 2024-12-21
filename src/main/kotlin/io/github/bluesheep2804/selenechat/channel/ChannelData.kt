@@ -7,6 +7,7 @@ import io.github.bluesheep2804.selenechat.SeleneChat
 import io.github.bluesheep2804.selenechat.common.ComponentSerializer
 import io.github.bluesheep2804.selenechat.common.ConvertMode
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayer
+import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerConsole
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 import java.util.*
@@ -22,6 +23,7 @@ data class ChannelData(
         val playerList: MutableList<String> = mutableListOf()
 ) {
     fun join(player: SeleneChatPlayer): Either<ChannelJoinError, SeleneChatPlayer> {
+        if (player is SeleneChatPlayerConsole) return ChannelJoinError.ConsolePlayer.left()
         if (playerList.contains(player.uniqueId.toString())) return ChannelJoinError.AlreadyJoins.left()
         playerList.add(player.uniqueId.toString())
         SeleneChat.channelManager.save(this)
@@ -47,6 +49,7 @@ data class ChannelData(
 
     sealed interface ChannelJoinError {
         object AlreadyJoins: ChannelJoinError
+        object ConsolePlayer: ChannelJoinError
     }
 
     sealed interface ChannelLeaveError {
