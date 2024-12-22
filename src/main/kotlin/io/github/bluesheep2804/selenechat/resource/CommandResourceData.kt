@@ -15,6 +15,8 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 @Serializable
 data class CommandResourceData(
         @Serializable(with = ComponentSerializer::class)
+        val generalErrorNoPermission: Component = Component.text("You do not have permission to execute this command.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
         val messageErrorPlayer: Component = Component.text("A player is required.", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
         val messageErrorMessage: Component = Component.text("A message is required.", NamedTextColor.RED),

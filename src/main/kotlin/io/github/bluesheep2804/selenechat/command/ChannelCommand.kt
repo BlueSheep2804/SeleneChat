@@ -31,6 +31,10 @@ class ChannelCommand : ICommand {
         } else {
             when (args[0]) {
                 "create" -> {
+                    if (!sender.hasPermission("selenechat.channel.create")) {
+                        sender.sendCommandResult(resource.command.generalErrorNoPermission)
+                        return false
+                    }
                     if (args.size < 2) {
                         sender.sendCommandResult(resource.command.channelErrorCreateEmpty)
                         return false
@@ -46,6 +50,10 @@ class ChannelCommand : ICommand {
                     }
                 }
                 "delete" -> {
+                    if (!sender.hasPermission("selenechat.channel.delete")) {
+                        sender.sendCommandResult(resource.command.generalErrorNoPermission)
+                        return false
+                    }
                     if (args.size < 2) {
                         sender.sendCommandResult(resource.command.channelErrorDeleteEmpty)
                         return false
@@ -71,6 +79,10 @@ class ChannelCommand : ICommand {
                     }
                 }
                 "list" -> {
+                    if (!sender.hasPermission("selenechat.channel.list")) {
+                        sender.sendCommandResult(resource.command.generalErrorNoPermission)
+                        return false
+                    }
                     val returnMessage = Component.text().append(resource.command.channelSuccessList)
                     channelManager.allChannels.forEach { (key, channel) ->
                         if (!channel.visible) return@forEach
@@ -82,6 +94,10 @@ class ChannelCommand : ICommand {
                     sender.sendCommandResult(returnMessage.build())
                 }
                 "join" -> {
+                    if (!sender.hasPermission("selenechat.channel.join")) {
+                        sender.sendCommandResult(resource.command.generalErrorNoPermission)
+                        return false
+                    }
                     if (args.size < 2) {
                         sender.sendCommandResult(resource.command.channelErrorJoinEmpty)
                         return false
@@ -111,6 +127,10 @@ class ChannelCommand : ICommand {
                     }
                 }
                 "leave" -> {
+                    if (!sender.hasPermission("selenechat.channel.leave")) {
+                        sender.sendCommandResult(resource.command.generalErrorNoPermission)
+                        return false
+                    }
                     val channel = if (args.size < 2) {
                         channelManager.getPlayerChannel(sender)
                     } else {
@@ -150,6 +170,10 @@ class ChannelCommand : ICommand {
                     }
                     when (args[1]) {
                         "format" -> {
+                            if (!sender.hasPermission("selenechat.channel.format")) {
+                                sender.sendCommandResult(resource.command.generalErrorNoPermission)
+                                return false
+                            }
                             if (args.size < 3) {
                                 sender.sendCommandResult(resource.command.channelSuccessEditFormatCurrentValue(channel.format))
                             } else {
@@ -165,6 +189,10 @@ class ChannelCommand : ICommand {
                             }
                         }
                         "jp" -> {
+                            if (!sender.hasPermission("selenechat.channel.jp")) {
+                                sender.sendCommandResult(resource.command.generalErrorNoPermission)
+                                return false
+                            }
                             if (args.size < 3) {
                                 sender.sendCommandResult(resource.command.channelSuccessEditJapanizeCurrentValue(channel.japanize))
                             } else {
@@ -182,6 +210,10 @@ class ChannelCommand : ICommand {
                             }
                         }
                         "moderator" -> {
+                            if (!sender.hasPermission("selenechat.channel.moderator")) {
+                                sender.sendCommandResult(resource.command.generalErrorNoPermission)
+                                return false
+                            }
                             if (args.size < 3) {
                                 val moderators = Component.text().append(resource.command.channelSuccessEditModeratorCurrentValue)
                                 channel.moderators.forEach {
@@ -225,6 +257,10 @@ class ChannelCommand : ICommand {
                             }
                         }
                         "visible" -> {
+                            if (!sender.hasPermission("selenechat.channel.visible")) {
+                                sender.sendCommandResult(resource.command.generalErrorNoPermission)
+                                return false
+                            }
                             if (args.size < 3) {
                                 sender.sendCommandResult(resource.command.channelSuccessEditVisibleCurrentValue(channel.visible))
                             } else {
@@ -282,6 +318,6 @@ class ChannelCommand : ICommand {
     companion object {
         const val COMMAND_NAME = "channel"
         val COMMAND_ALIASES = arrayOf("ch")
-        const val PERMISSION = "selenechat.command.channel"
+        const val PERMISSION = "selenechat.channel"
     }
 }
