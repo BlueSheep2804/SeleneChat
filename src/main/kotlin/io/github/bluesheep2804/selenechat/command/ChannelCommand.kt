@@ -152,7 +152,6 @@ class ChannelCommand : ICommand {
                         "format" -> {
                             if (args.size < 3) {
                                 sender.sendCommandResult(resource.command.channelSuccessEditFormatCurrentValue(channel.format))
-                                return false
                             } else {
                                 var format = args[2]
                                 if (args.size > 3) {
@@ -168,19 +167,19 @@ class ChannelCommand : ICommand {
                         "jp" -> {
                             if (args.size < 3) {
                                 sender.sendCommandResult(resource.command.channelSuccessEditJapanizeCurrentValue(channel.japanize))
-                                return false
-                            }
-                            channel.japanize = when (args[2]) {
-                                "none" -> ConvertMode.NONE
-                                "kana" -> ConvertMode.KANA
-                                "ime" -> ConvertMode.IME
-                                else -> {
-                                    sender.sendCommandResult(resource.command.channelErrorEditJapanizeUnexpectedArgs)
-                                    return false
+                            } else {
+                                channel.japanize = when (args[2]) {
+                                    "none" -> ConvertMode.NONE
+                                    "kana" -> ConvertMode.KANA
+                                    "ime" -> ConvertMode.IME
+                                    else -> {
+                                        sender.sendCommandResult(resource.command.channelErrorEditJapanizeUnexpectedArgs)
+                                        return false
+                                    }
                                 }
+                                sender.sendCommandResult(resource.command.channelSuccessEditJapanize(channel.japanize))
+                                channelManager.save(channel)
                             }
-                            sender.sendCommandResult(resource.command.channelSuccessEditJapanize(channel.japanize))
-                            channelManager.save(channel)
                         }
                         "moderator" -> {
                             if (args.size < 3) {
@@ -201,29 +200,29 @@ class ChannelCommand : ICommand {
                                             .append(playerComponent)
                                 }
                                 sender.sendCommandResult(moderators.build())
-                                return false
-                            }
-                            val player = plugin.getPlayer(if (args[2].startsWith("-")) args[2].removePrefix("-") else args[2])
-                            if (!player.isOnline) {
-                                sender.sendCommandResult(resource.command.channelErrorEditModeratorNotOnline)
-                                return false
-                            }
-                            if (args[2].startsWith("-")) {
-                                if (!channel.isModerator(player)) {
-                                    sender.sendCommandResult(resource.command.channelErrorEditModeratorNotModerator)
-                                    return false
-                                }
-                                channel.moderators -= player.uniqueId.toString()
-                                sender.sendCommandResult(resource.command.channelSuccessEditModeratorExclude(player))
                             } else {
-                                if (channel.isModerator(player)) {
-                                    sender.sendCommandResult(resource.command.channelErrorEditModeratorAlreadyModerator)
+                                val player = plugin.getPlayer(if (args[2].startsWith("-")) args[2].removePrefix("-") else args[2])
+                                if (!player.isOnline) {
+                                    sender.sendCommandResult(resource.command.channelErrorEditModeratorNotOnline)
                                     return false
                                 }
-                                channel.moderators += player.uniqueId.toString()
-                                sender.sendCommandResult(resource.command.channelSuccessEditModerator(player))
+                                if (args[2].startsWith("-")) {
+                                    if (!channel.isModerator(player)) {
+                                        sender.sendCommandResult(resource.command.channelErrorEditModeratorNotModerator)
+                                        return false
+                                    }
+                                    channel.moderators -= player.uniqueId.toString()
+                                    sender.sendCommandResult(resource.command.channelSuccessEditModeratorExclude(player))
+                                } else {
+                                    if (channel.isModerator(player)) {
+                                        sender.sendCommandResult(resource.command.channelErrorEditModeratorAlreadyModerator)
+                                        return false
+                                    }
+                                    channel.moderators += player.uniqueId.toString()
+                                    sender.sendCommandResult(resource.command.channelSuccessEditModerator(player))
+                                }
+                                channelManager.save(channel)
                             }
-                            channelManager.save(channel)
                         }
                         "visible" -> {
                             if (args.size < 3) {
