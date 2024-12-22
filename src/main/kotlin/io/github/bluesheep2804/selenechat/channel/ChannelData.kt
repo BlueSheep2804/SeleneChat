@@ -20,7 +20,8 @@ data class ChannelData(
         var format: String = "",
         var japanize: ConvertMode = ConvertMode.IME,
         var moderators: MutableList<String> = mutableListOf(),
-        val playerList: MutableList<String> = mutableListOf()
+        val playerList: MutableList<String> = mutableListOf(),
+        var visible: Boolean = true,
 ) {
     fun join(player: SeleneChatPlayer): Either<ChannelJoinError, SeleneChatPlayer> {
         if (player is SeleneChatPlayerConsole) return ChannelJoinError.ConsolePlayer.left()

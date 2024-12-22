@@ -25,4 +25,12 @@ data class ResourceData(
         @Serializable(with = ComponentSerializer::class)
         val hoverTextChannel: Component = Component.text("Change chat channel"),
         val command: CommandResourceData = CommandResourceData()
-)
+) {
+    fun switch(value: Boolean): Component {
+        return if (value) {
+            enabled
+        } else {
+            disabled
+        }
+    }
+}

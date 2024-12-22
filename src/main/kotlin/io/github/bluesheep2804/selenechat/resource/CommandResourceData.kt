@@ -86,6 +86,10 @@ data class CommandResourceData(
         val channelSuccessEditModeratorCurrentValue: Component = Component.text("Moderators"),
         val channelSuccessEditModerator: String = "<player> set as moderator.",
         val channelSuccessEditModeratorExclude: String = "Removed <player> from moderator.",
+        @Serializable(with = ComponentSerializer::class)
+        val channelErrorEditVisibleUnexpectedArgs: Component = Component.text("The argument must be one of [true, false].", NamedTextColor.RED),
+        val channelSuccessEditVisibleCurrentValue: String = "Current value: <value>",
+        val channelSuccessEditVisible: String = "Changed channel visibility to <value>.",
 ) {
     fun messageErrorPlayerNotFoundComponent(playerName: String): Component {
         val mm = MiniMessage.miniMessage()
@@ -94,22 +98,12 @@ data class CommandResourceData(
     }
     fun japanizeSuccessCurrentValueComponent(value: Boolean): Component {
         val mm = MiniMessage.miniMessage()
-        val valueComponent = if (value) {
-            SeleneChat.resource.enabled
-        } else {
-            SeleneChat.resource.disabled
-        }
-        val valueTagResolver = Placeholder.component("value", valueComponent)
+        val valueTagResolver = Placeholder.component("value", SeleneChat.resource.switch(value))
         return mm.deserialize(japanizeSuccessCurrentValue, valueTagResolver)
     }
     fun japanizeSuccessChangedComponent(value: Boolean): Component {
         val mm = MiniMessage.miniMessage()
-        val valueComponent = if (value) {
-            SeleneChat.resource.enabled
-        } else {
-            SeleneChat.resource.disabled
-        }
-        val valueTagResolver = Placeholder.component("value", valueComponent)
+        val valueTagResolver = Placeholder.component("value", SeleneChat.resource.switch(value))
         return mm.deserialize(japanizeSuccessChanged, valueTagResolver)
     }
 
@@ -168,5 +162,15 @@ data class CommandResourceData(
     fun channelSuccessEditModeratorExclude(player: SeleneChatPlayer): Component {
         val playerResolver = Placeholder.component("player", Component.text(player.displayName).hoverEvent(player.asHoverEvent()))
         return MiniMessage.miniMessage().deserialize(channelSuccessEditModeratorExclude, playerResolver)
+    }
+
+    fun channelSuccessEditVisibleCurrentValue(value: Boolean): Component {
+        val visibleResolver = Placeholder.component("value", SeleneChat.resource.switch(value))
+        return MiniMessage.miniMessage().deserialize(channelSuccessEditVisibleCurrentValue, visibleResolver)
+    }
+
+    fun channelSuccessEditVisible(value: Boolean): Component {
+        val visibleResolver = Placeholder.component("value", SeleneChat.resource.switch(value))
+        return MiniMessage.miniMessage().deserialize(channelSuccessEditVisible, visibleResolver)
     }
 }

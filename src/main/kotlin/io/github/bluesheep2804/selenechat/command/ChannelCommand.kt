@@ -73,6 +73,7 @@ class ChannelCommand : ICommand {
                 "list" -> {
                     val returnMessage = Component.text().append(resource.command.channelSuccessList)
                     channelManager.allChannels.forEach { (key, channel) ->
+                        if (!channel.visible) return@forEach
                         returnMessage.appendNewline()
                                 .append(Component.text("- "))
                                 .append(channel.displayName)
@@ -224,6 +225,22 @@ class ChannelCommand : ICommand {
                             }
                             channelManager.save(channel)
                         }
+                        "visible" -> {
+                            if (args.size < 3) {
+                                sender.sendCommandResult(resource.command.channelSuccessEditVisibleCurrentValue(channel.visible))
+                            } else {
+                                channel.visible = when (args[2].lowercase()) {
+                                    "true" -> true
+                                    "false" -> false
+                                    else -> {
+                                        sender.sendCommandResult(resource.command.channelErrorEditVisibleUnexpectedArgs)
+                                        return false
+                                    }
+                                }
+                                sender.sendCommandResult(resource.command.channelSuccessEditVisible(channel.visible))
+                                channelManager.save(channel)
+                            }
+                        }
                         else -> {
                             sender.sendCommandResult(resource.command.channelErrorEditSubCommandNotExists)
                             return false
@@ -241,14 +258,14 @@ class ChannelCommand : ICommand {
     override fun suggest(sender: SeleneChatPlayer, args: Array<String>): List<String> {
         return when (args.size) {
             1 -> if (args[0].startsWith(":")) {
-                channelManager.allChannels.keys.map { ":${it}" }.filter { it.startsWith(args[0]) || args[0] == ":" }
+                channelManager.allChannels.filterValues { it.visible }.keys.map { ":${it}" }.filter { it.startsWith(args[0]) || channelManager.allChannels[it]!!.visible }
             } else {
                 listOf("list", "create", "delete", "join", "leave", ":").filter { it.startsWith(args[0]) || args[0] == "" }
             }
             2 -> when (args[0]) {
-                "delete", "join", "leave" -> channelManager.allChannels.keys.filter { it.startsWith(args[1]) || args[1] == "" }
+                "delete", "join", "leave" -> channelManager.allChannels.filterValues { it.visible }.keys.filter { it.startsWith(args[1]) || args[1] == "" }
                 else -> if (args[0].startsWith(":")) {
-                    listOf("format", "jp", "moderator").filter { it.startsWith(args[1]) || args[1] == "" }
+                    listOf("format", "jp", "moderator", "visible").filter { it.startsWith(args[1]) || args[1] == "" }
                 } else {
                     emptyList()
                 }
@@ -256,6 +273,7 @@ class ChannelCommand : ICommand {
             3 -> if (args[0].startsWith(":")) when (args[1]) {
                 "jp" -> listOf("none", "kana", "ime")
                 "moderator" -> plugin.getAllPlayers().map { it.displayName }.filter { it.startsWith(args[2]) || args[2] == "" }
+                "visible" -> listOf("true", "false").filter { it.startsWith(args[2]) || args[2] == "" }
                 else -> emptyList()
             } else emptyList()
             else -> emptyList()
