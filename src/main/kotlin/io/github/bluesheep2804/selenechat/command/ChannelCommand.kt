@@ -271,7 +271,7 @@ class ChannelCommand : ICommand {
                 }
             }
             3 -> if (args[0].startsWith(":")) when (args[1]) {
-                "jp" -> listOf("none", "kana", "ime")
+                "jp" -> listOf("none", "kana", "ime").filter { it.startsWith(args[2]) || args[2] == "" }
                 "moderator" -> plugin.getAllPlayers().map { it.displayName }.filter { it.startsWith(args[2]) || args[2] == "" }
                 "visible" -> listOf("true", "false").filter { it.startsWith(args[2]) || args[2] == "" }
                 else -> emptyList()
