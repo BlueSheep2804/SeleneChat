@@ -14,6 +14,7 @@ import java.util.*
 
 @Serializable
 data class ChannelData(
+        var version: Int = 1,
         val name: String,
         @Serializable(with = ComponentSerializer::class)
         var displayName: Component = Component.text(name),

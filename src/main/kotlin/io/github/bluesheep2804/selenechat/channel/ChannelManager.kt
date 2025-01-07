@@ -19,6 +19,7 @@ class ChannelManager(private val file: File) {
     private val yaml = Yaml(configuration = yamlConfiguration)
     val allChannels = mutableMapOf<String, ChannelData>()
     val playerChannelMap = mutableMapOf<UUID, String>()
+    val defaultChannel = ChannelData(name = "")
 
     init {
         reload()
@@ -32,6 +33,11 @@ class ChannelManager(private val file: File) {
             val input = FileInputStream(it)
             val channel = yaml.decodeFromStream(ChannelData.serializer(), input)
             allChannels[channel.name] = channel
+
+            if (defaultChannel.version > channel.version) {
+                channel.version = defaultChannel.version
+                save(channel)
+            }
         }
     }
 
@@ -46,7 +52,7 @@ class ChannelManager(private val file: File) {
             return ChannelCreateError.AlreadyExists.left()
         }
         val channelFile = File(channelDirectory, "${name}.yml")
-        val channel = ChannelData(name)
+        val channel = ChannelData(name=name)
         channel.japanize = SeleneChat.plugin.config.convertMode
         if (moderator !is SeleneChatPlayerConsole) {
             channel.moderators += moderator.uniqueId.toString()
