@@ -1,5 +1,53 @@
 # Changelog
 
+## [0.3.0](https://github.com/BlueSheep2804/SeleneChat/compare/v0.2.0...v0.3.0) (2025-01-08)
+
+
+### Features
+
+* 🎸 /channel joinコマンドでグローバルチャンネルに切り替え可能に ([15f8279](https://github.com/BlueSheep2804/SeleneChat/commit/15f8279c41b11c28cc97b29ab46562756ca0a8c3))
+* 🎸 /channel leaveコマンドの空引数の挙動を変更 ([5ec2a15](https://github.com/BlueSheep2804/SeleneChat/commit/5ec2a15762f6566c64482b8f3006adc78c5216d0))
+* 🎸 allChannelsをmapに変更 ([e2a27dc](https://github.com/BlueSheep2804/SeleneChat/commit/e2a27dc2fd43808e20d3fee687e7c0eeec41fa06))
+* 🎸 channel listコマンドを見やすいものに変更 ([88e2ab5](https://github.com/BlueSheep2804/SeleneChat/commit/88e2ab5e5789575c0a187b773af4b92f1203a2dc))
+* 🎸 channelManagerをreloadコマンドの再読み込み対象に追加 ([bf652fd](https://github.com/BlueSheep2804/SeleneChat/commit/bf652fd91b497bb018e5e66d11dc606cdb4d4814))
+* 🎸 channelコマンドのサジェストを改善 ([bedd27e](https://github.com/BlueSheep2804/SeleneChat/commit/bedd27e6fa3d6148e0bbb0bde6e70202c346e551))
+* 🎸 channelサブコマンドの権限を追加 ([a0f7dd7](https://github.com/BlueSheep2804/SeleneChat/commit/a0f7dd728d7719981709f9f00c6b8c807ce892ab))
+* 🎸 ResourceDataにバージョンを追加 ([6ac76ab](https://github.com/BlueSheep2804/SeleneChat/commit/6ac76ab02f17d2e5d0529f63d7c6c19734fe10de))
+* 🎸 ResourceManagerに保存機能を追加 ([1e4d51e](https://github.com/BlueSheep2804/SeleneChat/commit/1e4d51ea720753b14dfd466b5adedfb2422f8325))
+* 🎸 グローバルマーカーを追加 ([2be6ffa](https://github.com/BlueSheep2804/SeleneChat/commit/2be6ffae716f41f96a41714e58d68977b5be71d4))
+* 🎸 コマンドの結果に接頭辞を追加 ([6fbe2e0](https://github.com/BlueSheep2804/SeleneChat/commit/6fbe2e00d39cb8fa20b571faa0d5816f3b0f2b77))
+* 🎸 コンソールプレイヤーのクラスを改善 ([e1cddf9](https://github.com/BlueSheep2804/SeleneChat/commit/e1cddf9b0e7de3e5b440c4f654703a53e795a420))
+* 🎸 コンフィグファイルのアップデート時に自動で更新するように変更 ([ecf4175](https://github.com/BlueSheep2804/SeleneChat/commit/ecf41753eba028f460ab8ca6ecae438b13132b1c))
+* 🎸 チャンネルごとに変換モードを指定できるように ([0b7c689](https://github.com/BlueSheep2804/SeleneChat/commit/0b7c689088247e3f69b2e1893da325ada890c204))
+* 🎸 チャンネルチャットを実装 ([2279c5f](https://github.com/BlueSheep2804/SeleneChat/commit/2279c5fc8ef3b7107cbc71914e5397ff0f730b1a))
+* 🎸 チャンネルにプレイヤーが入退室する仕組みを追加 ([6648461](https://github.com/BlueSheep2804/SeleneChat/commit/66484613d90062f24355f49ede75dd7bdd9d111a))
+* 🎸 チャンネルの情報を表示するコマンドを追加 ([478975c](https://github.com/BlueSheep2804/SeleneChat/commit/478975c2f51238a6541b6f8edc79c54807e590cd))
+* 🎸 チャンネルの表示名をMiniMessage形式に変更 ([9b9e607](https://github.com/BlueSheep2804/SeleneChat/commit/9b9e607585f3e4ca993121dde963506ec9654ae3))
+* 🎸 チャンネルの設定をコマンドから変更できるように ([2816ae7](https://github.com/BlueSheep2804/SeleneChat/commit/2816ae71ec2c3ca43448d7b79eb8bdc23edc6cf3))
+* 🎸 チャンネルファイルの自動更新機能を追加 ([e6743ad](https://github.com/BlueSheep2804/SeleneChat/commit/e6743ade394583a818acfb41c9083d75e6f98d37))
+* 🎸 チャンネルを削除するコマンドを追加 ([9aeada2](https://github.com/BlueSheep2804/SeleneChat/commit/9aeada25804bcd064e30b0ef5b32ba44e831de07))
+* 🎸 チャンネルを操作するためのコマンドを追加 ([f10b0f7](https://github.com/BlueSheep2804/SeleneChat/commit/f10b0f7716335f3231dfc130fb0dbdb58293c00a))
+* 🎸 チャンネルを管理するクラスを追加 ([059677f](https://github.com/BlueSheep2804/SeleneChat/commit/059677f94c2665e3950df233fe703a0c322c9d07))
+* 🎸 チャンネルを隠す設定を追加 ([22b8d93](https://github.com/BlueSheep2804/SeleneChat/commit/22b8d9332a8cae59f58ebf12ea1062d776284868))
+* 🎸 チャンネル作成時の重複をエラーとして返すように変更 ([d688c51](https://github.com/BlueSheep2804/SeleneChat/commit/d688c51c9eb51146bac2cadc68553c9776227f6f))
+* 🎸 チャンネル機能を無効化できる設定を追加 ([f1ad739](https://github.com/BlueSheep2804/SeleneChat/commit/f1ad7396c83f54ddf422bef143fca170106d76d3))
+* 🎸 チャンネル用のチャットフォーマット設定を追加 ([d68e0d5](https://github.com/BlueSheep2804/SeleneChat/commit/d68e0d552e283a957cd3cf9c1062dcbfa228ea7c))
+* 🎸 モデレーター機能を実装 ([1594d53](https://github.com/BlueSheep2804/SeleneChat/commit/1594d5371662e47ad2379c2cadbb8b6e016e0c3e))
+* 🎸 発言先の変更機能を追加 ([246580b](https://github.com/BlueSheep2804/SeleneChat/commit/246580bdbef4ee9adab4b426c44a04f2bc038379))
+
+
+### Bug Fixes
+
+* 🐛 ChannelDataのプロパティを変更できない問題を修正 ([e2368c8](https://github.com/BlueSheep2804/SeleneChat/commit/e2368c80d4e1d54e7ac032ca22d3ca0ef0228621))
+* 🐛 channelのサブコマンドが空か存在しない場合に内部的にはエラーになっていなかった問題を修正 ([5342d76](https://github.com/BlueSheep2804/SeleneChat/commit/5342d761a21e8b7046f7210311fcb4088116fea5))
+* 🐛 コンソールからchannelコマンドを実行した際の様々な不具合を修正 ([3b7befc](https://github.com/BlueSheep2804/SeleneChat/commit/3b7befc2f8e25dd4bf39e8a1597039515cd961fb))
+* 🐛 チャンネルから退出した際に発言先が切り替わらなかった問題を修正 ([e6405ac](https://github.com/BlueSheep2804/SeleneChat/commit/e6405acee191afba2f613c7d1b36829ecff6b428))
+* 🐛 チャンネルの変換設定のサジェストがうまく機能していなかった問題を修正 ([e49719d](https://github.com/BlueSheep2804/SeleneChat/commit/e49719d2402e16d02f373fd0f99c4a2af324ecf9))
+* 🐛 チャンネルの編集コマンドのサジェストがうまく機能していなかった問題を修正 ([7d28e9c](https://github.com/BlueSheep2804/SeleneChat/commit/7d28e9cdd3206e2a9690e618d74ce32b0c1cd1c4))
+* 🐛 チャンネルの設定を表示する際にエラー扱いになっていた不具合を修正 ([da1046f](https://github.com/BlueSheep2804/SeleneChat/commit/da1046faf64ccd31496bcf60464bb26c999ec20c))
+* 🐛 チャンネル作成時に小文字に強制するように ([6b0ad11](https://github.com/BlueSheep2804/SeleneChat/commit/6b0ad11e71802d1848956c2290d9eeeeb439e6ca))
+* 🐛 プライベートメッセージにSeleneChatの接頭辞が付いていた問題を修正 ([85cd6c0](https://github.com/BlueSheep2804/SeleneChat/commit/85cd6c082d982ad74d33ff3d2d89217d5c903161))
+
 ## [0.2.0](https://github.com/BlueSheep2804/SeleneChat/compare/v0.1.1...v0.2.0) (2023-07-21)
 
 
