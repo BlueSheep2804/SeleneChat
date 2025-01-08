@@ -1,6 +1,8 @@
 package io.github.bluesheep2804.selenechat
 
+import io.github.bluesheep2804.selenechat.channel.ChannelManager
 import io.github.bluesheep2804.selenechat.command.*
+import io.github.bluesheep2804.selenechat.common.Platforms
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.japanize.JapanizePlayersManager
 import io.github.bluesheep2804.selenechat.listener.ChatListenerSpigot
@@ -9,14 +11,19 @@ import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerOffline
 import io.github.bluesheep2804.selenechat.player.SeleneChatPlayerSpigot
 import io.github.bluesheep2804.selenechat.resource.ResourceManager
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
 class SeleneChatSpigot : JavaPlugin(), IPlugin {
     private lateinit var adventure: BukkitAudiences
+    override val platform = Platforms.BUKKIT
     override val configManager: SeleneChatConfigManager = SeleneChatConfigManager(dataFolder)
     override val resourceManager: ResourceManager = ResourceManager(dataFolder)
     override val japanizePlayersManager: JapanizePlayersManager = JapanizePlayersManager(dataFolder)
+    override val channelManager: ChannelManager = ChannelManager(dataFolder)
     init {
         SeleneChat.setPluginInstance(this)
 
@@ -31,6 +38,7 @@ class SeleneChatSpigot : JavaPlugin(), IPlugin {
         this.getCommand(SeleneChatCommand.COMMAND_NAME)?.setExecutor(SeleneChatCommandSpigot())
         this.getCommand(MessageCommand.COMMAND_NAME)?.setExecutor(MessageCommandSpigot())
         this.getCommand(JapanizeCommand.COMMAND_NAME)?.setExecutor(JapanizeCommandSpigot())
+        this.getCommand(ChannelCommand.COMMAND_NAME)?.setExecutor(ChannelCommandSpigot())
 
         logger.info("Loaded!")
     }
@@ -62,5 +70,13 @@ class SeleneChatSpigot : JavaPlugin(), IPlugin {
     override fun getPlayer(uuid: UUID): SeleneChatPlayer {
         val player = server.getPlayer(uuid)
         return if (player == null) SeleneChatPlayerOffline(uuid) else SeleneChatPlayerSpigot(player)
+    }
+
+    override fun sendMessage(component: Component) {
+        try {
+            server.spigot().broadcast(*BungeeComponentSerializer.get().serialize(component))
+        } catch (_: NoSuchMethodError) {
+            server.broadcastMessage(LegacyComponentSerializer.legacySection().serialize(component))
+        }
     }
 }

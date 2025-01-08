@@ -1,6 +1,7 @@
 package io.github.bluesheep2804.selenechat.config
 
 import com.charleskorn.kaml.YamlComment
+import io.github.bluesheep2804.selenechat.common.ConvertMode
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,6 +15,10 @@ data class SeleneChatConfigData(
         var nonJapanizeMarker: String = "$",
         @YamlComment("Whether to Japanize by default.")
         var japanizeDefault: Boolean = true,
+        @YamlComment("Enables the channel chat feature.")
+        var enableChannelChat: Boolean = false,
+        @YamlComment("Set a marker for the global channel.")
+        var globalMarker: String = "!",
         @YamlComment("Whether to send message content to proxy servers using plugin messages.", "Applies to Spigot only.")
         var shouldSendPluginMessage: Boolean = false,
         @YamlComment("Choose whether to send the message in the standard Minecraft message format or in SeleneChat's own format.", "If true, SeleneChat's format will be used.", "Applies to Spigot only.")
@@ -33,6 +38,17 @@ data class SeleneChatConfigData(
                 "<message> -> Message body"
         )
         var chatFormat: String = "<sender><server:@:><green>:</green> <message>",
+        @YamlComment(
+                "Specifies the format of the channel chat.",
+                "MiniMessage tags can be used.",
+                "<channel> -> Displays the name of the channel.",
+                "<sender> -> Display name of sender",
+                "<server:[prefix]:[suffix]> -> Name of the server where the sender is located",
+                "<date> -> Date",
+                "<time> -> Time",
+                "<message> -> Message body"
+        )
+        var channelChatFormat: String = "[<channel>]<sender><server:@:><green>:</green> <message>",
         @YamlComment(
                 "Specifies the format of the message portion of the chat.",
                 "MiniMessage tags can be used.",

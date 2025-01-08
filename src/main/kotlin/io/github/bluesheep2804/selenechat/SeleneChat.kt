@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.selenechat
 
+import io.github.bluesheep2804.selenechat.channel.ChannelManager
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigData
 import io.github.bluesheep2804.selenechat.config.SeleneChatConfigManager
 import io.github.bluesheep2804.selenechat.japanize.JapanizePlayersManager
@@ -20,6 +21,8 @@ object SeleneChat {
         get() = plugin.japanizePlayersManager
     val japanizePlayers: MutableMap<String, Boolean>
         get() = plugin.japanizePlayers
+    val channelManager: ChannelManager
+        get() = plugin.channelManager
 
     fun setPluginInstance(plugin: IPlugin) {
         this.plugin = plugin

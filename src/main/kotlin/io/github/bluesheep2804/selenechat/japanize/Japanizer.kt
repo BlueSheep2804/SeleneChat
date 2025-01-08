@@ -1,7 +1,8 @@
 package io.github.bluesheep2804.selenechat.japanize
 
 import io.github.bluesheep2804.selenechat.SeleneChat.config
-import io.github.bluesheep2804.selenechat.config.ConvertMode
+import io.github.bluesheep2804.selenechat.common.ConvertMode
+import io.github.bluesheep2804.selenechat.common.ConvertMode.*
 
 /**
  * ローマ字表記を漢字に変換するクラス
@@ -9,17 +10,12 @@ import io.github.bluesheep2804.selenechat.config.ConvertMode
  * @see [LunaChat Github](https://github.com/ucchyocean/LunaChat/tree/master/src/main/java/com/github/ucchyocean/lc3/japanize/Japanizer.java)
  */
 class Japanizer(private val original: String) {
-    fun japanize(): String {
-        if (config.convertMode == ConvertMode.NONE) {
-            return ""
+    fun japanize(convertMode: ConvertMode): String {
+        return when (convertMode) {
+            NONE -> ""
+            KANA -> RomaToKana.convert(original)
+            IME -> IMEConverter.googleIME(RomaToKana.convert(original))
         }
-
-        val kana = RomaToKana.convert(original)
-        if (config.convertMode == ConvertMode.KANA) {
-            return kana
-        }
-
-        return IMEConverter.googleIME(kana)
     }
 
     fun shouldConvert(): Boolean {

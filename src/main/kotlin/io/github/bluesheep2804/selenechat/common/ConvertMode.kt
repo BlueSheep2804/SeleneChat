@@ -1,4 +1,4 @@
-package io.github.bluesheep2804.selenechat.config
+package io.github.bluesheep2804.selenechat.common
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

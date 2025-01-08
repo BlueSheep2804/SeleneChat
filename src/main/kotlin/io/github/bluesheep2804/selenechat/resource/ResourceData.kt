@@ -1,5 +1,6 @@
 package io.github.bluesheep2804.selenechat.resource
 
+import io.github.bluesheep2804.selenechat.common.ComponentSerializer
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -18,6 +19,18 @@ data class ResourceData(
         @Serializable(with = ComponentSerializer::class)
         val disabled: Component = Component.text("Disabled", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
+        val offline: Component = Component.translatable("gui.socialInteractions.status_offline"),
+        @Serializable(with = ComponentSerializer::class)
         val hoverTextServer: Component = Component.translatable("selectServer.select"),
+        @Serializable(with = ComponentSerializer::class)
+        val hoverTextChannel: Component = Component.text("Change chat channel"),
         val command: CommandResourceData = CommandResourceData()
-)
+) {
+    fun switch(value: Boolean): Component {
+        return if (value) {
+            enabled
+        } else {
+            disabled
+        }
+    }
+}

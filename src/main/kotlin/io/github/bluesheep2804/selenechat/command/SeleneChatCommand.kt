@@ -21,6 +21,7 @@ class SeleneChatCommand : ICommand {
             SeleneChat.configManager.reload()
             SeleneChat.resourceManager.reload()
             SeleneChat.japanizePlayersManager.reload()
+            SeleneChat.channelManager.reload()
             sender.sendCommandResult(SeleneChat.resource.command.selenechatSuccessReload)
         }
         return true
