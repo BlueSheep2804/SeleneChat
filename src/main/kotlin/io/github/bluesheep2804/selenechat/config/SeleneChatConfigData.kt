@@ -15,6 +15,8 @@ data class SeleneChatConfigData(
         var nonJapanizeMarker: String = "$",
         @YamlComment("Whether to Japanize by default.")
         var japanizeDefault: Boolean = true,
+        @YamlComment("Enables the channel chat feature.")
+        var enableChannelChat: Boolean = false,
         @YamlComment("Set a marker for the global channel.")
         var globalMarker: String = "!",
         @YamlComment("Whether to send message content to proxy servers using plugin messages.", "Applies to Spigot only.")

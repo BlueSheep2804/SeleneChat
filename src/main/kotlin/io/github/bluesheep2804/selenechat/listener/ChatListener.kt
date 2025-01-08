@@ -11,7 +11,7 @@ import net.kyori.adventure.text.Component
 
 object ChatListener {
     fun chat(message: String, sender: SeleneChatPlayer): Component? {
-        val channel = if (message.startsWith(config.globalMarker)) null else channelManager.getPlayerChannel(sender)
+        val channel = if (message.startsWith(config.globalMarker) || !config.enableChannelChat) null else channelManager.getPlayerChannel(sender)
         return if (channel is ChannelData) {
             channel.sendMessage(ChatMessage.channelChat(message, sender, channel))
             null

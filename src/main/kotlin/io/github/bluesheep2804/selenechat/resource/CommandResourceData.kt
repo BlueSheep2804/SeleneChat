@@ -32,6 +32,8 @@ data class CommandResourceData(
         val japanizeSuccessCurrentValue: String = "Your Japanize conversion is currently set to <value>.",
         val japanizeSuccessChanged: String = "Your Japanize conversion is set to <value>.",
         @Serializable(with = ComponentSerializer::class)
+        val channelErrorDisabledChannelChat: Component = Component.text("The channel chat feature has been disabled.", NamedTextColor.RED),
+        @Serializable(with = ComponentSerializer::class)
         val channelErrorSubCommandEmpty: Component = Component.text("Argument is missing.", NamedTextColor.RED),
         @Serializable(with = ComponentSerializer::class)
         val channelErrorSubCommandNotFound: Component = Component.text("That subcommand does not exist.", NamedTextColor.RED),

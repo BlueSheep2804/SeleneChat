@@ -1,6 +1,7 @@
 package io.github.bluesheep2804.selenechat.command
 
 import io.github.bluesheep2804.selenechat.SeleneChat.channelManager
+import io.github.bluesheep2804.selenechat.SeleneChat.config
 import io.github.bluesheep2804.selenechat.SeleneChat.plugin
 import io.github.bluesheep2804.selenechat.SeleneChat.resource
 import io.github.bluesheep2804.selenechat.channel.ChannelData
@@ -28,6 +29,11 @@ class ChannelCommand : ICommand {
     )
 
     override fun execute(sender: SeleneChatPlayer, args: Array<String>): Boolean {
+        if (!config.enableChannelChat) {
+            sender.sendCommandResult(resource.command.channelErrorDisabledChannelChat)
+            return false
+        }
+
         if (args.isEmpty()) {
             sender.sendCommandResult(resource.command.channelErrorSubCommandEmpty)
             return false
@@ -75,6 +81,7 @@ class ChannelCommand : ICommand {
     }
 
     override fun suggest(sender: SeleneChatPlayer, args: Array<String>): List<String> {
+        if (!config.enableChannelChat) return emptyList()
         return when (args.size) {
             1 -> if (args[0].startsWith(":")) {
                 channelManager.allChannels.filterValues { it.visible }.keys.map { ":${it}" }.filter { it.startsWith(args[0]) }
