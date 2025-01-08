@@ -74,6 +74,10 @@ data class CommandResourceData(
         val channelErrorEditSubCommandNotExists: Component = Component.text("That subcommand does not exist.", NamedTextColor.RED),
         val channelSuccessEditFormatCurrentValue: String = "Current format: <newline><format>",
         val channelSuccessEditFormat: String = "Changed format: <newline><format>",
+        val channelSuccessEditInfoHeader: String = "==== <channel> ====",
+        @Serializable(with = ComponentSerializer::class)
+        val channelSuccessEditInfoNoPlayer: Component = Component.text("No Player"),
+        val channelSuccessEditInfoPlayer: String = "<num> players",
         @Serializable(with = ComponentSerializer::class)
         val channelErrorEditJapanizeUnexpectedArgs: Component = Component.text("The argument must be one of [none, kana, ime].", NamedTextColor.RED),
         val channelSuccessEditJapanizeCurrentValue: String = "Current value: <value>",
@@ -144,6 +148,16 @@ data class CommandResourceData(
         val formatComponent = Component.text(format).hoverEvent(Component.translatable("chat.copy.click")).clickEvent(ClickEvent.copyToClipboard(format))
         val formatResolver = Placeholder.component("format", formatComponent)
         return MiniMessage.miniMessage().deserialize(channelSuccessEditFormat, formatResolver)
+    }
+
+    fun channelSuccessEditInfoHeader(channel: ChannelData): Component {
+        val channelResolver = Placeholder.component("channel", channel.displayName)
+        return MiniMessage.miniMessage().deserialize(channelSuccessEditInfoHeader, channelResolver)
+    }
+
+    fun channelSuccessEditInfoPlayer(num: Int): Component {
+        val numResolver = Placeholder.component("num", Component.text(num))
+        return MiniMessage.miniMessage().deserialize(channelSuccessEditInfoPlayer, numResolver)
     }
 
     fun channelSuccessEditJapanizeCurrentValue(convertMode: ConvertMode): Component {

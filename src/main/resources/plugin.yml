@@ -67,6 +67,9 @@ permissions:
   selenechat.channel.format:
     description: Allow use of channel format command
     default: true
+  selenechat.channel.info:
+    description: Allow use of channel info command,
+    default: true
   selenechat.channel.jp:
     description: Allow use of channel jp command
     default: true

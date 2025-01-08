@@ -21,6 +21,7 @@ class ChannelCommand : ICommand {
     )
     private val subEditCommands: List<SubEditCommand> = listOf(
             EditFormatCommand(),
+            EditInfoCommand(),
             EditJpCommand(),
             EditModeratorCommand(),
             EditVisibleCommand(),
@@ -83,7 +84,7 @@ class ChannelCommand : ICommand {
             2 -> when (args[0]) {
                 "delete", "join", "leave" -> channelManager.allChannels.filterValues { it.visible }.keys.filter { it.startsWith(args[1]) || args[1] == "" }
                 else -> if (args[0].startsWith(":")) {
-                    listOf("format", "jp", "moderator", "visible").filter { it.startsWith(args[1]) || args[1] == "" }
+                    listOf("format", "info", "jp", "moderator", "visible").filter { it.startsWith(args[1]) || args[1] == "" }
                 } else {
                     emptyList()
                 }
