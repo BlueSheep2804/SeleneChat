@@ -77,14 +77,15 @@ class ChannelCommand : ICommand {
     override fun suggest(sender: SeleneChatPlayer, args: Array<String>): List<String> {
         return when (args.size) {
             1 -> if (args[0].startsWith(":")) {
-                channelManager.allChannels.filterValues { it.visible }.keys.map { ":${it}" }.filter { it.startsWith(args[0]) || channelManager.allChannels[it]!!.visible }
+                channelManager.allChannels.filterValues { it.visible }.keys.map { ":${it}" }.filter { it.startsWith(args[0]) }
             } else {
                 listOf("list", "create", "delete", "join", "leave", ":").filter { it.startsWith(args[0]) || args[0] == "" }
             }
             2 -> when (args[0]) {
-                "delete", "join", "leave" -> channelManager.allChannels.filterValues { it.visible }.keys.filter { it.startsWith(args[1]) || args[1] == "" }
+                "delete", "join" -> channelManager.allChannels.filterValues { it.visible }.keys.filter { it.startsWith(args[1]) || args[1] == "" }
+                "leave" -> suggestLeaveChannel(sender, args)
                 else -> if (args[0].startsWith(":")) {
-                    listOf("format", "info", "jp", "moderator", "visible").filter { it.startsWith(args[1]) || args[1] == "" }
+                    subEditCommands.map{ it.commandName }.filter { it.startsWith(args[1]) || args[1] == "" }
                 } else {
                     emptyList()
                 }
@@ -97,6 +98,16 @@ class ChannelCommand : ICommand {
             } else emptyList()
             else -> emptyList()
         }
+    }
+
+    private fun suggestLeaveChannel(sender: SeleneChatPlayer, args: Array<String>): List<String> {
+        return channelManager.allChannels
+                .filterValues {
+                    it.visible && it.playerList.contains(sender.uniqueId.toString())
+                }
+                .keys.filter {
+                    it.startsWith(args[1]) || args[1] == ""
+                }
     }
 
     companion object {
